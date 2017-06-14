@@ -1,0 +1,44 @@
+/**
+ * 控制编译过程
+ */
+
+//构建脚本，定义了 Android 编译工具的类路径
+buildscript {
+    //远程仓库依赖，依赖包的来源
+    repositories {
+        jcenter()
+//        mavenCentral()
+//        maven {
+//            url "http://repo.acmecorp.com/maven2"
+//            credentials {
+//                username 'user'
+//                password 'secretpassword'
+//            }
+//        }
+    }
+
+    //依赖
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+//定义的属性会被应用到所有moudle中
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+//extra property,第一次被声明，可用于全局
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

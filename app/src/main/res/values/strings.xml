@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">@string/APP_NAME</string>
+    <string name="action_settings">Settings</string>
+</resources>

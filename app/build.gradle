@@ -1,0 +1,128 @@
+//插件用于扩展gradle脚本的能力，在一个项目中使用插件，该项目的构建脚本就可以定义该插件定义好的属性和使用它的tasks
+apply plugin: 'com.android.application'//应用此插件，可构建应用程序
+//apply plugin: 'com.android.library'//应用此插件，可构建依赖库，两者不能同时应用
+
+android {
+    //必须有的两个属性
+    compileSdkVersion rootProject.ext.compileSdkVersion     //编译app时候，使用的sdk版本号
+    buildToolsVersion rootProject.ext.buildToolsVersion     //构建工具的版本号
+
+    //默认配置,重写AndroidManifest或在其上添加 自定义属性
+    defaultConfig {
+        applicationId "com.eyesmart.testapplication"    //只会修改当前程序的包名,不影响源码中资源文件对包名的引用
+        minSdkVersion 19                                //最小支持的sdk版本
+        targetSdkVersion 25                             //目标sdk版本
+        versionCode 1                                   //app版本号
+        versionName "1.0"                               //app版本名，无作用
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    //产品风味，重写默认配置或在其上添加 自定义属性
+    productFlavors {
+        myflavors {
+            applicationIdSuffix ".myflavors"
+            //signingConfig signingConfigs.release
+            resValue "string", "APP_NAME", "TestApp_myflavors"
+        }
+    }
+
+    //编译类型，重写产品风味或在其上添加 自定义属性
+    buildTypes {
+        debug {
+            buildConfigField "String", "API_URL", "\"http://test.example.com/api\""
+            //定义全局常量BuildConfig.API_UR
+            resValue "string", "APP_NAME", "TestApp_debug"
+            //定义资源 R.string.app_name
+        }
+        myrelease.initWith(buildTypes.debug)                                        //继承debug编译类型
+        myrelease {
+            applicationIdSuffix ".myrelease"                                        //自定义包名后缀
+            versionNameSuffix "_release"                                            //自定义版本名后缀
+            //signingConfig signingConfigs.release
+            buildConfigField "String", "API_URL", "\"http://example.com/api\""
+            resValue "string", "APP_NAME", "TestApp_myrelease"
+        }
+        release {
+            minifyEnabled true      // 是否进行混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //混淆文件的位置
+        }
+    }
+
+    //签名配置
+    signingConfigs {
+        staging.initWith(signingConfigs.debug)
+        release {
+            //storeFile file("release.keystore")                //可以这样，文件路径
+            storeFile file(System.properties['keyStore'])       //可以这样
+            storePassword System.properties['keyStorePassword']
+            keyAlias project.property('testapp.keyAlias')       //也可以这样
+            keyPassword testKeyAliasPassword                    //还可以这样
+        }
+    }
+
+    //保持旧的eclipse文件结构
+//    sourceSets {
+//        main {
+//            aidl.srcDirs = ['src']
+//            assets.srcDirs = ['assets']
+//            java.srcDirs = ['src']
+//            jniLibs.srcDirs =
+//            resources.srcDirs = ['src']
+//            renderscript.srcDirs = ['src']
+//            res.srcDirs = ['res']
+//            manifest.srcFile 'AndroidManifest.xml'
+//
+//            jniLibs.srcDir 'libs'                 //jniLibs: so库依赖路径 (armeabi、armebi-v7a)
+//                                                  //libs: jar包依赖路径
+//        }
+//        androidTest.setRoot('tests')
+//    }
+
+    //自定义apk的文件名
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFile != null &&
+                    output.outputFile.name.endsWith('.apk') &&
+                    variant.buildType.name == 'myrelease') {        //约束条件
+                def apkFile = new File(output.outputFile.getParent(),
+                        "Eyesmart_${variant.flavorName}_${variant.buildType.name}_ver${variant.versionName}.apk");
+                output.outputFile = apkFile;
+            }
+        }
+    }
+
+    //配置变体过滤器，忽略 myflavorsmyrelease 版本
+//    variantFilter { variant ->
+//        if (variant.buildType.name.equals('myrelease')) {
+//            variant.getFlavors().each() { flavor ->
+//                if (flavor.name.equals('myflavors')) {
+//                    variant.setIgnore(true);
+//                }
+//            }
+//        }
+//    }
+
+    // java版本
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+//    }
+
+    // 移除lint检查的error
+//    lintOptions {
+//        abortOnError false
+//    }
+}
+
+//依赖的库
+dependencies {
+    //将libs文件夹中所有的jar文件视为依赖库
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {   //根据不同编译类型，依赖不同的库
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    testCompile 'junit:junit:4.12'      //用于Java编写执行Java测试用例
+}

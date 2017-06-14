@@ -1,0 +1,15 @@
+/**
+ *配置Gradle多项目管理
+ */
+
+def initGradleEnvironment() {
+    println "initialize Gradle Environment ....."
+    //干一些special的私活....
+    println "initialize Gradle Environment completes..."
+}
+
+//settings.gradle加载的时候，会执行initMinshengGradleEnvironment
+initGradleEnvironment()
+
+//include也是一个函数：
+include ':app'
