@@ -1,6 +1,7 @@
 package com.eyesmart.testapplication;
 
 /**
+ * 多线程
  * 至少存在两个线程：main线程及JVM垃圾回收线程
  */
 
