@@ -1,23 +1,23 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.java;
 
 /**
  * 泛型，解决数据类型安全问题
  */
 
-public class MyGenericity<T> {
+public class MyGenericity {
 
     public void test() {
-        Point<Integer> p = new Point<Integer>();    //声明或实例化时指定
+        Point<Integer> p = new Point<Integer>();      //声明或实例化时指定
         out(p);
     }
 
-    public void out(Point<?> p) {                 //泛型的类型指定不能用Object，必须用 通配符?
+    public void out(Point<?> p) {                     //泛型的类型指定不能用Object，必须用 通配符?
     }
 
-    public void out1(Point<? extends Number> p) { //泛型的范围，上限
+    public void out1(Point<? extends Number> p) {     //泛型的范围，上限
     }
 
-    public void out2(Point<? super Number> p) {   //泛型的范围，下限
+    public void out2(Point<? super Number> p) {       //泛型的范围，下限
     }
 
     public <T extends Number> Point<T> out(T param) { //泛型方法返回泛型类型

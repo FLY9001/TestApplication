@@ -1,4 +1,7 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.java;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 多线程
@@ -51,5 +54,18 @@ public class MyThreadRunnable implements Runnable {
         currentThread.setDaemon(true);                  //设置为守护（后台）线程
         currentThread.setPriority(Thread.MAX_PRIORITY); //设置为最高线程优先级
         currentThread.yield();                          //线程礼让（相同优先级）
+
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+        };
+        Timer timer = new Timer();                      //一种线程设施，配合TimerTask使用
+        timer.schedule(timerTask,1000,2000);            //设置任务，1秒后执行，每2秒重复
+        timer.scheduleAtFixedRate(timerTask,1000,2000); //可以自动挑战间隔时间
+        timer.cancel();                                 //放弃已安排的任务，对正在执行的无影响
+        timer.purge();                                  //移除已取消的任务，释放内存空间
     }
 }
