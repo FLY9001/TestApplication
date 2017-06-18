@@ -107,7 +107,7 @@ class Student implements Comparable<Student>, Cloneable {
 
     @Override
     public int compareTo(@NonNull Student stu) { //实现Comparable接口，覆写compareTo
-        if (this.age > stu.age) {                  //通过0，-1，1表示顺序，此时为从大到小排列
+        if (this.age > stu.age) {                //通过0，-1，1表示顺序，此时为从大到小排列
             return -1;
         } else if (this.age < stu.age) {
             return 1;
