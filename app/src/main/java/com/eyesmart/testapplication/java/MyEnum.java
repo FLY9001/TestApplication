@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 /**
  * Created by 1 on 2017/6/18 0018.
  */
@@ -39,8 +38,8 @@ public class MyEnum {
         age.setAccessible(true);                    //设置为可被外部访问
         age.set(stu, "18");
     }
-}
 
-enum Color {
-    RED, GREEN, BULE;
+    enum Color {
+        RED, GREEN, BULE;
+    }
 }
