@@ -3,25 +3,35 @@
           package="com.eyesmart.testapplication"
           android:versionCode="1"
           android:versionName="1.0">
-    <!--android:sharedUserId="string"   用于不同apk共享数据
+
+    <!--
+        android:sharedUserId="string"   用于不同apk共享数据
         android:sharedUserLabel="string resource"
         android:installLocation=["auto" | "internalOnly" | "preferExternal"] 默认安装位置
-        -->
+    -->
     <!--
     <uses-sdk/>             //被gradle重写，不必声明
     <uses-configuration/>   //描述应用所需要的硬件和软件特性，以便防止应用在没有这些特性的设备上安装
     <uses-feature/>
     <instrumentation/>      //用于测试
     -->
-    <!--系统权限，底部有权限大全-->
+    <!-- 系统权限，底部有权限大全 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    <!--
+    <supports-screens   //多屏幕机制
+        android:smallScreens=["true" | "false"] //是否支持小屏
+        android:normalScreens=["true" | "false"]
+        android:largeScreens=["true" | "false"]
+        android:anyDensity=["true" | "false"]/>  //是否支持多种不同密度
+    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!--
         android:allowClearUserData=["true" | "false"]   //用户是否能选择自行清除数据，默认为true
         android:allowTaskReparenting=["true" | "false"] //是否允许activity更换从属的任务？默认为false
@@ -46,6 +56,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <!--
             android:allowTaskReparenting=["true" | "false"]
             android:alwaysRetainTaskState=["true" | "false"]                   //是否保留状态不变，比如切换回home, 再从新打开，activity处于最后的状态
@@ -80,13 +91,15 @@
                                         "adjustResize", "adjustPan"]
             -->
             <intent-filter>
+
                 <!--
                 android:icon="drawable resource"    //过滤器展示给用户时，所设置的图标，默认为父组件的图标
                 android:label="string resource"     //过滤器展示给用户时，所设置的标签，默认为父组件的标签
                 android:priority="integer"          //-1000～1000，只对Activity和Broadcast Receiver对象有意义（如强制Android启动另外一个Activity）
                 -->
-                <action android:name="android.intent.action.MAIN"/>         <!--表示应用程序的入口-->
-                <category android:name="android.intent.category.LAUNCHER"/> <!--决定应用程序是否显示在程序列表里-->
+                <action android:name="android.intent.action.MAIN"/> <!-- 表示应用程序的入口 -->
+                <category
+                    android:name="android.intent.category.LAUNCHER"/> <!-- 决定应用程序是否显示在程序列表里 -->
                 <!--
                 <data                               //每个<data>元素指定一个URI和数据类型（MIME类型）（scheme://host:port/path）
                     android:host="string"           //scheme的值一般为"http"，host为包名，port为端口号，path为具体地址
@@ -96,7 +109,7 @@
                     android:pathPrefix="string"     //为了格式化path
                     android:port="string"
                     android:scheme="string"/>
-                 -->
+                -->
             </intent-filter>
             <!--
             <meta-data                              //元数据，可以包含在<activity> <activity-alias> <service> <receiver>四个元素中
@@ -139,16 +152,23 @@
             android:name="..."
             android:required="true"/>   //为true时，若设备上没有这个类库（name），系统不允许该应用程序安装在这个设备上
         -->
+        <service
+            android:name=".TestService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <receiver
+            android:name=".TestReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.eyesmart.testapplication.TestReceiver"/>
+            </intent-filter>
+        </receiver>
     </application>
-    <!--
-    <supports-screens   //多屏幕机制
-        android:smallScreens=["true" | "false"] //是否支持小屏
-        android:normalScreens=["true" | "false"]
-        android:largeScreens=["true" | "false"]
-        android:anyDensity=["true" | "false"]/>  //是否支持多种不同密度
-    -->
-</manifest>
-    <!--
+
+</manifest><!--
     权限代码：
     1.android.permission.WRITE_USER_DICTIONARY允许应用程序向用户词典中写入新词
     2.android.permission.WRITE_SYNC_SETTINGS写入Google在线同步设置
@@ -294,4 +314,4 @@
     140.android.permission.ACCESS_FINE_LOCATION允许程序通过GPS芯片接收卫星的定位信息
     141.android.permission.ACCESS_COARSE_LOCATION允许程序通过WiFi或移动基站的方式获取用户错略的经纬度信息
     142.android.permission.ACCESS_CHECKIN_PROPERTIES允许程序读取或写入登记check-in数据库属性表的权限
-    -->
+-->

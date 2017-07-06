@@ -10,7 +10,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -48,18 +47,6 @@ public class APIs {
         Pattern pattern = Pattern.compile("[0-9]+");   //正则表达式，用于字符串的匹配、替换、拆分
         Matcher matcher = pattern.matcher("1234567890");
         matcher.matches();
-
-        int[] temp = {4, 2, 6, 3, 1, 7, 5};
-        Arrays.sort(temp);                  //数组排序
-        Arrays.binarySearch(temp, 3);       //数组查找
-        Arrays.fill(temp, 1);               //数组填充，全部为1
-        Arrays.toString(temp);              //数组输出
-        Arrays.equals(temp, null);          //数组比较
-        //System.arraycopy();               //数组复制
-
-        Student[] students = {};            //对对象数组进行排列
-        Arrays.sort(students);
-        Arrays.sort(students, new StuComparator());
 
         new Student().clone();              //对象的克隆
 //--------------------------------------------------------------------------------------------------

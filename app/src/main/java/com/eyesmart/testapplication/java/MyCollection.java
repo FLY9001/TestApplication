@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +30,21 @@ import java.util.Vector;
 
 public class MyCollection {
     void test() throws IOException {
+        int[] temp = {4, 2, 6, 3, 1, 7, 5};
+        Student[] students = {};            //对对象数组进行排列
+
+        Arrays.fill(temp, 1);               //数组填充，全部为1
+        //System.arraycopy();               //数组复制
+        Arrays.copyOf(temp, 6);             //数组复制5个（从0开始）
+        Arrays.copyOfRange(temp, 0, 5);
+        Arrays.binarySearch(temp, 7);       //数组查找
+        Arrays.binarySearch(temp, 3, 6, 7); //数组查找
+        Arrays.sort(temp);                  //数组排序
+        Arrays.sort(students, 0, 5, new StuComparator());
+        Arrays.toString(temp);              //数组输出
+        Arrays.deepToString(students);      //二维数组输出
+        Arrays.equals(temp, null);          //数组比较
+        Arrays.deepEquals(students, null);  //二维数组比较
 //--------------------------------------------------------------------------------------------------
         //List
         //ArrayList
@@ -120,11 +136,11 @@ public class MyCollection {
         pro.getProperty("key");
 
         File file = new File("D:" + File.separator + "myPro.peoperties");//从普通文件保存读取属性
-        pro.store(new FileOutputStream(file),"info");
+        pro.store(new FileOutputStream(file), "info");
         pro.load(new FileInputStream(file));
 
         File xmlFile = new File("D:" + File.separator + "myPro.xml");    //从xml文件保存读取属性
-        pro.storeToXML(new FileOutputStream(xmlFile),"info");
+        pro.storeToXML(new FileOutputStream(xmlFile), "info");
         pro.loadFromXML(new FileInputStream(xmlFile));
     }
 }
