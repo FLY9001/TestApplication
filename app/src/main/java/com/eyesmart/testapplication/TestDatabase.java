@@ -1,0 +1,104 @@
+package com.eyesmart.testapplication;
+
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import static android.content.ContentValues.TAG;
+
+/**
+ * Created by Tian on 2017-7-18 0018.
+ */
+
+public class TestDatabase {
+    void test() {
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase("/mnt/db/test.db", null);//打开或创建数据库文件，需绝对路径
+        db.close();
+    }
+
+    public static class DbTool {
+        private static SQLiteDatabase db;
+
+        public static long insert(String value) {
+            if (db == null || !db.isOpen()) {
+                db = DbHelper.getInstance().getWritableDatabase();
+            }
+            ContentValues values = new ContentValues();
+            values.put(DbHelper.COLUMN, value);
+            long rowId = db.insert(DbHelper.TABAL, null, values);
+            Log.d(TAG, "插入行id：" + rowId);   //-1表示失败
+            return rowId;
+        }
+
+        public static int update(String value) {
+            if (db == null || !db.isOpen()) {
+                db = DbHelper.getInstance().getWritableDatabase();
+            }
+            ContentValues values = new ContentValues();
+            values.put(DbHelper.COLUMN, value);
+            int rows = db.update(DbHelper.TABAL, values, DbHelper.COLUMN + " = ?", new String[]{"arg"});
+            Log.d(TAG, "更新行数：" + rows);
+            return rows;
+        }
+
+        public static int delete(long id) {
+            if (db == null || !db.isOpen()) {
+                db = DbHelper.getInstance().getWritableDatabase();
+            }
+            int rows = db.delete(DbHelper.TABAL, "id > ?", new String[]{id + ""});
+            Log.d(TAG, "删除行数：" + rows);
+            return rows;
+        }
+
+        public static int query(long id) {
+            if (db == null || !db.isOpen()) {
+                db = DbHelper.getInstance().getWritableDatabase();
+            }
+            Cursor cursor = db.query(DbHelper.TABAL, new String[]{DbHelper.COLUMN}, DbHelper.COLUMN + " = ?", new String[]{id + ""}, null, null, null);
+            int queryId = 0;
+            while (cursor.moveToNext()) {
+                queryId = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMN));
+            }
+            cursor.close();
+            return queryId;
+        }
+    }
+
+    public static class DbHelper extends SQLiteOpenHelper {
+        public static final String TABAL = "tabal";     //表名
+        public static final String COLUMN = "column";   //列名
+
+        private static DbHelper dbHelper;
+
+        public DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+            super(context, name, factory, version);
+        }
+
+        public static DbHelper getInstance() {
+            if (dbHelper == null) {
+                dbHelper = new DbHelper(null, "Test.db", null, 1);  //文件地址：/data/data/<package name>/databases/目录
+            }
+            return dbHelper;
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {                 //第一次创建数据库时
+            String sqlCreate = "create table if not exists " + TABAL + "("
+                    + "id" + " integer PRIMARY KEY AUTOINCREMENT,"//主键，自增长
+                    + COLUMN + " integer,"                        //整型
+                    + COLUMN + " text,"                           //文本
+                    + COLUMN + " real,"                           //浮点型
+                    + COLUMN + " blob)";                          //二进制
+            db.execSQL(sqlCreate);                                //自动建表
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }
+}
