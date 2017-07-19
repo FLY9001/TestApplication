@@ -1,8 +1,5 @@
 package com.eyesmart.testapplication;
 
-import android.os.Handler;
-import android.os.Message;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,6 +11,19 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.HTTP;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Http请求工具类
@@ -27,33 +37,15 @@ public class HttpUtils {
     private static final int MESSAGE_SUCCESS = 0;
     private static final int MESSAGE_FAILURE = -1;
 
-    private static HttpCallBack mHttpCallBack;
-
     public interface HttpCallBack {
+        public String mResult = null;
+
         void onSuccess(String result);
 
         void onFailure(String msg);
     }
 
-    /**
-     * 在主线程中回调
-     */
-    private static Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case MESSAGE_SUCCESS:
-                    mHttpCallBack.onSuccess((String) msg.obj);
-                    break;
-                case MESSAGE_FAILURE:
-                    mHttpCallBack.onFailure((String) msg.obj);
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+//**********************************************************************************************************
 
     /**
      * Get请求,运用HttpURLConnection
@@ -65,14 +57,13 @@ public class HttpUtils {
         if (urlStr == null || urlStr.isEmpty() || httpCallBack == null) {
             throw new NullPointerException();
         }
-        mHttpCallBack = httpCallBack;
         new Thread() {
             @Override
             public void run() {
                 super.run();
                 HttpURLConnection conn = null;
                 try {
-                    URL url = new URL(urlStr);
+                    URL url = new URL(urlStr);//URL的长度不能超过2048个字符
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");                       //请求方法，默认为get
                     conn.setConnectTimeout(TIMEOUT);                    //链接超时
@@ -89,12 +80,12 @@ public class HttpUtils {
                         InputStream is = conn.getInputStream();
                         byte[] bytes = getBytesByInputStream(is);
                         String resultStr = new String(bytes, "UTF-8");
-                        mHandler.obtainMessage(MESSAGE_SUCCESS, resultStr).sendToTarget();
+                        httpCallBack.onSuccess(resultStr);
                     } else {
-                        mHandler.obtainMessage(MESSAGE_FAILURE, "ResponseCode: " + conn.getResponseCode()).sendToTarget();
+                        httpCallBack.onFailure("ResponseCode: " + conn.getResponseCode());
                     }
                 } catch (IOException e) {
-                    mHandler.obtainMessage(MESSAGE_FAILURE, "Exception: " + e.toString()).sendToTarget();
+                    httpCallBack.onFailure("Exception: " + e.toString());
                     e.printStackTrace();
                 } finally {
                     if (conn != null) {
@@ -116,7 +107,6 @@ public class HttpUtils {
         if (urlStr == null || urlStr.isEmpty() || requestStr == null || requestStr.isEmpty() || httpCallBack == null) {
             throw new NullPointerException();
         }
-        mHttpCallBack = httpCallBack;
         new Thread() {
             @Override
             public void run() {
@@ -146,12 +136,12 @@ public class HttpUtils {
                         InputStream is = conn.getInputStream();
                         byte[] bytes = getBytesByInputStream(is);
                         String resultStr = new String(bytes, "UTF-8");
-                        mHandler.obtainMessage(MESSAGE_SUCCESS, resultStr).sendToTarget();
+                        httpCallBack.onSuccess(resultStr);
                     } else {
-                        mHandler.obtainMessage(MESSAGE_FAILURE, "ResponseCode: " + conn.getResponseCode()).sendToTarget();
+                        httpCallBack.onFailure("ResponseCode: " + conn.getResponseCode());
                     }
                 } catch (IOException e) {
-                    mHandler.obtainMessage(MESSAGE_FAILURE, "Exception: " + e.toString()).sendToTarget();
+                    httpCallBack.onFailure("Exception: " + e.toString());
                     e.printStackTrace();
                 } finally {
                     if (conn != null) {
@@ -162,6 +152,56 @@ public class HttpUtils {
         }.start();
     }
 
+//**********************************************************************************************************
+
+    public interface TestService {
+        @GET("testBean/{id}")
+        Call<ResponseBody> getTestBean(@Path("id") int id);
+
+        @POST("testBean/1")
+        @HTTP(method = "POST", path = "testBean/1", hasBody = true)
+        @Headers("Cache-Control: max-age=640000")
+        Call<ResponseBody> getTestBean2(@Body String body, @Query("sort") String sort);
+
+        //@HTTP可替代HTTP请求方法
+
+        //{}中的表示待定参数,路径中的参数使用@Path(“XXX”)
+        //@Headers(“”)请求头设置
+        //@Query用于查询参数如同”?”作用
+        //@QueryMap用于有多个查询参数
+        //@Body请求体(主要是用于@POST方式)
+        //@FormUrlEncoded表明请求体是一个form表单
+        //@Field注明表单中的键,方法的参数就是值
+        //@Multipart表明请求体是一个支持文件上传的form表单
+        //@Streaming表明响应体的数据用流的形式返回（用于数据量比较大时）
+    }
+
+    public static void testRetrofit() throws IOException {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.zhifangw.cn/")     //baseUrl必须以"/"结尾
+                .build();
+        TestService testService = retrofit.create(TestService.class);
+        Call<ResponseBody> call = testService.getTestBean(1);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+        call.execute();
+        call.cancel();
+    }
+
+//**********************************************************************************************************
 
     /**
      * 从InputStream中读取数据，转换成byte数组，最后关闭InputStream

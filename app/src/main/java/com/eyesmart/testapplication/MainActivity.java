@@ -34,7 +34,12 @@ public class MainActivity extends AppCompatActivity {
                 TestFragment.class,
 
                 TestHandler.class,      //线程及消息通讯
-        };
 
+                TestDatabase.class,     //数据库
+                TestNet.class,          //Socket
+                HttpUtils.class,        //Http
+
+                TestRxJava.class,
+        };
     }
 }

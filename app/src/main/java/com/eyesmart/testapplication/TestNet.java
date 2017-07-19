@@ -18,31 +18,32 @@ import java.nio.charset.Charset;
  */
 
 public class TestNet {
+    //此为单线程
     private void startTCPServer() {
         final int port = 8989;  //端口号应该大于等于1024，因为0~1023内都被系统内部占用了
-
+        //端口号范围为0-65535，其中0-1023位为系统保留
         new Thread(new Runnable() {
             @Override
             public void run() {
                 ServerSocket server = null;
                 try {
-                    server = new ServerSocket(port);                    // 1、创建ServerSocket服务器套接字
-                    server.setSoTimeout(8000);                              // 设置连接超时时间，不设置，则是一直阻塞等待
+                    server = new ServerSocket(port);                    //1、创建ServerSocket服务器套接字
+                    server.setSoTimeout(8000);// 设置连接超时时间，不设置，则是一直阻塞等待
                     while (true) {
-                        Socket socket = server.accept();                // 2、等待被连接。在连接超时时间内连接有效，超时则抛异常，
+                        Socket socket = server.accept();                //2、等待被连接。在连接超时时间内连接有效，超时则抛异常，
                         System.out.println("connected...");
-                        socket.setSoTimeout(5000);                          // 设置读取流的超时时间，不设置，则是一直阻塞读取
+                        socket.setSoTimeout(5000);// 设置读取流的超时时间，不设置，则是一直阻塞读取
 
-                        InputStream is = socket.getInputStream();       // 3、获取输入流和输出流
+                        InputStream is = socket.getInputStream();       //3、获取输入流和输出流
                         OutputStream os = socket.getOutputStream();
 
                         byte[] buff = new byte[1024];
-                        int len = is.read(buff);                            // 4、读取数据
+                        int len = is.read(buff);                        //4、读取数据
                         String receData = new String(buff, 0, len, Charset.forName("UTF-8"));
                         System.out.println("received data from client: " + receData);
 
                         byte[] responseBuf = "Hi, I am Server".getBytes(Charset.forName("UTF-8"));
-                        os.write(responseBuf, 0, responseBuf.length);       // 5、发送响应数据
+                        os.write(responseBuf, 0, responseBuf.length);   //5、发送响应数据
                         socket.close();
                     }
                 } catch (IOException e) {

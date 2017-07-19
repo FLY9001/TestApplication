@@ -9,7 +9,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
@@ -34,6 +36,7 @@ public class MyIO {
         file.mkdir();                   //创建文件夹
         File[] files = file.listFiles();//遍历文件夹中的文件
 
+//**********************************************************************************************************
         //对文件内容操作，可进行随机读取
         RandomAccessFile rdf = new RandomAccessFile(file, "rw");//以读写方式打开，自动创建文件
         rdf.writeInt(123);              //写，此数长度4字节
@@ -48,6 +51,7 @@ public class MyIO {
         rdf.readInt();                  //读取1个int，即 123
         rdf.close();                    //关闭
 
+//**********************************************************************************************************
         //字节流
         OutputStream os = new FileOutputStream(file, false);//以覆盖（不追加）的方式
         byte[] osBytes = "abc\r\n".getBytes();
@@ -67,15 +71,16 @@ public class MyIO {
         }
         is.close();
 
+//**********************************************************************************************************
         //字符流，用到缓冲区，最终都是以字节流操作
         Writer w = new FileWriter(file, false);
-        //w = new OutputStreamWriter(os);   //可以用转换流
+        w = new OutputStreamWriter(os);     //可以用转换流
         w.write("abc");
         w.flush();                          //清空缓冲区内容，写进Writer
         w.close();
 
         Reader r = new FileReader(file);
-        //r = new InputStreamReader(is);    //可以用转换流
+        r = new InputStreamReader(is);      //可以用转换流
         char[] rBytes = new char[(int) file.length()];
         int read = r.read(rBytes);
         for (int i = 0; (temp = r.read()) != -1; i++) {
@@ -83,6 +88,7 @@ public class MyIO {
         }
         r.close();
 
+//**********************************************************************************************************
         //内存操作流
         ByteArrayInputStream bis = new ByteArrayInputStream("abc".getBytes());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -17,6 +17,20 @@ import static android.content.ContentValues.TAG;
 public class TestDatabase {
     void test() {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase("/mnt/db/test.db", null);//打开或创建数据库文件，需绝对路径
+
+        db.beginTransaction();              // 开启事务
+        try {
+            //TODO 某些操作
+            if (true) {// 在这里手动抛出一个异常，让事务失败
+                throw new NullPointerException();
+            }
+            db.setTransactionSuccessful();  //事务已经执行成功
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();            // 结束事务
+        }
+
         db.close();
     }
 
@@ -31,6 +45,9 @@ public class TestDatabase {
             values.put(DbHelper.COLUMN, value);
             long rowId = db.insert(DbHelper.TABAL, null, values);
             Log.d(TAG, "插入行id：" + rowId);   //-1表示失败
+
+            db.execSQL("insert into <表名>(列名1, 列名2...) values(value1,value2...)");
+            db.execSQL("insert into " + DbHelper.TABAL + "(" + DbHelper.COLUMN + ", " + DbHelper.COLUMN + ") values(" + value + "," + value + ")");
             return rowId;
         }
 
@@ -42,6 +59,9 @@ public class TestDatabase {
             values.put(DbHelper.COLUMN, value);
             int rows = db.update(DbHelper.TABAL, values, DbHelper.COLUMN + " = ?", new String[]{"arg"});
             Log.d(TAG, "更新行数：" + rows);
+
+            db.execSQL("update <表名> set 列名1=value1, 列名2=value2... where <whereClause>");
+            //<whereClause>:列名1=value1 and/or 列名2=value2
             return rows;
         }
 
@@ -49,8 +69,10 @@ public class TestDatabase {
             if (db == null || !db.isOpen()) {
                 db = DbHelper.getInstance().getWritableDatabase();
             }
-            int rows = db.delete(DbHelper.TABAL, "id > ?", new String[]{id + ""});
+            int rows = db.delete(DbHelper.TABAL, "id <> ?", new String[]{id + ""});//不等于
             Log.d(TAG, "删除行数：" + rows);
+
+            db.execSQL("delete <表名> where <whereClause>");
             return rows;
         }
 
@@ -58,12 +80,18 @@ public class TestDatabase {
             if (db == null || !db.isOpen()) {
                 db = DbHelper.getInstance().getWritableDatabase();
             }
-            Cursor cursor = db.query(DbHelper.TABAL, new String[]{DbHelper.COLUMN}, DbHelper.COLUMN + " = ?", new String[]{id + ""}, null, null, null);
+            Cursor cursor = db.query(DbHelper.TABAL, null, null, null, null, null, null);
+            cursor = db.query(DbHelper.TABAL, new String[]{DbHelper.COLUMN}, DbHelper.COLUMN + " = ?", new String[]{id + ""}, null, null, null);
             int queryId = 0;
             while (cursor.moveToNext()) {
                 queryId = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMN));
             }
             cursor.close();
+            db.execSQL("select 列名1，sum(列名2) from <表名> where <whereClause> group by 列名1 having sum(列名2)>10");
+            //group by 以列名1分组
+            //having   组内列名2的值的和大于10
+            db.execSQL("select 列名1，列名2... from <表名> where <whereClause> order by 列名1 asc,列名2 desc");
+            //order by 排序：asc 升序(默认)，dese 降序
             return queryId;
         }
     }

@@ -119,10 +119,13 @@ android {
 dependencies {
     //将libs文件夹中所有的jar文件视为依赖库
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {   //根据不同编译类型，依赖不同的库
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        //根据不同编译类型，依赖不同的库
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    testCompile 'junit:junit:4.12'      //用于Java编写执行Java测试用例
+    testCompile 'junit:junit:4.12'
+    //用于Java编写执行Java测试用例
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
 }
