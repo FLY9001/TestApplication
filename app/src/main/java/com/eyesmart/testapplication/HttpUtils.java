@@ -3,6 +3,7 @@ package com.eyesmart.testapplication;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,6 +13,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Cache;
+import okhttp3.FormBody;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +27,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -154,16 +161,65 @@ public class HttpUtils {
 
 //**********************************************************************************************************
 
+    void testOkHttp() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        client.interceptors().add(new Interceptor() {               //拦截器，监控，重试，重写请求的机制
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request request = chain.request().newBuilder()      //统一请求头
+                        .addHeader("key", "value")
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+        client = client.newBuilder()
+                .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存
+                .build();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json");
+        FormBody formBody = new FormBody.Builder()                  //POST提交键值对
+                .add("key", "value")
+                .build();
+        Request request = new Request.Builder()
+                .url("http://api.zhifangw.cn/")
+                .get()                                              //GET请求（默认）
+                .post(requestBody)                                  //POST请求
+                .header("User-Agent", "OkHttp Headers.java")        //添加请求头（覆盖）
+                .addHeader("Accept", "application/json; q=0.5")     //不覆盖
+                .build();
+
+        okhttp3.Call call = client.newCall(request);
+        call.enqueue(new okhttp3.Callback() {                       //异步请求
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                okhttp3.Headers responseHeaders = response.headers();
+                for (int i = 0; i < responseHeaders.size(); i++) {
+                    System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                }
+                System.out.println(response.body().string());
+            }
+        });
+        okhttp3.Response response = call.execute();                 //同步请求
+
+        call.cancel();                                              //必要时取消请求
+    }
+
+//**********************************************************************************************************
+
     public interface TestService {
         @GET("testBean/{id}")
         Call<ResponseBody> getTestBean(@Path("id") int id);
 
         @POST("testBean/1")
-        @HTTP(method = "POST", path = "testBean/1", hasBody = true)
         @Headers("Cache-Control: max-age=640000")
         Call<ResponseBody> getTestBean2(@Body String body, @Query("sort") String sort);
 
-        //@HTTP可替代HTTP请求方法
+        //@HTTP可替代HTTP请求方法  @HTTP(method = "POST", path = "testBean/1", hasBody = true)
 
         //{}中的表示待定参数,路径中的参数使用@Path(“XXX”)
         //@Headers(“”)请求头设置
