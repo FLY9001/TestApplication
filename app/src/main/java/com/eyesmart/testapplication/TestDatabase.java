@@ -108,7 +108,7 @@ public class TestDatabase {
 
         public static DbHelper getInstance() {
             if (dbHelper == null) {
-                dbHelper = new DbHelper(null, "Test.db", null, 1);  //文件地址：/data/data/<package name>/databases/目录
+                dbHelper = new DbHelper(null, "Test.db", null, 1);  //文件地址：/data/data/<package name>/databases/xxx.db
             }
             return dbHelper;
         }

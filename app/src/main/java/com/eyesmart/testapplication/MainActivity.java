@@ -8,7 +8,7 @@ import com.eyesmart.testapplication.java.MyCollection;
 import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
-import com.eyesmart.testapplication.java.MyThreadRunnable;
+import com.eyesmart.testapplication.java.MyThread;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
                 MyCollection.class,     //集合、数组
-                MyThreadRunnable.class, //线程基础
+                MyThread.class,         //线程基础
 
                 MyGenericity.class,     //泛型、注解
                 MyEnum.class,           //反射、枚举
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 HttpUtils.class,        //Http
 
                 TestRxJava.class,
+
+                CMD.class               //命令行
         };
     }
 }

@@ -1,5 +1,12 @@
 package com.eyesmart.testapplication;
 
+import android.content.Context;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,6 +19,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import okhttp3.Cache;
 import okhttp3.FormBody;
@@ -161,18 +169,20 @@ public class HttpUtils {
 
 //**********************************************************************************************************
 
-    void testOkHttp() throws IOException {
+    public void testOkHttp() throws IOException {
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new Interceptor() {               //拦截器，监控，重试，重写请求的机制
+        client.interceptors().add(new Interceptor() {               //拦截器，添加，移除、转换请求头或响应头信息
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()      //统一请求头
+                        .header("Authorization", "")
                         .addHeader("key", "value")
                         .build();
                 return chain.proceed(request);
             }
         });
         client = client.newBuilder()
+                .addInterceptor(new LoggingInterceptor())
                 .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存
                 .build();
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json");
@@ -242,6 +252,7 @@ public class HttpUtils {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
                     response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -253,8 +264,30 @@ public class HttpUtils {
 
             }
         });
-        call.execute();
+        Response<ResponseBody> response = call.execute();
         call.cancel();
+    }
+
+//**********************************************************************************************************
+
+    public static void testVolley(Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);   //请求队列,可以只有一个（对应Application）, 也可以是一个Activity对应一个网络请求队列
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, "http://api.zhifangw.cn/",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        //JsonObjectRequest、JsonArrayRequest获取Json数据
+        //ImageRequest加载图片
+        queue.add(stringRequest);
     }
 
 //**********************************************************************************************************
@@ -319,5 +352,36 @@ public class HttpUtils {
             sbResponseHeader.append("\n");
         }
         return sbResponseHeader.toString();
+    }
+
+    private static class LoggingInterceptor implements Interceptor {
+        @Override
+        public okhttp3.Response intercept(Chain chain) throws IOException {
+            //这个chain里面包含了request和response，所以你要什么都可以从这里拿
+            Logger logger = Logger.getLogger("LoggingInterceptor");
+            Request request = chain.request();
+
+            long t1 = System.nanoTime();//请求发起的时间
+            logger.info(String.format("发送请求 %s on %s%n%s",
+                    request.url(), chain.connection(), request.headers()));
+
+            okhttp3.Response response = chain.proceed(request);
+
+            long t2 = System.nanoTime();//收到响应的时间
+
+            //这里不能直接使用response.body().string()的方式输出日志
+            //因为response.body().string()之后，response中的流会被关闭，程序会报错，我们需要创建出一
+            //个新的response给应用层处理
+            ResponseBody responseBody = response.peekBody(1024 * 1024);
+
+            logger.info(String.format("接收响应: [%s] %n状态码:[%s]%n返回json:【%s】 %.3fms%n%s",
+                    response.request().url(),
+                    response.code(),
+                    responseBody.string(),
+                    (t2 - t1) / 1e6d,
+                    response.headers()));
+
+            return response;
+        }
     }
 }
