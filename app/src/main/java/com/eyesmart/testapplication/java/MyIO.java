@@ -57,34 +57,34 @@ public class MyIO {
         byte[] osBytes = "abc\r\n".getBytes();
         os.write(osBytes);
         for (int i = 0; i < osBytes.length; i++) {
-            os.write(osBytes[i]);         //写一个字节
+            os.write(osBytes[i]);        //写一个字节
         }
         os.close();
 
         InputStream is = new FileInputStream(file);
-        is.available();                     //输入流数据大小
+        is.available();                   //输入流数据大小
         byte[] isBytes = new byte[(int) file.length()];
-        int len = is.read(isBytes);         //isBytes，len为一次读取的数据长度
+        int len = is.read(isBytes);       //isBytes，len为一次读取的数据长度
         int temp = 0;
         for (int i = 0; (temp = is.read()) != -1; i++) {
-            isBytes[i] = (byte) temp;       //读取一个字节，读到bytes1
+            isBytes[i] = (byte) temp;     //读取一个字节，读到bytes1
         }
         is.close();
 
 //**********************************************************************************************************
         //字符流，用到缓冲区，最终都是以字节流操作
         Writer w = new FileWriter(file, false);
-        w = new OutputStreamWriter(os);     //可以用转换流
+        w = new OutputStreamWriter(os);   //可以用转换流
         w.write("abc");
-        w.flush();                          //清空缓冲区内容，写进Writer
+        w.flush();                        //清空缓冲区内容，写进Writer
         w.close();
 
         Reader r = new FileReader(file);
-        r = new InputStreamReader(is);      //可以用转换流
+        r = new InputStreamReader(is);    //可以用转换流
         char[] rBytes = new char[(int) file.length()];
         int read = r.read(rBytes);
         for (int i = 0; (temp = r.read()) != -1; i++) {
-            rBytes[i] = (char) temp;       //读取一个字符，读到bytes1
+            rBytes[i] = (char) temp;      //读取一个字符，读到bytes1
         }
         r.close();
 
@@ -99,7 +99,7 @@ public class MyIO {
         //打印流
         PrintStream ps = new PrintStream(os);
         ps.printf("在文件中打印字符串：%s", "abc");
-        ps = System.out;                //可向屏幕输出
+        ps = System.out;                   //可向屏幕输出
         ps.close();
     }
 

@@ -1,4 +1,4 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.android;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

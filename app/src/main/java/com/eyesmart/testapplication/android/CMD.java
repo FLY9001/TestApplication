@@ -1,4 +1,4 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.android;
 
 /**
  * Created by Tian on 2017-7-26 0026.

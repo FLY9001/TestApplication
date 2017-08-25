@@ -1,4 +1,4 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.android;
 
 import android.content.Context;
 import android.content.SharedPreferences;

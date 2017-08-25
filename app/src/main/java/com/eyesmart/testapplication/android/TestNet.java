@@ -1,4 +1,4 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.android;
 
 import java.io.IOException;
 import java.io.InputStream;

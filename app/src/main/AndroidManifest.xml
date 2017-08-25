@@ -153,13 +153,13 @@
             android:required="true"/>   //为true时，若设备上没有这个类库（name），系统不允许该应用程序安装在这个设备上
         -->
         <service
-            android:name=".TestService"
+            android:name=".android.TestService"
             android:enabled="true"
             android:exported="true">
         </service>
 
         <receiver
-            android:name=".TestReceiver"
+            android:name=".android.TestReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

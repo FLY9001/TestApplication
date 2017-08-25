@@ -1,4 +1,4 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.android;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,13 +14,13 @@ public class TestReceiver extends BroadcastReceiver {
         //动态注册
         TestReceiver tr = new TestReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("com.eyesmart.testapplication.TestReceiver");
+        filter.addAction("com.eyesmart.testapplication.android.TestReceiver");
         context.registerReceiver(tr, filter);       //一般在onStart
         context.unregisterReceiver(tr);             //一般在onStop
 
         //发送广播
         Intent intent = new Intent(context, TestReceiver.class);
-        intent.setAction("com.eyesmart.testapplication.TestReceiver");
+        intent.setAction("com.eyesmart.testapplication.android.TestReceiver");
         context.sendBroadcast(intent);
         context.sendOrderedBroadcast(intent, null); //有序广播，按优先级传播，priority（-1000~1000），null为不指定权限
     }

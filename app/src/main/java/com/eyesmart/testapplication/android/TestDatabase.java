@@ -1,4 +1,4 @@
-package com.eyesmart.testapplication;
+package com.eyesmart.testapplication.android;
 
 
 import android.content.ContentValues;
@@ -11,7 +11,9 @@ import android.util.Log;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by Tian on 2017-7-18 0018.
+ * 性能优化：
+ * 1、execSql，rawQuery方法执行效率更高（大于1000，数据量越大越明显）
+ * 2、批量操作时，执行事务（将先缓存在内存中，COMMIT时一次写入数据库，数据库文件只被打开关闭了一次，提高效率）
  */
 
 public class TestDatabase {
