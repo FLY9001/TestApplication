@@ -14,5 +14,5 @@ package com.eyesmart.testapplication.android;
 
 public class TestJni {
 
-    public native int add(int a, int b);
+    //public native int add(int a, int b);
 }

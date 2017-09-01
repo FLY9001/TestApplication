@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 TestRxJava.class,
 
                 CMD.class               //命令行
+                
         };
     }
 }
