@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 TestService.class,
                 TestReceiver.class,
                 TestFragment.class,
-
                 TestHandler.class,      //线程及消息通讯
 
                 TestDatabase.class,     //数据库
@@ -49,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 HttpUtils.class,        //Http
 
                 TestRxJava.class,
-
-                CMD.class               //命令行
-                
+                CMD.class,               //命令行
+                Git.class
         };
     }
 }
