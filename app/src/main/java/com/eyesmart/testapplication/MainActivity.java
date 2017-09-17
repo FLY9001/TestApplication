@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 HttpUtils.class,        //Http
 
                 TestRxJava.class,
-                CMD.class,               //命令行
-                Git.class
+                CMD.class,              //命令行
+                Git.class               //git
         };
     }
 }
