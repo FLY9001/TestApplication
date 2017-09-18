@@ -20,6 +20,10 @@ import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
 import com.eyesmart.testapplication.java.MyThread;
 
+/**
+ * ［干货］2017已来，最全面试总结：
+ * http://mp.weixin.qq.com/s?__biz=MzI0MjE3OTYwMg==&mid=2649548612&idx=1&sn=8e46b6dd47bd8577a5f7098aa0889098&chksm=f1180c39c66f852fd955a29a9cb4ffa9dc4d528cab524059bcabaf37954fa3f04bc52c41dae8&mpshare=1&scene=23&srcid=0803Ekz4932sa0JrjO4jR36C#rd
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
