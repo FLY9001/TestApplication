@@ -9,6 +9,7 @@ import com.eyesmart.testapplication.android.TestActivity;
 import com.eyesmart.testapplication.android.TestDatabase;
 import com.eyesmart.testapplication.android.TestFragment;
 import com.eyesmart.testapplication.android.TestHandler;
+import com.eyesmart.testapplication.android.TestJni;
 import com.eyesmart.testapplication.android.TestNet;
 import com.eyesmart.testapplication.android.TestReceiver;
 import com.eyesmart.testapplication.android.TestRxJava;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 HttpUtils.class,        //Http
 
                 TestRxJava.class,
+                TestJni.class,
                 CMD.class,               //命令行
                 Git.class
         };
