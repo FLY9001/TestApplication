@@ -48,7 +48,7 @@ public class MyThread {
         threadPool = Executors.newSingleThreadExecutor();//单线程池
         threadPool = Executors.newCachedThreadPool();    //灵活复用执行完毕的线程，不用每次新建
         threadPool = Executors.newFixedThreadPool(3);    //固定大小，超出的线程会在队列中等待
-        //Runtime.getRuntime().availableProcessors();//可用的处理器核心，可用来设置线程池大小
+        //Runtime.getRuntime().availableProcessors();    //可用的处理器核心，可用来设置线程池大小
         threadPool.execute(new MyThreadRunnable());
 
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);//类似Timer

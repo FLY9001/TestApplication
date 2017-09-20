@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         Class[] android = {
+                TestApplication.class,  //Application、Context
                 TestActivity.class,     //四大组件、Fragment、Intent
                 TestService.class,
                 TestReceiver.class,

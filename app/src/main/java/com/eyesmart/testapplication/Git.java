@@ -15,7 +15,7 @@ class Git {
  *
  * 初始化repository：
  * $ git init                   //会生成.git目录
- *
+ *--------------------------------------------------------------------------------------------------
  * 工作区控制：
  * $ git add <file>             //添加修改；<file>为.时代表全部；若是删除文件，也可用git rm <file>
  * $ git checkout -- <file>     //替换为暂存区、版本库的文件状态
@@ -31,8 +31,18 @@ class Git {
  * $ git log                    //查看提交历史
  * $ git reflog                 //查看命令历史
  *
- * 远程仓库：
- * $ ssh-keygen -t rsa -C "youremail@example.com" //创建SSH Key
+ *--------------------------------------------------------------------------------------------------
+ * 远程仓库（传输通过SSH加密）：
+ * $ ssh-keygen -t rsa -C "youremail@example.com" //创建SSH Key，生成id_rsa、id_rsa.pub两个文件
+ *                                                //给远程仓库添加公钥
+ *
+ * $ git remote add origin git@github.com:FLY9001/test.git  //先有本地库，关联空的远程库
+ * $ git push -u origin master                              //推送到远程库，（-u）并关联master分支
+ * $ git remote rm origin                                   //删除关联
+ *
+ * $ git clone git@github.com:FLY9001/test.git              //先有远程库，克隆到本地
+ *
+ * $ git pull origin master --allow-unrelated-histories     //本地和远程都不为空时
  *
  *
  * $ git remote -v              //查看远程库
@@ -40,5 +50,17 @@ class Git {
  * $ git push origin <branch-name>  //推送提交
  * $ git checkout -b <branch-name> origin/<branch-name> //创建并关联远程分支
  * $ git branch --set-upstream <branch-name> origin/<branch-name> //建立分支关联
+ *--------------------------------------------------------------------------------------------------
+ * 分支：
+ * $ git branch                 //查看
+ * $ git branch -r              //查看远程分支
+ * $ git branch <name>          //创建
+ * $ git checkout <name>        //切换
+ * $ git branch -d <name>       //删除
+ * $ git merge <name>           //合并到当前分支
+ * $ git log --graph            //查看分支合并图
+ *
+ * $ git stash                  //藏匿工作现场，在创建bug分支时应用
+ * $ git stash pop
  */
 }
