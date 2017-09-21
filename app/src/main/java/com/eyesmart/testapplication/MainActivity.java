@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println(TestJni.sayHello());
         Class[] java = {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         Class[] android = {
+                TestApplication.class,  //Application、Context
                 TestActivity.class,     //四大组件、Fragment、Intent
                 TestService.class,
                 TestReceiver.class,
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
                 TestRxJava.class,
                 TestJni.class,
-                CMD.class,               //命令行
-                Git.class
+                CMD.class,              //命令行
+                Git.class               //git
         };
     }
 }

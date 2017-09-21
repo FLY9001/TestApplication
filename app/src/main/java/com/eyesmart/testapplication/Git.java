@@ -43,6 +43,13 @@ class Git {
  * $ git clone git@github.com:FLY9001/test.git              //先有远程库，克隆到本地
  *
  * $ git pull origin master --allow-unrelated-histories     //本地和远程都不为空时
+ *
+ *
+ * $ git remote -v              //查看远程库
+ * $ git pull                   //抓取最新
+ * $ git push origin <branch-name>  //推送提交
+ * $ git checkout -b <branch-name> origin/<branch-name> //创建并关联远程分支
+ * $ git branch --set-upstream <branch-name> origin/<branch-name> //建立分支关联
  *--------------------------------------------------------------------------------------------------
  * 分支：
  * $ git branch                 //查看
