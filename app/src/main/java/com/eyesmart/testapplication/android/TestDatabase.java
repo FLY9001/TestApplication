@@ -50,6 +50,8 @@ public class TestDatabase {
 
             db.execSQL("insert into <表名>(列名1, 列名2...) values(value1,value2...)");
             db.execSQL("insert into " + DbHelper.TABAL + "(" + DbHelper.COLUMN + ", " + DbHelper.COLUMN + ") values(" + value + "," + value + ")");
+
+            //db.replace()      //避免重复添加，当表有一个PRIMARY KEY或UNIQUE索引才有意义
             return rowId;
         }
 
