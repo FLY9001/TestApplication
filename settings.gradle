@@ -1,5 +1,5 @@
 /**
- *配置Gradle多项目管理
+ * 配置Gradle多项目管理
  */
 
 def initGradleEnvironment() {
@@ -12,4 +12,4 @@ def initGradleEnvironment() {
 initGradleEnvironment()
 
 //include也是一个函数：
-include ':app'
+include ':app', ':testlibrary'

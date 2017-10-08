@@ -37,6 +37,17 @@ allprojects {
 ext {
     compileSdkVersion = 25
     buildToolsVersion = "25.0.2"
+    minSdkVersion = 14
+    targetSdkVersion = 22
+
+    versionCode = 100900000
+    versionName = '1.9.0'
+
+    // App dependencies
+    supportVersion = '25.3.1'
+
+    junitVersion = '4.12'
+    robolectricVersion = '3.1.2'
 }
 
 task clean(type: Delete) {

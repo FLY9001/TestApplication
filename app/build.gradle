@@ -33,12 +33,7 @@ android {
             resValue "string", "APP_NAME", "TestApp_myflavors"
         }
     }
-    sourceSets {
-        main {
-            jni.srcDirs = []                                    //设置禁止gradle生成Android.mk
-            jniLibs.srcDirs = ['src/main/jniLibs']              //设置目标的so存放路径
-        }
-    }
+
 
     //编译类型，重写产品风味或在其上添加 自定义属性
     buildTypes {
@@ -127,12 +122,25 @@ android {
 //    lintOptions {
 //        abortOnError false
 //    }
+    sourceSets {
+        main {
+            jni.srcDirs = []                                    //设置禁止gradle生成Android.mk
+            jniLibs.srcDirs = ['src/main/jniLibs']              //设置目标的so存放路径
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'//作用是添加一个本地仓库,并把libs目录当做仓库地址
+        }
+    }
 }
+
 
 //依赖的库
 dependencies {
     //将libs文件夹中所有的jar文件视为依赖库
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile(name: 'testlibrary-debug', ext: 'aar')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         //根据不同编译类型，依赖不同的库
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -141,11 +149,14 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     //用于Java编写执行Java测试用例
+    compile 'com.dubsmash.volley:library:2.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     compile 'io.reactivex.rxjava2:rxjava:2.1.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.dubsmash.volley:library:2.0.1'
     compile 'jp.wasabeef:glide-transformations:1.0.6'
     compile 'com.github.bumptech.glide:glide:4.0.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'

@@ -3,12 +3,12 @@
           package="com.eyesmart.testapplication"
           android:versionCode="1"
           android:versionName="1.0">
-
     <!--
         android:sharedUserId="string"   用于不同apk共享数据
         android:sharedUserLabel="string resource"
         android:installLocation=["auto" | "internalOnly" | "preferExternal"] 默认安装位置
     -->
+
     <!--
     <uses-sdk/>             //被gradle重写，不必声明
     <uses-configuration/>   //描述应用所需要的硬件和软件特性，以便防止应用在没有这些特性的设备上安装
@@ -169,7 +169,8 @@
         </receiver>
     </application>
 
-</manifest><!--
+</manifest>
+    <!--
     权限代码：
     1.android.permission.WRITE_USER_DICTIONARY允许应用程序向用户词典中写入新词
     2.android.permission.WRITE_SYNC_SETTINGS写入Google在线同步设置
