@@ -9,7 +9,9 @@ import com.eyesmart.testapplication.android.TestActivity;
 import com.eyesmart.testapplication.android.TestDatabase;
 import com.eyesmart.testapplication.android.TestFragment;
 import com.eyesmart.testapplication.android.TestHandler;
+import com.eyesmart.testapplication.android.TestIO;
 import com.eyesmart.testapplication.android.TestJni;
+import com.eyesmart.testapplication.android.TestMedia;
 import com.eyesmart.testapplication.android.TestMemory;
 import com.eyesmart.testapplication.android.TestNet;
 import com.eyesmart.testapplication.android.TestReceiver;
@@ -57,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
                 TestFragment.class,
                 TestHandler.class,      //线程及消息通讯 //TODO 原理
 
+                TestIO.class,
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket //TODO http
+                TestMedia.class,        //多媒体
+
                 TestJni.class,          //Jni的编译、应用
                 //TODO 跨进程通讯
                 //TODO Android 版本新特性：MD、权限
-
-                CMD.class,              //命令行
-                Git.class               //git
         };
         //android代码优化：
         Class[] android2 = {
@@ -72,12 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 //TODO UI优化
                 HttpUtils.class,        //TODO 网络优化
                 TestRxJava.class,       //TODO 原理及应用
-                //TODO 内存泄漏、优化
-                TestMemory.class
+                TestMemory.class,       //TODO 内存泄漏、优化
+
                 //TODO 架构：MVP、MVP、MVVM
                 //TODO 热修复
                 //TODO 混合开发
                 //TODO React Native
+
+                CMD.class,              //命令行
+                Git.class               //git
         };
         Class[] android3 = {
                 //TODO 设计模式
