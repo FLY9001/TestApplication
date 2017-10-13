@@ -1,0 +1,260 @@
+package android.content;
+
+import android.annotation.SystemApi;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.view.DisplayAdjustments;
+import android.view.Display;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class ContextWrapper extends Context {
+    Context mBase;
+
+    public ContextWrapper(Context base) {
+        mBase = base;
+    }
+    
+    protected void attachBaseContext(Context base) {
+        if (mBase != null) {
+            throw new IllegalStateException("Base context already set");
+        }
+        mBase = base;
+    }
+
+    /**
+     * @return the base context as set by the constructor or setBaseContext
+     */
+    public Context getBaseContext() {
+        return mBase;
+    }
+
+    @Override
+    public AssetManager getAssets() {
+        return mBase.getAssets();
+    }
+
+    @Override
+    public Resources getResources()
+    {
+        return mBase.getResources();
+    }
+
+    @Override
+    public PackageManager getPackageManager() {
+        return mBase.getPackageManager();
+    }
+
+    @Override
+    public ContentResolver getContentResolver() {
+        return mBase.getContentResolver();
+    }
+
+    @Override
+    public Looper getMainLooper() {
+        return mBase.getMainLooper();
+    }
+    
+    @Override
+    public Context getApplicationContext() {
+        return mBase.getApplicationContext();
+    }
+    
+    @Override
+    public void setTheme(int resid) {
+        mBase.setTheme(resid);
+    }
+
+    /** @hide */
+    @Override
+    public int getThemeResId() {
+        return mBase.getThemeResId();
+    }
+
+    @Override
+    public Resources.Theme getTheme() {
+        return mBase.getTheme();
+    }
+
+    @Override
+    public ClassLoader getClassLoader() {
+        return mBase.getClassLoader();
+    }
+
+    @Override
+    public String getPackageName() {
+        return mBase.getPackageName();
+    }
+
+    /** @hide */
+    @Override
+    public String getBasePackageName() {
+        return mBase.getBasePackageName();
+    }
+
+    /** @hide */
+    @Override
+    public String getOpPackageName() {
+        return mBase.getOpPackageName();
+    }
+
+    @Override
+    public ApplicationInfo getApplicationInfo() {
+        return mBase.getApplicationInfo();
+    }
+    
+    @Override
+    public String getPackageResourcePath() {//路径名：/data/app/<包名>.apk
+        return mBase.getPackageResourcePath();
+    }
+
+    @Override
+    public String getPackageCodePath() {
+        return mBase.getPackageCodePath();
+    }
+
+    /** @hide */
+    @Override
+    public File getSharedPrefsFile(String name) {
+        return mBase.getSharedPrefsFile(name);
+    }
+
+    @Override
+    public SharedPreferences getSharedPreferences(String name, int mode) {
+        return mBase.getSharedPreferences(name, mode);
+    }
+
+
+	/** 对应用内部默认存储操作的API--------------------------------------- */
+    @Override
+    public FileInputStream openFileInput(String name)
+        throws FileNotFoundException {
+        return mBase.openFileInput(name);
+    }
+
+    @Override
+    public FileOutputStream openFileOutput(String name, int mode)
+        throws FileNotFoundException {
+        return mBase.openFileOutput(name, mode);
+    }
+
+    @Override
+    public boolean deleteFile(String name) {
+        return mBase.deleteFile(name);
+    }
+
+    @Override
+    public File getFileStreamPath(String name) {
+        return mBase.getFileStreamPath(name);
+    }
+
+    @Override
+    public String[] fileList() {
+        return mBase.fileList();
+    }
+	
+    @Override
+    public File getFilesDir() {//路径：/data/data/<包名>/files/
+        return mBase.getFilesDir();
+    }
+
+    @Override
+    public File getNoBackupFilesDir() {
+        return mBase.getNoBackupFilesDir();
+    }
+
+    @Override
+    public File getExternalFilesDir(String type) {
+        return mBase.getExternalFilesDir(type);
+    }
+
+    @Override
+    public File[] getExternalFilesDirs(String type) {
+        return mBase.getExternalFilesDirs(type);
+    }
+
+    @Override
+    public File getObbDir() {//回应用程序的OBB文件目录
+        return mBase.getObbDir();
+    }
+
+    @Override
+    public File[] getObbDirs() {
+        return mBase.getObbDirs();
+    }
+
+    @Override
+    public File getCacheDir() {	//返回应用程序指定的缓存目录，这些文件在设备内存不足时会优先被删除掉
+        return mBase.getCacheDir();
+    }
+
+    @Override
+    public File getCodeCacheDir() {
+        return mBase.getCodeCacheDir();
+    }
+
+    @Override
+    public File getExternalCacheDir() {//路径SDCard/Android/data/<包名>/cache
+        return mBase.getExternalCacheDir();
+    }
+
+    @Override
+    public File[] getExternalCacheDirs() {
+        return mBase.getExternalCacheDirs();
+    }
+
+    @Override
+    public File[] getExternalMediaDirs() {
+        return mBase.getExternalMediaDirs();
+    }
+
+    @Override
+    public File getDir(String name, int mode) {//存放你自己应用程序自定义的文件
+        return mBase.getDir(name, mode);
+    }
+
+    @Override
+    public SQLiteDatabase openOrCreateDatabase(String name, int mode, CursorFactory factory) {
+        return mBase.openOrCreateDatabase(name, mode, factory);
+    }
+
+    @Override
+    public SQLiteDatabase openOrCreateDatabase(String name, int mode, CursorFactory factory,
+            DatabaseErrorHandler errorHandler) {
+        return mBase.openOrCreateDatabase(name, mode, factory, errorHandler);
+    }
+
+    @Override
+    public boolean deleteDatabase(String name) {
+        return mBase.deleteDatabase(name);
+    }
+
+    @Override
+    public File getDatabasePath(String name) {
+        return mBase.getDatabasePath(name);
+    }
+
+    @Override
+    public String[] databaseList() {
+        return mBase.databaseList();
+    }
+}

@@ -20,6 +20,13 @@ public class TestHandler {
         handler.sendMessageDelayed(message, 1000);
         message.sendToTarget();
 
+        handler.post(new Runnable() {           //在handler线程执行Runnable
+            @Override
+            public void run() {
+
+            }
+        });
+
         new TestAsyncTask().execute("test");
     }
 

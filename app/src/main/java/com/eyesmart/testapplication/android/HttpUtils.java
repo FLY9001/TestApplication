@@ -1,11 +1,13 @@
 package com.eyesmart.testapplication.android;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.eyesmart.testapplication.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -22,7 +24,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import okhttp3.Cache;
-import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -33,6 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -40,12 +43,21 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- * Http请求工具类
- * Created by Tian on 2017-1-19 0019.
- */
-
 public class HttpUtils {
+    /**
+     * Http
+     */
+    void test(Context context) throws IOException {
+        //*************************
+        int net = R.drawable.net;       //TODO 网络思维导图
+        //*************************
+
+        sendGetRequest("", null);       //HttpURLConnection
+        sendPostRequest("", "", null);
+        testVolley(context);            //Volley
+        testOkHttp();                   //OkHttp
+        testRetrofit();                 //Retrofit
+    }
 
     private static final int TIMEOUT = 8000;
 
@@ -169,9 +181,31 @@ public class HttpUtils {
 
 //**********************************************************************************************************
 
+    public static void testVolley(Context context) {
+        RequestQueue queue = Volley.newRequestQueue(context);   //请求队列,可以只有一个（对应Application）, 也可以是一个Activity对应一个网络请求队列
+        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, "http://api.zhifangw.cn/",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("TAG", response);
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("TAG", error.getMessage(), error);
+                    }
+                });
+        //JsonObjectRequest、JsonArrayRequest获取Json数据
+        //ImageRequest加载图片
+        queue.add(stringRequest);
+    }
+//**********************************************************************************************************
+
     public void testOkHttp() throws IOException {
+        /**1、创建OkHttpClient*/
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new Interceptor() {               //拦截器，添加，移除、转换请求头或响应头信息
+        client.interceptors().add(new Interceptor() {               //可设置拦截器；添加，移除、转换请求头或响应头信息
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()      //统一请求头
@@ -183,21 +217,29 @@ public class HttpUtils {
         });
         client = client.newBuilder()
                 .addInterceptor(new LoggingInterceptor())
-                .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存
+                //.connectTimeout(15, TimeUnit.SECONDS)               //超时时间
+                //.writeTimeout(20, TimeUnit.SECONDS)
+                //.readTimeout(20, TimeUnit.SECONDS)
+                .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存；注意路径！
                 .build();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json");
-        FormBody formBody = new FormBody.Builder()                  //POST提交键值对
-                .add("key", "value")
-                .build();
+
+        /**2、创建Request*/
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json数据");//数据可以从多个地方获取
+//        FormBody formBody = new FormBody.Builder()                  //POST提交键值对
+//                .add("key", "value")
+//                .build();
         Request request = new Request.Builder()
                 .url("http://api.zhifangw.cn/")
                 .get()                                              //GET请求（默认）
                 .post(requestBody)                                  //POST请求
                 .header("User-Agent", "OkHttp Headers.java")        //添加请求头（覆盖）
                 .addHeader("Accept", "application/json; q=0.5")     //不覆盖
+                //.cacheControl(CacheControl.FORCE_NETWORK)         //无缓存，每次都请求网络获取最新数据
                 .build();
 
+        /**3、创建Call*/
         okhttp3.Call call = client.newCall(request);
+        /**4、请求*/
         call.enqueue(new okhttp3.Callback() {                       //异步请求
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
@@ -211,11 +253,12 @@ public class HttpUtils {
                 for (int i = 0; i < responseHeaders.size(); i++) {
                     System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
                 }
+
                 System.out.println(response.body().string());
             }
         });
         okhttp3.Response response = call.execute();                 //同步请求
-
+        //当成功时……
         call.cancel();                                              //必要时取消请求
     }
 
@@ -227,32 +270,50 @@ public class HttpUtils {
 
         @POST("testBean/1")
         @Headers("Cache-Control: max-age=640000")
+//        @Headers({
+//                "Accept-Encoding: application/json",
+//                "User-Agent: MoonRetrofit"
+//        })
         Call<ResponseBody> getTestBean2(@Body String body, @Query("sort") String sort);
 
-        //@HTTP可替代HTTP请求方法  @HTTP(method = "POST", path = "testBean/1", hasBody = true)
+        //@HTTP可替代请求方法  @HTTP(method = "POST", path = "testBean/1", hasBody = true)
 
-        //{}中的表示待定参数,路径中的参数使用@Path(“XXX”)
-        //@Headers(“”)请求头设置
-        //@Query用于查询参数如同”?”作用
-        //@QueryMap用于有多个查询参数
-        //@Body请求体(主要是用于@POST方式)
+        //@Path("XXX")动态配置URL地址，{XXX}中的表示待定参数
+        //@Headers("")请求头设置，@Header可放在方法参数前，动态设置
+
+        //@Query用于查询参数如同"?"作用
+        //@QueryMap用于有多个查询参数，参数为Map
+
+        //@Body请求体，可以为json对象(主要是用于@POST方式)
+
         //@FormUrlEncoded表明请求体是一个form表单
-        //@Field注明表单中的键,方法的参数就是值
+        //@Field("key")传输数据类型为键值对；合@FormUrlEncoded使用
+
         //@Multipart表明请求体是一个支持文件上传的form表单
+        //@Part：单个文件上传，@PartMap：多个文件上传；配合@Multipart
+
         //@Streaming表明响应体的数据用流的形式返回（用于数据量比较大时）
     }
 
     public static void testRetrofit() throws IOException {
+        /**1、创建Retrofit*/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.zhifangw.cn/")     //baseUrl必须以"/"结尾
+                //ConverterFactory依赖包需单独引入
+                .addConverterFactory(ScalarsConverterFactory.create())//增加返回值为String的支持
+                .addConverterFactory(GsonConverterFactory.create())   //Gson支持
                 .build();
+        /**2、创建接口对象*/
         TestService testService = retrofit.create(TestService.class);
+        /**3、创建Call*/
         Call<ResponseBody> call = testService.getTestBean(1);
+        /**4、请求*/
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
                     response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -265,30 +326,10 @@ public class HttpUtils {
             }
         });
         Response<ResponseBody> response = call.execute();
+        //当成功时……
         call.cancel();
     }
 
-//**********************************************************************************************************
-
-    public static void testVolley(Context context) {
-        RequestQueue queue = Volley.newRequestQueue(context);   //请求队列,可以只有一个（对应Application）, 也可以是一个Activity对应一个网络请求队列
-        StringRequest stringRequest = new StringRequest(com.android.volley.Request.Method.GET, "http://api.zhifangw.cn/",
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        //JsonObjectRequest、JsonArrayRequest获取Json数据
-        //ImageRequest加载图片
-        queue.add(stringRequest);
-    }
 
 //**********************************************************************************************************
 

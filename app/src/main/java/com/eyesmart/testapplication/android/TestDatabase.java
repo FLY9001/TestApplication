@@ -62,7 +62,7 @@ public class TestDatabase {
             ContentValues values = new ContentValues();
             values.put(DbHelper.COLUMN, value);
             int rows = db.update(DbHelper.TABAL, values, DbHelper.COLUMN + " = ?", new String[]{"arg"});
-            Log.d(TAG, "更新行数：" + rows);
+            Log.d(TAG, "更新行个数：" + rows);
 
             db.execSQL("update <表名> set 列名1=value1, 列名2=value2... where <whereClause>");
             //<whereClause>:列名1=value1 and/or 列名2=value2
@@ -74,7 +74,7 @@ public class TestDatabase {
                 db = DbHelper.getInstance().getWritableDatabase();
             }
             int rows = db.delete(DbHelper.TABAL, "id <> ?", new String[]{id + ""});//不等于
-            Log.d(TAG, "删除行数：" + rows);
+            Log.d(TAG, "删除行个数：" + rows);
 
             db.execSQL("delete <表名> where <whereClause>");
             return rows;

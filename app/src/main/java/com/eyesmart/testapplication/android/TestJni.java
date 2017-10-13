@@ -20,8 +20,10 @@ package com.eyesmart.testapplication.android;
  * 4、编写Android.mk文件         //.h、.c/cpp、.mk都在jni目录下
  * 5、NDK编译生成动态库 .so文件  //在jni上层目录执行：\main>ndk-build ，会自动生成obj、libs目录，所需so在libs目录下
  * ----------------------------------------------------
- * 应用步骤：
- * 1、jniLibs下放so文件，libs下放jar包       //路径可统一修改为libs
+ * 引入步骤：
+ * so文件：jniLibs         //路径可修改为libs
+ * jar文件：libs
+ * aar文件：libs           //在build.gradle配置本地仓库并手动引入
  */
 
 public class TestJni {

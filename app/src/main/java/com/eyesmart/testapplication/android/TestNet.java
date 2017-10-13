@@ -1,5 +1,7 @@
 package com.eyesmart.testapplication.android;
 
+import com.eyesmart.testapplication.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,7 +20,16 @@ import java.nio.charset.Charset;
  */
 
 public class TestNet {
-    //此为单线程
+    void test() {
+        //TODO 网络思维导图
+        //*************************
+        int net = R.drawable.net;
+        //*************************
+    }
+
+    /**
+     * 开启服务器
+     */
     private void startTCPServer() {
         final int port = 8989;  //端口号应该大于等于1024，因为0~1023内都被系统内部占用了
         //端口号范围为0-65535，其中0-1023位为系统保留
@@ -64,6 +75,9 @@ public class TestNet {
 
     }
 
+    /**
+     * 开启客户端
+     */
     private void startTCPClient() {
         final String host = "192.168.1.214";
         final int port = 8989;
