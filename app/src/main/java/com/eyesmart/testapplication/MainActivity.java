@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 TestIO.class,
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket //TODO http
-                TestMedia.class,        //多媒体
+                TestMedia.class,        //多媒体：音频、视频、相机
 
                 TestJni.class,          //Jni的编译、应用
                 //TODO 跨进程通讯
