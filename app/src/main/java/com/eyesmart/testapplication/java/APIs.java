@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  */
 
 public class APIs {
-    public static void test() throws IOException, ParseException, CloneNotSupportedException {
+    public void test() throws IOException, ParseException, CloneNotSupportedException {
 //--------------------------------------------------------------------------------------------------
         Runtime run = Runtime.getRuntime(); //运行时操作类，一个JVM对应一个Runtime
         run.maxMemory();                    //JVM最大内存量
