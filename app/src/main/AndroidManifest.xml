@@ -3,11 +3,13 @@
           package="com.eyesmart.testapplication"
           android:versionCode="1"
           android:versionName="1.0">
+
     <!--
         android:sharedUserId="string"   用于不同apk共享数据
         android:sharedUserLabel="string resource"
         android:installLocation=["auto" | "internalOnly" | "preferExternal"] 默认安装位置
     -->
+
 
     <!--
     <uses-sdk/>             //被gradle重写，不必声明
@@ -99,8 +101,7 @@
                 android:priority="integer"          //-1000～1000，只对Activity和Broadcast Receiver对象有意义（如强制Android启动另外一个Activity）
                 -->
                 <action android:name="android.intent.action.MAIN"/> <!-- 表示应用程序的入口 -->
-                <category
-                    android:name="android.intent.category.LAUNCHER"/> <!-- 决定应用程序是否显示在程序列表里 -->
+                <category android:name="android.intent.category.LAUNCHER"/> <!-- 决定应用程序是否显示在程序列表里 -->
                 <!--
                 <data                               //每个<data>元素指定一个URI和数据类型（MIME类型）（scheme://host:port/path）
                     android:host="string"           //scheme的值一般为"http"，host为包名，port为端口号，path为具体地址
@@ -157,6 +158,13 @@
             android:name=".android.TestService"
             android:enabled="true"
             android:exported="true">
+            <!--
+            android:process=":remote"    //设置成远程服务
+            <intent-filter>
+                //此处Intent的action必须写成“服务器端包名.aidl文件名”
+                <action android:name="com.eyesmart.testapplication.IMyAidlInterface"/>
+            </intent-filter>
+            -->
         </service>
 
         <receiver
@@ -167,10 +175,16 @@
                 <action android:name="com.eyesmart.testapplication.TestReceiver"/>
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name=".android.TestContentProvider"
+            android:authorities="com.eyesmart.testapplication.android.TestContentProvider"
+            android:enabled="true"
+            android:exported="true">
+        </provider>
     </application>
 
-</manifest>
-    <!--
+</manifest><!--
     权限代码：
     1.android.permission.WRITE_USER_DICTIONARY允许应用程序向用户词典中写入新词
     2.android.permission.WRITE_SYNC_SETTINGS写入Google在线同步设置

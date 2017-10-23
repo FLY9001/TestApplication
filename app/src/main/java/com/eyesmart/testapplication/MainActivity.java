@@ -2,6 +2,7 @@ package com.eyesmart.testapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.eyesmart.testapplication.android.CMD;
 import com.eyesmart.testapplication.android.HttpUtils;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println(TestJni.sayHello());
-
         //java相关
         Class[] java = {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         Class[] android = {
                 TestApplication.class,  //Application、Context
                 TestActivity.class,     //四大组件、Fragment、Intent
-                TestService.class,      //TODO aidl
+                TestService.class,      //TODO aidl、通知
                 TestReceiver.class,
                 //TODO Content Provider
                 TestFragment.class,
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 TestIO.class,
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket //TODO http
-                TestMedia.class,        //多媒体
+                TestMedia.class,        //多媒体：音频、视频、相机
 
                 TestJni.class,          //Jni的编译、应用
                 //TODO 跨进程通讯
@@ -70,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         };
         //android代码优化：
         Class[] android2 = {
-                //TODO 图片优化
                 //TODO UI优化
+                //TODO 图片优化
+                TestMemory.class,       //TODO 内存泄漏、优化
                 HttpUtils.class,        //TODO 网络优化
                 TestRxJava.class,       //TODO 原理及应用
-                TestMemory.class,       //TODO 内存泄漏、优化
 
                 //TODO 架构：MVP、MVP、MVVM
                 //TODO 热修复
@@ -88,5 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 //TODO 设计模式
                 //TODO 算法
         };
+    }
+
+    public void onTest(View view) {
+
     }
 }
