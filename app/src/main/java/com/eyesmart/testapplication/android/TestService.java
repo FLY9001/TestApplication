@@ -165,7 +165,7 @@ class TestIntentService extends IntentService {
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
-        //2、向Handler发送包含intent的Message，最终交给onHandleIntent()
+        //2、向Handler发送包含intent的Message，由handleMessage()最终交给onHandleIntent()
     }
 
     @Override
