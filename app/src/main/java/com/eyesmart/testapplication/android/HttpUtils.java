@@ -44,13 +44,10 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class HttpUtils {
-    /**
-     * Http
-     */
     void test(Context context) throws IOException {
-        //*************************
+        //***********************
         int net = R.drawable.net;       //TODO 网络思维导图
-        //*************************
+        //***********************
 
         sendGetRequest("", null);       //HttpURLConnection
         sendPostRequest("", "", null);
@@ -196,8 +193,8 @@ public class HttpUtils {
                         Log.e("TAG", error.getMessage(), error);
                     }
                 });
-        //JsonObjectRequest、JsonArrayRequest获取Json数据
-        //ImageRequest加载图片
+        //获取Json数据用JsonObjectRequest、JsonArrayRequest
+        //加载图片用ImageRequest
         queue.add(stringRequest);
     }
 //**********************************************************************************************************

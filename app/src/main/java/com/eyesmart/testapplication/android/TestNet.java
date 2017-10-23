@@ -21,10 +21,11 @@ import java.nio.charset.Charset;
 
 public class TestNet {
     void test() {
-        //TODO 网络思维导图
-        //*************************
-        int net = R.drawable.net;
-        //*************************
+        //***********************
+        int net = R.drawable.net;   //TODO 网络思维导图
+        //***********************
+        startTCPServer();           //socket，开启服务器
+        startTCPClient();           //socket，开启客户端
     }
 
     /**

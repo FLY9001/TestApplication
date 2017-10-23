@@ -17,6 +17,7 @@ public class MyEnum {
         }
 
         //反射机制
+        /**得到Class*/
         Class<?> c = Class.forName("com.eyesmart.testapplication.java.Student");
         c = new Student().getClass();
         c = Student.class;                          //实例化Class对象的三种方式

@@ -10,15 +10,16 @@ public class TestReceiver extends BroadcastReceiver {
     Context context;
 
     void test() {
-        //静态注册，AndroidManifest.xml
-        //动态注册
-        TestReceiver tr = new TestReceiver();
+        /**1、创建*/
+        //覆写onReceive();
+        /**2、注册、解注册*/
+        TestReceiver tr = new TestReceiver();       //动态注册（静态注册，AndroidManifest.xml）
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.eyesmart.testapplication.android.TestReceiver");
         context.registerReceiver(tr, filter);       //一般在onStart
         context.unregisterReceiver(tr);             //一般在onStop
 
-        //发送广播
+        /**发送广播*/
         Intent intent = new Intent(context, TestReceiver.class);
         intent.setAction("com.eyesmart.testapplication.android.TestReceiver");
         context.sendBroadcast(intent);
