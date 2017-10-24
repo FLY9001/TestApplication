@@ -33,6 +33,9 @@ public class MyThread {
         thread.yield();                         //线程礼让（相同优先级）
 
         /**线程池*/
+        //1、重用线程池中的线程，避免因为线程的创建和销毁所带来的性能开销；
+        //2、能有效的控制线程池中的最大并发数，避免大量线程之间因互相抢占系统资源而导致的阻塞现象；
+        //3、能对线程进行简单的管理，并提供定时执行及指定间隔循环执行等功能；
         ExecutorService threadPool;
         threadPool = Executors.newSingleThreadExecutor();//单线程池
         threadPool = Executors.newCachedThreadPool();    //灵活复用执行完毕的线程，不用每次新建

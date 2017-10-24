@@ -34,6 +34,17 @@ android {
         }
     }
 
+    //签名配置
+    signingConfigs {
+        staging.initWith(signingConfigs.debug)
+        release {
+            //storeFile file("release.keystore")                //可以这样，文件路径
+            storeFile file(System.properties['keyStore'])       //可以这样
+            storePassword System.properties['keyStorePassword']
+            keyAlias project.property('testapp.keyAlias')       //也可以这样
+            keyPassword testKeyAliasPassword                    //还可以这样
+        }
+    }
 
     //编译类型，重写产品风味或在其上添加 自定义属性
     buildTypes {
@@ -55,18 +66,6 @@ android {
             minifyEnabled true      // 是否进行混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //混淆文件的位置
-        }
-    }
-
-    //签名配置
-    signingConfigs {
-        staging.initWith(signingConfigs.debug)
-        release {
-            //storeFile file("release.keystore")                //可以这样，文件路径
-            storeFile file(System.properties['keyStore'])       //可以这样
-            storePassword System.properties['keyStorePassword']
-            keyAlias project.property('testapp.keyAlias')       //也可以这样
-            keyPassword testKeyAliasPassword                    //还可以这样
         }
     }
 
@@ -134,7 +133,6 @@ android {
         }
     }
 }
-
 
 //依赖的库
 dependencies {
