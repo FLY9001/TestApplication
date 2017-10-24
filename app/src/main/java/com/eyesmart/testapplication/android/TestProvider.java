@@ -17,10 +17,15 @@ import android.provider.BaseColumns;
  * 优点：安全；访问简单、高效    （解耦了 底层数据的存储方式，统一了 数据的访问方式）
  * <p>
  * 清单文件配置authorities属性：可用全类名
- * 访问需通过Uri，如"content://com.eyesmart.testapplication.android.TestContentProvider/user"
- * 其中   content://为协议   全类名为authorities    user为资源
+ * 访问需通过Uri，如"content://com.eyesmart.testapplication.android.TestContentProvider/words"
+ * 其中   content://为协议   全类名为authorities    words为资源
+ * <p>
+ * ContactsProvider：用来查询联系人信息；
+ * CalendarProvider：用来提供日历相关信息的查询；
+ * MediaProvider：用来查询磁盘上多媒体文件；
+ * BookmarkProvider：用来提供书签信息的查询；
  */
-public class TestContentProvider extends ContentProvider {
+public class TestProvider extends ContentProvider {
     void test() {
         /**ContentResolver进行数据操作*/
         ContentResolver resolver = getContext().getContentResolver();

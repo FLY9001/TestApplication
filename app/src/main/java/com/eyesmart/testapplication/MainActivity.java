@@ -15,6 +15,7 @@ import com.eyesmart.testapplication.android.TestJni;
 import com.eyesmart.testapplication.android.TestMedia;
 import com.eyesmart.testapplication.android.TestMemory;
 import com.eyesmart.testapplication.android.TestNet;
+import com.eyesmart.testapplication.android.TestProvider;
 import com.eyesmart.testapplication.android.TestReceiver;
 import com.eyesmart.testapplication.android.TestRxJava;
 import com.eyesmart.testapplication.android.TestService;
@@ -51,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
         //android基础框架
         Class[] android = {
                 TestApplication.class,  //Application、Context
-                TestActivity.class,     //四大组件、Fragment、Intent
-                TestService.class,      //TODO aidl、通知
-                TestReceiver.class,
-                //TODO Content Provider
-                TestFragment.class,
+                TestActivity.class,     //Activity
+                TestService.class,      //Service、通知
+                TestReceiver.class,     //BroadcastReceiver
+                TestProvider.class,     //ContentProvider
+                TestFragment.class,     //Fragment
                 TestHandler.class,      //线程及消息通讯 //TODO 原理
 
-                TestIO.class,
+                TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket //TODO http
                 TestMedia.class,        //多媒体：音频、视频、相机
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO 跨进程通讯
                 //TODO Android 版本新特性：MD、权限
         };
-        //android代码优化：
+        //android代码优化
         Class[] android2 = {
                 //TODO UI优化
                 //TODO 图片优化

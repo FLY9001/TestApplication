@@ -177,7 +177,7 @@
         </receiver>
 
         <provider
-            android:name=".android.TestContentProvider"
+            android:name=".android.TestProvider"
             android:authorities="com.eyesmart.testapplication.android.TestContentProvider"
             android:enabled="true"
             android:exported="true">
