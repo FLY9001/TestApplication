@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.eyesmart.testapplication"
           android:versionCode="1"
           android:versionName="1.0">
@@ -29,9 +30,10 @@
     -->
     <application
         android:name=".TestApplication"
+        tools:replace="android:label"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/APP_NAME"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -56,10 +58,7 @@
         android:theme="resource or theme"               //主题风格
         -->
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
+            android:name=".MainActivity">
             <!--
             android:allowTaskReparenting=["true" | "false"]
             android:alwaysRetainTaskState=["true" | "false"]                   //是否保留状态不变，比如切换回home, 再从新打开，activity处于最后的状态
@@ -179,9 +178,15 @@
         <provider
             android:name=".android.TestProvider"
             android:authorities="com.eyesmart.testapplication.android.TestContentProvider"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true">
+            <!--android:enabled="false" 不可用-->
         </provider>
+
+        <activity android:name=".ui.viewprinciple.ViewPrincipleActivity">
+        </activity>
+        <activity android:name=".ui.viewwidget.ViewWidgetActivity">
+        </activity>
     </application>
 
 </manifest><!--

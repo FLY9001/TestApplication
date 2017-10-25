@@ -20,6 +20,21 @@ import com.eyesmart.testapplication.R;
 public class TestFragment extends Fragment {
 
     void test() {
+        onAttach(getContext());         //当建立关联
+        onCreate(null);
+        onCreateView(null, null, null); //当创建视图
+        onActivityCreated(null);
+        onStart();
+        onResume();
+
+        onPause();
+        onStop();
+        onDestroyView();                //当销毁视图
+        onDestroy();
+        onDetach();                     //当解除关联
+
+        //静态添加
+        //动态添加
         /**1、创建Fragment*/
         TestFragment tf = new TestFragment();       //可以在savedInstanceState==null时，才进行创建Fragment实例
         Bundle args = new Bundle();
@@ -28,7 +43,7 @@ public class TestFragment extends Fragment {
         //tf=TestFragment.getInstance("value");
         /**2、获取FragmentManager*/
         FragmentManager fm = getFragmentManager();  //Fragment的事务操作
-        //fm = getChildFragmentManager();             //获取本Fragment的Manager(用于Fragment嵌套)
+        //fm = getChildFragmentManager();           //获取本Fragment的Manager(用于Fragment嵌套)
         /**2、获取FragmentTransaction并提交*/
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.add(R.id.content_main, tf);
@@ -67,7 +82,7 @@ public class TestFragment extends Fragment {
     }
 
     public void onClick(View v) {
-        if (getActivity() instanceof FOneBtnClickListener) {        //交给宿主Activity处理，如果它希望处理
+        if (getActivity() instanceof FOneBtnClickListener) { //交给宿主Activity处理，如果它希望处理
             ((FOneBtnClickListener) getActivity()).onFOneBtnClick();
         }
     }

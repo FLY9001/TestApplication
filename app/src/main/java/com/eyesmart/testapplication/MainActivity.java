@@ -25,6 +25,14 @@ import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
 import com.eyesmart.testapplication.java.MyThread;
+import com.eyesmart.testapplication.ui.TestAnim;
+import com.eyesmart.testapplication.ui.TestView;
+import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
+import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
+import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
+import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
+import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
+import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
 /**
  * ［干货］最全知识总结：
@@ -39,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //java相关
+        /**java相关*/
         Class[] java = {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 MyGenericity.class,     //泛型、注解
                 MyEnum.class,           //反射、枚举
         };
-        //android基础框架
+        /**android基础框架*/
         Class[] android = {
                 TestApplication.class,  //Application、Context
                 TestActivity.class,     //Activity
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 TestReceiver.class,     //BroadcastReceiver
                 TestProvider.class,     //ContentProvider
                 TestFragment.class,     //Fragment
-                TestHandler.class,      //线程及消息通讯 //TODO 原理
+                TestHandler.class,      //线程及消息通讯
 
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
@@ -68,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO 跨进程通讯
                 //TODO Android 版本新特性：MD、权限
         };
-        //android代码优化
+        /**android代码优化*/
         Class[] android2 = {
                 //TODO UI优化
                 //TODO 图片优化
@@ -88,9 +96,32 @@ public class MainActivity extends AppCompatActivity {
                 //TODO 设计模式
                 //TODO 算法
         };
+        /**UI*/
+        Class[] view = {
+                TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
+                AnalogClock.class,      //完全自定义View(重写onDraw)
+                StaggerLayout.class,    //完全自定义ViewGroup(重写)
+                //扩展已有View(如密码输入EditText)
+                //扩展已有ViewGroup(inflate)
+
+                TestAnim.class,          //动画
+
+                ListViewFragment.class,
+                RecyclerFragment.class,
+        };
     }
 
-    public void onTest(View view) {
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_view_widget:
+                ViewWidgetActivity.actionStart(MainActivity.this);
+                break;
+            case R.id.btn_view_principle:
+                ViewPrincipleActivity.actionStart(MainActivity.this);
+                break;
+            default:
 
+                break;
+        }
     }
 }

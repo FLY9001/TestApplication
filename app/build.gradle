@@ -25,12 +25,14 @@ android {
     //产品风味，重写默认配置或在其上添加 自定义属性
     productFlavors {
         flavor {
+            resValue "string", "APP_NAME", "TestApp_debug"
 
         }
         myflavors {
             applicationIdSuffix ".myflavors"
             //signingConfig signingConfigs.release
-            resValue "string", "APP_NAME", "TestApp_myflavors"
+            resValue "string", "APP_NAME", "TestApp_debug"
+
         }
     }
 
@@ -66,6 +68,8 @@ android {
             minifyEnabled true      // 是否进行混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //混淆文件的位置
+            resValue "string", "APP_NAME", "TestApp_myrelease"
+
         }
     }
 

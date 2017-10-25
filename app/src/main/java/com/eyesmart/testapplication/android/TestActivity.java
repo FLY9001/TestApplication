@@ -16,10 +16,26 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class TestActivity extends AppCompatActivity {
+
+    void test() {
+        onCreate(null);
+        //onRestart();
+        onStart();
+        //onRestoreInstanceState(null);
+        onResume();
+        onPause();
+        //onSaveInstanceState(null);
+        onStop();
+        onDestroy();
+
+
+        onConfigurationChanged(null);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {   //onCreate()中的savedInstanceState有可能为空
+        if (savedInstanceState != null) {                               //onCreate()中的savedInstanceState有可能为空
             savedInstanceState.getString("key");
         }
     }
@@ -27,17 +43,17 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {  //activity被异常终止再启动时，才会被调用；在onStart()之后调用
         super.onRestoreInstanceState(savedInstanceState);
-        savedInstanceState.getString("key");  //savedInstanceState不可能为空
+        savedInstanceState.getString("key");                            //savedInstanceState不可能为空
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {   //activity被异常终止时，才会被调用；和onPause()没有时序关系
+    protected void onSaveInstanceState(Bundle outState) {               //activity被异常终止时，才会被调用；和onPause()没有时序关系
         super.onSaveInstanceState(outState);
         outState.putString("key", "value");
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {   //当系统配置信息发生改变时，且设置configChanges时，系统会调用此方法
+    public void onConfigurationChanged(Configuration newConfig) {       //当系统配置信息发生改变时，且设置configChanges时，系统会调用此方法
         super.onConfigurationChanged(newConfig);
         //设置屏幕旋转不重新创建：android:configChanges="orientation|screenSize"
         //当新设置中，屏幕布局模式为横排时
@@ -47,7 +63,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {     //配合启动模式
+    protected void onNewIntent(Intent intent) {                         //配合启动模式
         super.onNewIntent(intent);
     }
 }

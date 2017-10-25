@@ -45,15 +45,20 @@ import retrofit2.http.Query;
 
 public class HttpUtils {
     void test(Context context) throws IOException {
-        //***********************
-        int net = R.drawable.net;       //TODO 网络思维导图
-        //***********************
+        /**TODO 网络思维导图*/
+        int net = R.drawable.net;
 
-        sendGetRequest("", null);       //HttpURLConnection
+        /**HttpURLConnection*/
+        sendGetRequest("", null);
         sendPostRequest("", "", null);
-        testVolley(context);            //Volley
-        testOkHttp();                   //OkHttp
-        testRetrofit();                 //Retrofit
+
+        /**Volley*/
+        testVolley(context);
+
+        /**OkHttp*/
+        testOkHttp();
+        /**Retrofit*/
+        testRetrofit();
     }
 
     private static final int TIMEOUT = 8000;
@@ -220,7 +225,7 @@ public class HttpUtils {
                 .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存；注意路径！
                 .build();
 
-        /**2、创建Request*/
+        /**2、创建请求*/
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json数据");//数据可以从多个地方获取
 //        FormBody formBody = new FormBody.Builder()                  //POST提交键值对
 //                .add("key", "value")
@@ -234,9 +239,9 @@ public class HttpUtils {
                 //.cacheControl(CacheControl.FORCE_NETWORK)         //无缓存，每次都请求网络获取最新数据
                 .build();
 
-        /**3、创建Call*/
+        /**3、创建请求Call*/
         okhttp3.Call call = client.newCall(request);
-        /**4、请求*/
+        /**4、发送*/
         call.enqueue(new okhttp3.Callback() {                       //异步请求
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
@@ -295,16 +300,16 @@ public class HttpUtils {
     public static void testRetrofit() throws IOException {
         /**1、创建Retrofit*/
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.zhifangw.cn/")     //baseUrl必须以"/"结尾
+                .baseUrl("http://api.zhifangw.cn/")                   //baseUrl必须以"/"结尾
                 //ConverterFactory依赖包需单独引入
                 .addConverterFactory(ScalarsConverterFactory.create())//增加返回值为String的支持
                 .addConverterFactory(GsonConverterFactory.create())   //Gson支持
                 .build();
-        /**2、创建接口对象*/
+        /**2、创建请求集合*/
         TestService testService = retrofit.create(TestService.class);
-        /**3、创建Call*/
+        /**3、创建具体请求Call*/
         Call<ResponseBody> call = testService.getTestBean(1);
-        /**4、请求*/
+        /**4、发送*/
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
