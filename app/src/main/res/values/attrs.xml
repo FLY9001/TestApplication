@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AnalogClock">
-        <attr name="custom_color" format="color"></attr>
+        <attr name="custom_color" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="TestView">
