@@ -24,8 +24,7 @@ public class TestReceiver extends BroadcastReceiver {
         //重复注册、重复注销也不允许
 
         /**发送广播*/
-        Intent intent = new Intent(context, TestReceiver.class);
-        intent.setAction("com.eyesmart.testapplication.android.TestReceiver");
+        Intent intent = new Intent("com.eyesmart.testapplication.android.TestReceiver");
         context.sendBroadcast(intent);
 
         /**有序广播*/

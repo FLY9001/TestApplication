@@ -6,12 +6,14 @@ import android.os.Looper;
 import android.os.Message;
 
 /**
+ * http://www.jianshu.com/p/9fe944ee02f7
  * 为同时满足：UI操作线程安全（只允许UI线程修改）、多线程并发UI操作
  * 解决：子线程无法操作UI的问题
  * **********************
  * 为什么不用锁机制解决？  1、访问UI逻辑复杂；2、会阻塞线程，降低效率
  * 为什么主线程Looper.loop()不阻塞主线程？   Looper.loop()死循环一直阻塞主线程，一旦退出消息循环，程序也就退出了；只会发生别的代码阻塞Looper.loop()
  * **********************
+ * Handler(sendMessage)--->Message--->(enqueueMessage)MessageQueue(next)--->(loop)Looper--->Message--->(dispatchMessage)Handler(handleMessage)
  */
 
 public class TestHandler {

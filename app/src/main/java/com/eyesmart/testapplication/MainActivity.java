@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
-                TestNet.class,          //Socket //TODO http
+                TestNet.class,          //Socket
+                //TODO 数据解析
                 TestMedia.class,        //多媒体：音频、视频、相机
 
                 TestJni.class,          //Jni的编译、应用
-                //TODO 跨进程通讯
                 //TODO Android 版本新特性：MD、权限
         };
         /**android代码优化*/
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO UI优化
                 //TODO 图片优化
                 TestMemory.class,       //TODO 内存泄漏、优化
-                HttpUtils.class,        //TODO 网络优化
+                HttpUtils.class,        //Http TODO 组合框架
                 TestRxJava.class,       //TODO 原理及应用
 
                 //TODO 架构：MVP、MVP、MVVM
