@@ -108,7 +108,9 @@ public class TestMedia {
         VideoView videoView = new VideoView(context);
         videoView.setVideoPath("/mnt/sdcard/test.mp4");         //设置视频资源
         //videoView.setVideoURI(Uri.parse("http://www.crazyit.org/abc.mp3"));
-        new MediaController(context).setMediaPlayer(videoView); //添加MediaController，提供图形控制界面
+        MediaController mc = new MediaController(context);      //添加MediaController，提供图形控制界面
+        videoView.setMediaController(mc);
+        mc.setMediaPlayer(videoView);
 
         videoView.start();          //视频控制等方法……
         videoView.pause();
