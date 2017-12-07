@@ -26,6 +26,13 @@ import java.util.TimeZone;
  */
 
 public class AnalogClock extends View {
+    void test() {
+        /***************************************************/
+        new AnalogClock(getContext()); //构造器
+
+        /***************************************************/
+    }
+
     private static final String TAG = "AnalogClock";
     private Time mCalendar;//用来记录当前时间
 
@@ -155,7 +162,6 @@ public class AnalogClock extends View {
         setMeasuredDimension(resolveSizeAndState((int) (mDialWidth * scale), widthMeasureSpec, 0),
                 resolveSizeAndState((int) (mDialHeight * scale), heightMeasureSpec, 0));
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {

@@ -28,7 +28,7 @@ public class TestView extends LinearLayout {
     private void test() {
         /***************************************************/
         coordinate();               //View坐标系
-        new TestView(null);         //View初始化，自定义属性
+        new TestView(null); //View初始化，自定义属性
         testDraw();                 //View绘制流程
         dispatchTouchEvent(null);   //View事件体系
 
@@ -83,21 +83,21 @@ public class TestView extends LinearLayout {
      * 6种滑动实现方式
      */
     void testScroll() {
-        layout(0, 0, 0, 0);         //布局四顶点
+        layout(0, 0, 0, 0);      //布局四顶点
 
-        offsetLeftAndRight(0);      //对left和right进行偏移
-        offsetTopAndBottom(0);      //对top和bottom进行偏移
+        offsetLeftAndRight(0);              //对left和right进行偏移
+        offsetTopAndBottom(0);              //对top和bottom进行偏移
 
-        ((MarginLayoutParams) getLayoutParams()).leftMargin += 10;          //参数滑动
+        ((MarginLayoutParams) getLayoutParams()).leftMargin += 10; //参数滑动
         requestLayout();
         //setLayoutParams(getLayoutParams());
 
         ObjectAnimator.ofFloat(this, "translationX", 0, 10).setDuration(1000).start();//动画滑动，也可是其他动画
 
-        scrollBy(10, 10);           //相对滑动，（针对View中内容的滑动）
+        scrollBy(10, 10);               //相对滑动，（针对View中内容的滑动）
         scrollTo(getScrollX() + 10, getScrollY() + 10);//绝对滑动
 
-        smoothScrollTo(0, 0);       //通过scroller实现平滑滑动
+        smoothScrollTo(0, 0);   //通过scroller实现平滑滑动
     }
 
 //                                 View的初始化

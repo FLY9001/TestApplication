@@ -25,6 +25,7 @@ import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
 import com.eyesmart.testapplication.java.MyThread;
+import com.eyesmart.testapplication.java.TestDesignPattern;
 import com.eyesmart.testapplication.ui.TestAnim;
 import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 Git.class               //git
         };
         Class[] android3 = {
-                //TODO 设计模式
+                TestDesignPattern.class,//TODO 设计模式
                 //TODO 算法
         };
         /**UI*/

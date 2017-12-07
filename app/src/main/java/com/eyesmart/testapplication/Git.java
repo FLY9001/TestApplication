@@ -55,8 +55,8 @@ class Git {
  * $ git branch                 //查看
  * $ git branch -r              //查看远程分支
  * $ git branch <name>          //创建
- * $ git checkout <name>        //切换
  * $ git branch -d <name>       //删除
+ * $ git checkout <name>        //切换
  * $ git merge <name>           //合并到当前分支
  * $ git log --graph            //查看分支合并图
  *

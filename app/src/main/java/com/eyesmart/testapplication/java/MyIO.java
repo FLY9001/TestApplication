@@ -32,22 +32,22 @@ public class MyIO {
         file.exists();                  //是否存在
         file.createNewFile();           //创建文件
         file.delete();                  //删除
-        file.isDirectory();             //是否时文件夹
+        file.isDirectory();             //是否是文件夹
         file.mkdir();                   //创建文件夹
         File[] files = file.listFiles();//遍历文件夹中的文件
 
 //**********************************************************************************************************
         //对文件内容操作，可进行随机读取
         RandomAccessFile rdf = new RandomAccessFile(file, "rw");//以读写方式打开，自动创建文件
-        rdf.writeInt(123);              //写，此数长度4字节
+        rdf.writeInt(123);           //写，此数长度4字节
         rdf.writeBytes("abc");
-        rdf.skipBytes(4);               //往后跳4字节
+        rdf.skipBytes(4);            //往后跳4字节
         byte[] b = new byte[3];
         for (int i = 0; i < b.length; i++) {
             b[i] = rdf.readByte();      //读取1字节并后移
         }
         String abc = new String(b);     //得到"abc"
-        rdf.seek(0);                    //读指针移到0位置
+        rdf.seek(0);             //读指针移到0位置
         rdf.readInt();                  //读取1个int，即 123
         rdf.close();                    //关闭
 
