@@ -91,9 +91,11 @@ android {
     //自定义apk的文件名
 //    applicationVariants.all { variant ->
 //        variant.outputs.each { output ->
-//            if (output.outputFile != null && output.outputFile.name.endsWith('.apk') && variant.buildType.name == 'myrelease') {
-//                //约束条件
-//                def apkFile = new File(output.outputFile.getParent(), "Eyesmart_${variant.flavorName}_${variant.buildType.name}_ver${variant.versionName}.apk");
+//            if (output.outputFile != null &&
+//                    output.outputFile.name.endsWith('.apk') &&
+//                    variant.buildType.name == 'myrelease') {        //约束条件
+//                def apkFile = new File(output.outputFile.getParent(),
+//                        "Eyesmart_${variant.flavorName}_${variant.buildType.name}_ver${variant.versionName}.apk");
 //                output.outputFile = apkFile;
 //            }
 //        }
