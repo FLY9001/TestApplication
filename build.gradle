@@ -1,10 +1,10 @@
 /**
- * 控制编译过程
+ * Gradle是编程框架，控制编译过程
  */
 
 //构建脚本，定义了 Android 编译工具的类路径
 buildscript {
-    //远程仓库依赖，依赖包的来源
+    //远程仓库依赖，依赖包的来源，设定插件的下载仓库
     repositories {
         jcenter()
 //        mavenCentral()
@@ -19,7 +19,7 @@ buildscript {
 
     //依赖
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

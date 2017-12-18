@@ -32,6 +32,7 @@ import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
 import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
 import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
+import com.eyesmart.testapplication.ui.viewwidget.MyView;
 import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
 import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /**java相关*/
+        /**java*/
         Class[] java = {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
@@ -57,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
                 MyGenericity.class,     //泛型、注解
                 MyEnum.class,           //反射、枚举
+        };
+        /**android工程*/
+        Class[] project = {
+
         };
         /**android基础框架*/
         Class[] android = {
@@ -105,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)
 
-                TestAnim.class,          //动画
+                MyView.class,           //draw
+                TestAnim.class,         //动画
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
