@@ -26,6 +26,8 @@ import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
 import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestDesignPattern;
+import com.eyesmart.testapplication.project.ProjectCatalog;
+import com.eyesmart.testapplication.project.Resource;
 import com.eyesmart.testapplication.ui.TestAnim;
 import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
@@ -61,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         };
         /**android工程*/
         Class[] project = {
-
+                ProjectCatalog.class,   //工程目录
+                Resource.class          //资源文件
         };
         /**android基础框架*/
         Class[] android = {
@@ -105,12 +108,12 @@ public class MainActivity extends AppCompatActivity {
         /**UI*/
         Class[] view = {
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
-                AnalogClock.class,      //完全自定义View(重写onDraw)
+
+                MyView.class, AnalogClock.class,//完全自定义View(重写onDraw)
                 StaggerLayout.class,    //完全自定义ViewGroup(重写)
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)
 
-                MyView.class,           //draw
                 TestAnim.class,         //动画
 
                 ListViewFragment.class,

@@ -19,19 +19,31 @@ import android.widget.ListView;
 import com.eyesmart.testapplication.R;
 
 /**
- * Created by 1 on 2017/7/2 0002.
+ * 动画
  */
 
 public class TestAnim extends Activity {
+    View view = new View(this);
+
     private void test() {
-        View view = new View(this);
-//---------------------------------------------------------------------
-        //帧动画
+        frameAnimation();       //帧动画
+        tweenAnimation();       //view（补间）动画
+        propertyAnimator();     //属性动画
+        layoutAnimation();      //Layout动画
+        transitionActivity();   //activity切换效果
+
+        //插值器、估值器
+    }
+
+    //帧动画
+    void frameAnimation() {
         view.setBackgroundResource(R.drawable.frame_animation);
         AnimationDrawable frame_animation = (AnimationDrawable) view.getBackground();
         frame_animation.start();
-//---------------------------------------------------------------------
-        //view（补间）动画
+    }
+
+    //view（补间）动画
+    void tweenAnimation() {
         Animation tween_animation = AnimationUtils.loadAnimation(this, R.anim.tween_animation);
         view.startAnimation(tween_animation);
 
@@ -59,8 +71,10 @@ public class TestAnim extends Activity {
         animationSet.reset();
         //开始动画
         view.startAnimation(animationSet);
-//---------------------------------------------------------------------
-        //属性动画，分为ObjectAnimator、ValueAnimator
+    }
+
+    //属性动画，分为ObjectAnimator、ValueAnimator
+    void propertyAnimator() {
         ObjectAnimator tAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, 100f);//对某个对象进行操作
         tAnimator.setInterpolator(new AccelerateDecelerateInterpolator());  //插值器，可自定义
         tAnimator.addListener(null);//监听
@@ -90,14 +104,18 @@ public class TestAnim extends Activity {
             }
         });
         animator.start();
-//---------------------------------------------------------------------
-        //Layout动画，ViewGroup中子View的出场动画
+    }
+
+    //Layout动画，ViewGroup中子View的出场动画
+    void layoutAnimation() {
         Animation layout_animation = AnimationUtils.loadAnimation(this, R.anim.layout_animation);
         LayoutAnimationController controller = new LayoutAnimationController(layout_animation);
         controller.setDelay(0.5f);
         new ListView(this).setLayoutAnimation(controller);
-//---------------------------------------------------------------------
-        //activity切换效果，在startActivity()或finish()之后调用
+    }
+
+    //activity切换效果，在startActivity()或finish()之后调用
+    void transitionActivity() {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_in_left);
     }
 }

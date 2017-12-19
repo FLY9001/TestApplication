@@ -28,8 +28,8 @@ public class TestActivity extends AppCompatActivity {
         onStop();
         onDestroy();
 
-
         onConfigurationChanged(null);
+        onNewIntent(null);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {  //activity被异常终止再启动时，才会被调用；在onStart()之后调用
         super.onRestoreInstanceState(savedInstanceState);
-        savedInstanceState.getString("key");                            //savedInstanceState不可能为空
+        savedInstanceState.getString("key");//savedInstanceState不可能为空
     }
 
     @Override

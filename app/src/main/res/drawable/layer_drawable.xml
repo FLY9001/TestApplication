@@ -17,5 +17,14 @@
             <solid android:color="#ffffff"/>
         </shape>
     </item>
+
 </layer-list>
     <!--下面的item覆盖上面的，left、top、right、bottom为相对view的偏移量-->
+    <!--
+        可设置SeekBar的外观：
+        android:progressDrawable="@drawable/layer_drawable"
+
+        android:id="@android:id/background"     定义轨道背景
+        android:id="@android:id/progress"       定义已完成背景
+    -->
+

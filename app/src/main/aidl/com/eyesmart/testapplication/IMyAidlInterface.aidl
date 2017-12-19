@@ -1,4 +1,3 @@
-// IMyAidlInterface.aidl
 package com.eyesmart.testapplication;
 
 //AIDL中支持以下的数据类型

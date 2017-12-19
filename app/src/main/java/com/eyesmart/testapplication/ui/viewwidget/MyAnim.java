@@ -18,13 +18,19 @@ import com.eyesmart.testapplication.R;
 
 
 /**
- * Created by 1 on 2017/7/2 0002.
+ * 动画
  */
 
 public class MyAnim extends Activity {
-    private void test() {
+    public void test() {
         View view = new View(this);
-        //view（补间）动画
+        //帧动画--------------------------------------------------------
+        view.setBackgroundResource(R.drawable.frame_animation);
+        AnimationDrawable frame_animation = (AnimationDrawable) view.getBackground();
+        frame_animation.start();
+
+
+        //view（补间）动画--------------------------------------------------------
         AlphaAnimation aa = new AlphaAnimation(1, 0);
         aa.setDuration(1000);
         aa.setAnimationListener(null);
@@ -33,12 +39,8 @@ public class MyAnim extends Activity {
         Animation tween_animation = AnimationUtils.loadAnimation(this, R.anim.tween_animation);
         view.startAnimation(tween_animation);
 
-        //帧动画
-        view.setBackgroundResource(R.drawable.frame_animation);
-        AnimationDrawable frame_animation = (AnimationDrawable) view.getBackground();
-        frame_animation.start();
 
-        //属性动画，分为ObjectAnimator、ValueAnimator
+        //属性动画，分为ObjectAnimator、ValueAnimator--------------------------------------------------------
         ObjectAnimator tAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, 100f);
         tAnimator.setInterpolator(new AccelerateDecelerateInterpolator());  //插值器，可自定义
         tAnimator.addListener(null);//监听
@@ -70,13 +72,14 @@ public class MyAnim extends Activity {
         animator.start();
 
 
-        //Layout动画，ViewGroup中子View的出场动画
+        //Layout动画，ViewGroup中子View的出场动画--------------------------------------------------------
         Animation layout_animation = AnimationUtils.loadAnimation(this, R.anim.layout_animation);
         LayoutAnimationController controller = new LayoutAnimationController(layout_animation);
         controller.setDelay(0.5f);
         new ListView(this).setLayoutAnimation(controller);
 
-        //activity切换效果，在startActivity()或finish()之后调用
+
+        //activity切换效果，在startActivity()或finish()之后调用--------------------------------------------------------
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_in_left);
     }
 }

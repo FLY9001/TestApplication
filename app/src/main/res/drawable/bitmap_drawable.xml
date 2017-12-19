@@ -7,13 +7,17 @@
         android:mipMap="false"
         android:src="@mipmap/ic_launcher"
         android:tileMode="disabled"/>
+
     <!--
-        android:antialias  抗锯齿功能（优化图片显示效果的作用）
-        android:dither 抖动效果（优化图片显示效果的作用）
-        android:filter 过滤效果（优化图片显示效果的作用）
-        android:gravity 定位图片
-        android:mipMap 纹理映射（不常用）
-        android:src  图片的资源ID，必有的属性。
-        android:tileMode 平铺模式（当开启这个模式时，gravity属性会被忽略）共有四种模式：
-        disabled——关闭平铺模式；repeat——水平和垂直方向上的平铺效果；clamp——图片四周的像素会扩展到周围区域。mirror——水平和垂直方向上的镜面投影效果。
+        android:antialias  抗锯齿功能（优化图片显示效果的作用），建议开启
+        android:dither     抖动效果（优化图片显示效果的作用），建议开启
+        android:filter     过滤效果（优化图片显示效果的作用），建议开启
+        android:gravity    在较大容器中的位置
+        android:mipMap     纹理映射，不常用
+        android:src        图片的资源ID，必有的属性。
+        android:tileMode   平铺模式（当开启这个模式时，gravity属性会被忽略）共有四种模式：
+                           disabled——关闭平铺模式；
+                           repeat——水平和垂直方向上的平铺效果；
+                           clamp——图片四周的像素会扩展到周围区域；
+                           mirror——水平和垂直方向上的镜面投影效果。
     -->
