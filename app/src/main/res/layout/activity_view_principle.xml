@@ -7,15 +7,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
+
+        <com.eyesmart.testapplication.ui.viewwidget.MyView
+            android:layout_width="match_parent"
+            android:layout_height="280dp"/>
+
         <com.eyesmart.testapplication.ui.viewprinciple.AnalogClock
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:custom_color="@android:color/holo_red_dark"/>
+
         <com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout
             android:id="@+id/staggerlayout"
             android:layout_width="match_parent"
