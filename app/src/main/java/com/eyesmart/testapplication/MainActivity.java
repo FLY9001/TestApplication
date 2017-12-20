@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         /**UI*/
         Class[] view = {
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
-
-                MyView.class, AnalogClock.class,//完全自定义View(重写onDraw)
+                MyView.class,
+                AnalogClock.class,      //完全自定义View(重写onDraw)
                 StaggerLayout.class,    //完全自定义ViewGroup(重写)
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)

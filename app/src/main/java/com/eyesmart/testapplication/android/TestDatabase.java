@@ -23,11 +23,11 @@ public class TestDatabase {
         db = DbHelper.getInstance().getWritableDatabase();  //一般通过DbHelper
 
         /**数据操作*/
-        DbTool.insert(null);    //增
+        DbTool.insert(null); //增
         DbTool.delete(0);       //删
-        DbTool.update(null);    //改
+        DbTool.update(null); //改
         DbTool.query(0);        //查
-        testTransaction(db);    //批量操作时，执行事务
+        testTransaction(db);       //批量操作时，执行事务
 
         /**关闭数据库*/
         db.close();
