@@ -1,11 +1,13 @@
 package com.eyesmart.testapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.eyesmart.testapplication.android.CMD;
 import com.eyesmart.testapplication.android.HttpUtils;
+import com.eyesmart.testapplication.android.SensorActivity;
 import com.eyesmart.testapplication.android.TestActivity;
 import com.eyesmart.testapplication.android.TestDatabase;
 import com.eyesmart.testapplication.android.TestFragment;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 TestNet.class,          //Socket
                 //TODO 数据解析
                 TestMedia.class,        //多媒体：音频、视频、相机
+                SensorActivity.class,   //传感器
 
                 TestJni.class,          //Jni的编译、应用
                 //TODO Android 版本新特性：MD、权限
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
-
+                startActivity(new Intent(this, SensorActivity.class));
                 break;
         }
     }

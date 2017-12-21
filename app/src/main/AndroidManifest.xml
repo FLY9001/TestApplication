@@ -30,12 +30,12 @@
     -->
     <application
         android:name=".TestApplication"
-        tools:replace="android:label"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/APP_NAME"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
 
         <!--
         android:allowClearUserData=["true" | "false"]   //用户是否能选择自行清除数据，默认为true
@@ -183,10 +183,9 @@
             <!--android:enabled="false" 不可用-->
         </provider>
 
-        <activity android:name=".ui.viewprinciple.ViewPrincipleActivity">
-        </activity>
-        <activity android:name=".ui.viewwidget.ViewWidgetActivity">
-        </activity>
+        <activity android:name=".ui.viewprinciple.ViewPrincipleActivity"/>
+        <activity android:name=".ui.viewwidget.ViewWidgetActivity"/>
+        <activity android:name=".android.SensorActivity"/>
     </application>
 
 </manifest><!--
