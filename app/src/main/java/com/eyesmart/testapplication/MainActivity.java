@@ -17,6 +17,7 @@ import com.eyesmart.testapplication.android.TestJni;
 import com.eyesmart.testapplication.android.TestMedia;
 import com.eyesmart.testapplication.android.TestMemory;
 import com.eyesmart.testapplication.android.TestNet;
+import com.eyesmart.testapplication.android.TestParse;
 import com.eyesmart.testapplication.android.TestProvider;
 import com.eyesmart.testapplication.android.TestReceiver;
 import com.eyesmart.testapplication.android.TestRxJava;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket
-                //TODO 数据解析
+                TestParse.class,//TODO 数据解析
                 TestMedia.class,        //多媒体：音频、视频、相机
                 SensorActivity.class,   //传感器
 
