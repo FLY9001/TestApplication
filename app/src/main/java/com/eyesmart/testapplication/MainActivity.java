@@ -1,6 +1,5 @@
 package com.eyesmart.testapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -82,13 +81,15 @@ public class MainActivity extends AppCompatActivity {
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket
-                TestParse.class,//TODO 数据解析
+                TestParse.class,        //TODO 数据解析
+
                 TestMedia.class,        //多媒体：音频、视频、相机
                 SensorActivity.class,   //传感器
 
                 TestJni.class,          //Jni的编译、应用
                 //TODO Android 版本新特性：MD、权限
         };
+
         /**android代码优化*/
         Class[] android2 = {
                 //TODO UI优化
@@ -134,7 +135,12 @@ public class MainActivity extends AppCompatActivity {
                 ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
-                startActivity(new Intent(this, SensorActivity.class));
+                //startActivity(new Intent(this, SensorActivity.class));
+                try {
+                    new TestParse().testPullCreate();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
