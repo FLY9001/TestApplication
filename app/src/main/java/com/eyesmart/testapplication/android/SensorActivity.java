@@ -63,17 +63,17 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     }
 
     @Override
-    protected void onStop() {
-        // 程序退出时取消注册传感器监听器
-        mSensorManager.unregisterListener(this);
-        super.onStop();
-    }
-
-    @Override
     protected void onPause() {
         // 程序暂停时取消注册传感器监听器
         mSensorManager.unregisterListener(this);
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        // 程序退出时取消注册传感器监听器
+        mSensorManager.unregisterListener(this);
+        super.onStop();
     }
 
     // 以下是实现SensorEventListener接口必须实现的方法

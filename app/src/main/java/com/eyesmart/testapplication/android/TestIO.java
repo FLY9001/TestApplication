@@ -35,7 +35,6 @@ public class TestIO {
         FileInputStream fis = context.openFileInput("test.txt");
         FileOutputStream fos = context.openFileOutput("test.txt", Context.MODE_PRIVATE);//MODE_APPEND以追加的方式
 
-
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File sdCardDir = Environment.getExternalStorageDirectory(); // /mnt/sdcard/
 

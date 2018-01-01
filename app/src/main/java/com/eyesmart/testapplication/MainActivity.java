@@ -16,11 +16,11 @@ import com.eyesmart.testapplication.android.TestJni;
 import com.eyesmart.testapplication.android.TestMedia;
 import com.eyesmart.testapplication.android.TestMemory;
 import com.eyesmart.testapplication.android.TestNet;
-import com.eyesmart.testapplication.android.TestParse;
 import com.eyesmart.testapplication.android.TestProvider;
 import com.eyesmart.testapplication.android.TestReceiver;
 import com.eyesmart.testapplication.android.TestRxJava;
 import com.eyesmart.testapplication.android.TestService;
+import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.MyCollection;
 import com.eyesmart.testapplication.java.MyEnum;
@@ -66,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
         /**android工程*/
         Class[] project = {
                 ProjectCatalog.class,   //工程目录
-                Resource.class          //资源文件
+                Resource.class,         //资源文件
+
+                CMD.class,              //命令行
+                Git.class               //git
         };
         /**android基础框架*/
         Class[] android = {
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket
-                TestParse.class,        //TODO 数据解析
+                TestXmlJson.class,      //TODO 数据解析
 
                 TestMedia.class,        //多媒体：音频、视频、相机
                 SensorActivity.class,   //传感器
@@ -103,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 //TODO 混合开发
                 //TODO React Native
 
-                CMD.class,              //命令行
-                Git.class               //git
         };
         Class[] android3 = {
                 TestDesignPattern.class,//TODO 设计模式
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 //startActivity(new Intent(this, SensorActivity.class));
                 try {
-                    new TestParse().testPullCreate();
+                    new TestXmlJson().testPullCreate();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

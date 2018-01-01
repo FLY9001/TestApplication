@@ -47,6 +47,7 @@ public class CMD {
 
      ------------------文件操作--------------------------------------------
      //android中，sdcard代表内置存储，不同系统中tf卡的设备名可能不同，使用查看adb shell ls mnt查看所有存储设备名。
+
      adb remount                                // 将system分区重新挂载为可读写分区
      adb push <local> <remote>                  // 从本地复制文件到设备
      adb pull <remote>  <local>                 // 从设备复制文件到本地

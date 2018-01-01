@@ -8,7 +8,7 @@ import com.squareup.leakcanary.LeakCanary;
 /**
  * Context：描述一个应用程序环境的信息（即上下文）
  * Context数量 = Activity + Service + 1
- * 启动Activity（新建任务栈也可）、注入Layout（会使用主题样式）、弹出Dialog（必须）：最好使用Activity类型的Context
+ * 弹出Dialog（必须）、启动Activity（新建任务栈也可）、注入Layout（会使用主题样式）：最好使用Activity类型的Context
  * <p>
  * 使用建议：
  * 1：优先使用Application的Context

@@ -34,8 +34,8 @@ import javax.xml.parsers.SAXParserFactory;
  * 数据解析
  */
 
-public class TestParse {
-    private static final String TAG = "TestParse";
+public class TestXmlJson {
+    private static final String TAG = "TestXmlJson";
 
     void test() throws Exception {
         /**
