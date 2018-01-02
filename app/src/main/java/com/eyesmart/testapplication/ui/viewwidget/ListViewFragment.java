@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,6 +25,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ListViewFragment extends Fragment {
+    private static final String TAG = "ListViewFragment";
     private View rootView;
     private ListView mListView;
 
@@ -45,9 +48,14 @@ public class ListViewFragment extends Fragment {
         }
         ListViewAdapter listViewAdapter = new ListViewAdapter(beens);
         mListView.setAdapter(listViewAdapter);
-        mListView.setEmptyView(rootView.findViewById(R.id.textview));
+        //分割线、点击效果见XML
+
+        mListView.setEmptyView(rootView.findViewById(R.id.textview));   //当listView无数据时，显示
+        mListView.addHeaderView(null);                               //添加HeaderView
+        setListViewListener();                                          //通过ListView的监听，实现各种操作
         return rootView;
     }
+
 
     class ListViewAdapter extends BaseAdapter {
         private List<Bean> mBeans;
@@ -105,10 +113,50 @@ public class ListViewFragment extends Fragment {
             return 2;
         }
 
-        public class ViewHolder {
+        //ViewHolder提高效率
+        public final class ViewHolder {
             ImageView icon;
             TextView text;
         }
+    }
+
+    private void setListViewListener() {
+        //两种监听方式：
+
+        mListView.setOnTouchListener(null);
+
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int lastVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                switch (scrollState) {
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+                        Log.d(TAG, "当滑动停止时-----");
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                        Log.d(TAG, "当正在滑动时-----");
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
+                        Log.d(TAG, "当惯性滑动时-----");
+                        break;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+                    Log.d(TAG, "已滚动到最后一行-----");
+                }
+
+                if (firstVisibleItem > lastVisibleItem) {
+                    Log.d(TAG, "上滑-----");
+                } else {
+                    Log.d(TAG, "下滑-----");
+                }
+                lastVisibleItem = firstVisibleItem;
+            }
+        });
     }
 
     /**

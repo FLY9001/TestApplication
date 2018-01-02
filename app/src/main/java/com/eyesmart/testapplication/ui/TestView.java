@@ -208,7 +208,7 @@ public class TestView extends LinearLayout {
         return super.onInterceptTouchEvent(ev);
     }
 
-    //设置OnTouchListener时，onTouchEvent前先判断onTouch
+    //当外部设置OnTouchListener时，onTouchEvent前会先判断onTouch
     @Override
     public void setOnTouchListener(OnTouchListener l) {
         l = new OnTouchListener() {
@@ -255,7 +255,7 @@ public class TestView extends LinearLayout {
         return super.onTouchEvent(e);
     }
 
-    //若可点击，在ACTION_UP中执行onClick或onLongClick
+    //若外部设置点击监听，在ACTION_UP中执行onClick或onLongClick
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         l = new OnClickListener() {
@@ -270,8 +270,6 @@ public class TestView extends LinearLayout {
 //**************************************************************************************************
 
     Scroller mScroller = new Scroller(getContext());
-
-    //弹性滑动
 
     /**
      * 弹性滑动

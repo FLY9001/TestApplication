@@ -107,10 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 //TODO React Native
 
         };
-        Class[] android3 = {
-                TestDesignPattern.class,//TODO 设计模式
-                //TODO 算法
-        };
         /**UI*/
         Class[] view = {
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
@@ -124,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
+        };
+        Class[] android3 = {
+                TestDesignPattern.class,//TODO 设计模式
+                //TODO 算法
         };
     }
 
