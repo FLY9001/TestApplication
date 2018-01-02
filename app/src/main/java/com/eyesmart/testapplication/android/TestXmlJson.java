@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,7 +20,10 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,20 +46,22 @@ public class TestXmlJson {
          * 3. 访问与修改:SAX采用流式解析，DOM随机访问。
          * 4. 访问方式:SAX，Pull解析的方式是同步的，DOM逐字逐句
          */
-        testDom();
-        testSax();
-        testPull();
+        testDom();          //Dom解析
+        testSax();          //Sax解析
+        testPull();         //Pull解析，android默认
         testPullCreate();
 
-        testJSONObject(null);
-        testGSON(null);
+        testJSONObject();
+        testJSONObjectCreate();
+        testGson();
+        testGsonCreate();
     }
 
     /**
      * 第一种：DOM解析
-     * 直接访问XML文档中所有部分。
-     * 特点：一次性解析整个文档。
-     * 缺点：加载大文件时效率低下。
+     * 把整个XML文档当成一个对象来处理，会先把整个文档读入到内存里
+     * 优点：a、由于整棵树在内存中，可以对xml文档随机访问 b、可以对xml文档进行修改操作 c、较sax，dom使用也更简单。
+     * 缺点：a、整个文档必须一次性解析完，浪费时间和空间 b、对于大文档效率较低
      */
     public List<Person> testDom() throws Exception {
         InputStream is = TestApplication.getContext().getAssets().open("persons.xml");
@@ -94,7 +98,9 @@ public class TestXmlJson {
                 }
             }
             persons.add(person);
+            Log.d(TAG, person.toString());
         }
+
         return persons;
     }
 
@@ -102,8 +108,8 @@ public class TestXmlJson {
     /**
      * 第二种SAX解析：
      * 使用流的形式处理，一种以基于事件驱动的解析器，使用回调函数来实现。
-     * 优点：边读边解析，解析速度快，占用内存少，
-     * 缺点：不能倒退
+     * 优点：a、无需将整个xml文档载入内存，占用内存少，b、SAX解析器代码比DOM解析器代码小 c、可以注册多个ContentHandler
+     * 缺点：a、不能随机的访问xml中的节点 b、只支持读，不能修改文档 c、无状态性；从事件中只能得到文本，但不知该文本属于哪个元素
      */
     public List<Person> testSax() throws Exception {
         InputStream is = TestApplication.getContext().getAssets().open("persons.xml");
@@ -149,6 +155,7 @@ public class TestXmlJson {
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if ("person".equals(localName)) {
                 persons.add(person);
+                Log.d(TAG, person.toString());
                 person = null;
             }
             tag = null;
@@ -215,6 +222,7 @@ public class TestXmlJson {
                     //判断是都是person的结束事件
                     if ("person".equals(parser.getName())) {
                         persons.add(person);
+                        Log.d(TAG, person.toString());
                         person = null;
                     }
                     break;
@@ -270,63 +278,78 @@ public class TestXmlJson {
         Log.d(TAG, "xmlWriter \n" + xmlWriter.toString());
     }
 
-    private void testJSONObject(String jsonData) throws JSONException {
+    public void testJSONObject() throws Exception {
+        String jsonData = "";
+        Reader reader = new InputStreamReader(TestApplication.getContext().getAssets().open("persons.json"));
+        char[] buff = new char[1024];
+        int length = -1;
+        for (int i = 0; (length = reader.read(buff)) != -1; i++) {
+            jsonData += new String(buff, 0, length);
+        }
+        Log.d(TAG, "jsonData \n" + jsonData);
+
+        List<Person> persons = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(jsonData);
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String id = jsonObject.getString("id");
-            String name = jsonObject.getString("name");
-            String version = jsonObject.getString("version");
 
-            Log.d(TAG, "id is " + id);
-            Log.d(TAG, "name is " + name);
-            Log.d(TAG, "version is " + version);
+            Person person = new Person();
+            person.setId(Integer.parseInt(jsonObject.getString("id")));
+            person.setName(jsonObject.getString("name"));
+            person.setAge(jsonObject.getString("age"));
+            persons.add(person);
+
+            Log.d(TAG, person.toString());
         }
     }
 
-    private void testGSON(String jsonData) {
-        Gson gson = new Gson();
-        List<Bean> beanList = gson.fromJson(jsonData, new TypeToken<List<Bean>>() {
-        }.getType());
-        for (Bean bean : beanList) {
-            Log.d(TAG, "id is " + bean.getId());
-            Log.d(TAG, "name is " + bean.getName());
-            Log.d(TAG, "version is " + bean.getVersion());
+    public void testJSONObjectCreate() throws Exception {
+        Person[] persons = new Person[3];       // 创建节点Person对象
+        persons[0] = new Person(1, "AAA", "111");
+        persons[1] = new Person(2, "BBB", "222");
+        persons[2] = new Person(3, "CCC", "333");
+
+        JSONArray jsonArray = new JSONArray();
+        for (Person person : persons) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", person.getId());
+            jsonObject.put("name", person.getName());
+            jsonObject.put("age", person.getAge());
+            jsonArray.put(jsonObject);
+        }
+        Log.d(TAG, jsonArray.toString());
+
+    }
+
+    public void testGson() throws Exception {
+        String jsonData = "";
+        Reader reader = new InputStreamReader(TestApplication.getContext().getAssets().open("persons.json"));
+        char[] buff = new char[1024];
+        int length = -1;
+        for (int i = 0; (length = reader.read(buff)) != -1; i++) {
+            jsonData += new String(buff, 0, length);
+        }
+        Log.d(TAG, "jsonData \n" + jsonData);
+
+        Type type = new TypeToken<List<Person>>() {
+        }.getType();
+        List<Person> personList = new Gson().fromJson(jsonData, type);
+        //new Gson().fromJson(jsonData, Person.class);
+        for (Person person : personList) {
+            Log.d(TAG, person.toString());
         }
     }
 
-    public class Bean {
+    public void testGsonCreate() throws Exception {
+        Person[] persons = new Person[3];       // 创建节点Person对象
+        persons[0] = new Person(1, "AAA", "111");
+        persons[1] = new Person(2, "BBB", "222");
+        persons[2] = new Person(3, "CCC", "333");
 
-        private String id;
-
-        private String name;
-
-        private String version;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
+        Type type = new TypeToken<Person[]>() {
+        }.getType();
+        String json = new Gson().toJson(persons, type);
+        Log.d(TAG, json);
     }
 
     public class Person {

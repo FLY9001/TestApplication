@@ -141,6 +141,7 @@ dependencies {
     //将libs文件夹中所有的jar文件视为依赖库
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile(name: 'testlibrary-debug', ext: 'aar')
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         //根据不同编译类型，依赖不同的库
         exclude group: 'com.android.support', module: 'support-annotations'
