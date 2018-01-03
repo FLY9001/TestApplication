@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.eyesmart.testapplication.android.CMD;
+import com.eyesmart.testapplication.android.ADB;
+import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
 import com.eyesmart.testapplication.android.SensorActivity;
+import com.eyesmart.testapplication.android.SystemInfoUtils;
 import com.eyesmart.testapplication.android.TestActivity;
 import com.eyesmart.testapplication.android.TestDatabase;
 import com.eyesmart.testapplication.android.TestFragment;
@@ -65,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
         };
         /**android工程*/
         Class[] project = {
-                ProjectCatalog.class,   //工程目录
-                Resource.class,         //资源文件
+                ProjectCatalog.class,   //工程、文件、sdk目录
+                SystemInfoUtils.class,  //设备、系统信息
+                AppInfoUtils.class,     //应用信息
 
-                CMD.class,              //命令行
+                ADB.class,              //adb
                 Git.class               //git
         };
         /**android基础框架*/
@@ -91,23 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
                 TestJni.class,          //Jni的编译、应用
                 //TODO Android 版本新特性：MD、权限
-        };
 
-        /**android代码优化*/
-        Class[] android2 = {
-                //TODO UI优化
-                //TODO 图片优化
-                TestMemory.class,       //TODO 内存泄漏、优化
-                HttpUtils.class,        //Http TODO 组合框架
-                TestRxJava.class,       //TODO 原理及应用
-
-                //TODO 架构：MVP、MVP、MVVM
-                //TODO 热修复
-                //TODO 混合开发
-                //TODO React Native
-
-                CMD.class,              //命令行
-                Git.class               //git
+                Resource.class,         //资源文件
         };
         /**UI*/
         Class[] view = {
@@ -122,6 +110,19 @@ public class MainActivity extends AppCompatActivity {
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
+        };
+        /**android代码优化*/
+        Class[] android2 = {
+                //TODO UI优化
+                //TODO 图片优化
+                TestMemory.class,       //TODO 内存泄漏、优化
+                HttpUtils.class,        //Http TODO 组合框架
+                TestRxJava.class,       //TODO 原理及应用
+
+                //TODO 架构：MVP、MVP、MVVM
+                //TODO 热修复
+                //TODO 混合开发
+                //TODO React Native
         };
         Class[] android3 = {
                 TestDesignPattern.class,//TODO 设计模式
@@ -139,11 +140,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 //startActivity(new Intent(this, SensorActivity.class));
-                try {
-                    new TestXmlJson().testGsonCreate();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    new TestXmlJson().testGsonCreate();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                SystemInfoUtils.get_system_property();
                 break;
         }
     }

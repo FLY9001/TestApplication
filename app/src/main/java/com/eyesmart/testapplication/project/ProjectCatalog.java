@@ -32,9 +32,12 @@ public class ProjectCatalog {
      * lib                     存放so文件
      * media                   系统声音
      * usr                     用户配置文件
+     *
+     * build.prop              系统信息
      */
 
-    /**sdk目录：
+    /**
+     * sdk目录：
      * add-ons                 附加库
      * build-tools             编译工具：aapt、aidl、dexdump、dx等
      * docs                    开发文档
