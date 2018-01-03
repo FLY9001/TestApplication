@@ -106,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 //TODO 混合开发
                 //TODO React Native
 
+                CMD.class,              //命令行
+                Git.class               //git
         };
         /**UI*/
         Class[] view = {
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 //startActivity(new Intent(this, SensorActivity.class));
                 try {
-                    new TestXmlJson().testPullCreate();
+                    new TestXmlJson().testGsonCreate();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -31,18 +31,18 @@ import java.util.Vector;
 public class MyCollection {
     void test() throws IOException {
         int[] temp = {4, 2, 6, 3, 1, 7, 5};
-        Student[] students = {};            //对对象数组进行排列
+        Student[] students = {};                //对对象数组进行排列
 
         Arrays.fill(temp, 1);               //数组填充，全部为1
-        //System.arraycopy();               //数组复制
-        Arrays.copyOf(temp, 6);             //数组复制5个（从0开始）
+        //System.arraycopy();                   //数组复制
+        Arrays.copyOf(temp, 6);      //数组复制5个（从0开始）
         Arrays.copyOfRange(temp, 0, 5);
-        Arrays.binarySearch(temp, 7);       //数组查找
+        Arrays.binarySearch(temp, 7);      //数组查找
         Arrays.binarySearch(temp, 3, 6, 7); //数组查找
-        Arrays.sort(temp);                  //数组排序
+        Arrays.sort(temp);                      //数组排序
         Arrays.sort(students, 0, 5, new StuComparator());
-        Arrays.toString(temp);              //数组输出
-        Arrays.deepToString(students);      //二维数组输出
+        Arrays.toString(temp);                  //数组输出
+        Arrays.deepToString(students);          //二维数组输出
         Arrays.equals(temp, null);          //数组比较
         Arrays.deepEquals(students, null);  //二维数组比较
 //--------------------------------------------------------------------------------------------------
