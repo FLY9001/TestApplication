@@ -8,7 +8,7 @@ import android.util.Log;
  */
 
 public class SystemInfoUtils {
-    void test() {
+    public static void test() {
         get_android_os_build();     //android.os.Build 获取硬件信息
         get_system_property();      //System.getProperty 获取系统属性
         //文件：/system/build.prop 包含系统信息

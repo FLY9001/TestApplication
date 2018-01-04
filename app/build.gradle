@@ -63,10 +63,9 @@ android {
         }
         release {
             minifyEnabled true      // 是否进行混淆
+            //混淆文件  proguard-android.txt为系统默认的混淆文件，位于\sdk\tools\proguard    proguard-rules.pro为项目自定义混淆文件，用于定义第三方依赖包的混淆规则
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //混淆文件的位置
             resValue "string", "APP_NAME", "TestApp_myrelease"
-
         }
     }
 

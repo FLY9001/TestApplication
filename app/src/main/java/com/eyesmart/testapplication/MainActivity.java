@@ -7,6 +7,7 @@ import android.view.View;
 import com.eyesmart.testapplication.android.ADB;
 import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
+import com.eyesmart.testapplication.android.Safety;
 import com.eyesmart.testapplication.android.SensorActivity;
 import com.eyesmart.testapplication.android.SystemInfoUtils;
 import com.eyesmart.testapplication.android.TestActivity;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 ProjectCatalog.class,   //工程、文件、sdk目录
                 SystemInfoUtils.class,  //设备、系统信息
                 AppInfoUtils.class,     //应用信息
+                Safety.class,           //安全机制、反编译
 
                 ADB.class,              //adb
                 Git.class               //git
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-                SystemInfoUtils.get_system_property();
+                SystemInfoUtils.get_android_os_build();
                 break;
         }
     }

@@ -7,7 +7,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.eyesmart.testapplication.R;
 import com.eyesmart.testapplication.TestApplication;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class AppInfoUtils {
     Context context = TestApplication.getContext();
 
     void test() throws PackageManager.NameNotFoundException {
-        int manifest_info = R.drawable.manifest_info;
+        //int manifest_info = R.drawable.manifest_info;
         /**PackageManager，获取应用的包信息*/
         PackageManager pm = context.getPackageManager();
         //PackageInfo
