@@ -23,6 +23,7 @@ import com.eyesmart.testapplication.android.TestProvider;
 import com.eyesmart.testapplication.android.TestReceiver;
 import com.eyesmart.testapplication.android.TestRxJava;
 import com.eyesmart.testapplication.android.TestService;
+import com.eyesmart.testapplication.android.TestUI;
 import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.MyCollection;
@@ -115,9 +116,8 @@ public class MainActivity extends AppCompatActivity {
         };
         /**android代码优化*/
         Class[] android2 = {
-                //TODO UI优化
-                //TODO 图片优化
-                TestMemory.class,       //TODO 内存泄漏、优化
+                TestUI.class,           //布局优化
+                TestMemory.class,       //TODO 内存泄漏、优化、图片优化
                 HttpUtils.class,        //Http TODO 组合框架
                 TestRxJava.class,       //TODO 原理及应用
 
