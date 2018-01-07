@@ -20,7 +20,8 @@
     -->
     <!-- 系统权限，底部有权限大全 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <!--
     <supports-screens   //多屏幕机制
         android:smallScreens=["true" | "false"] //是否支持小屏

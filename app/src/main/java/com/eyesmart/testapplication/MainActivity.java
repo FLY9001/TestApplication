@@ -1,6 +1,7 @@
 package com.eyesmart.testapplication;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -56,13 +57,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Debug.startMethodTracing("Love_World_");
         setContentView(R.layout.activity_main);
         /**java*/
         Class[] java = {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
                 MyCollection.class,     //集合、数组、栈、属性类
-                MyThread.class,         //线程基础
+                 MyThread.class,         //线程基础
 
                 MyGenericity.class,     //泛型、注解
                 MyEnum.class,           //反射、枚举
@@ -150,5 +152,11 @@ public class MainActivity extends AppCompatActivity {
                 SystemInfoUtils.get_android_os_build();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Debug.stopMethodTracing();
     }
 }
