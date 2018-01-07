@@ -42,7 +42,7 @@ public class TestFragment extends Fragment {
         tf.setArguments(args);
         //tf=TestFragment.getInstance("value");
         /**2、获取FragmentManager*/
-        FragmentManager fm = getFragmentManager();  //Fragment的事务操作
+        FragmentManager fm = getFragmentManager();  //Fragment的事务操作 getSupportFragmentManager()
         //fm = getChildFragmentManager();           //获取本Fragment的Manager(用于Fragment嵌套)
         /**2、获取FragmentTransaction并提交*/
         FragmentTransaction transaction = fm.beginTransaction();
