@@ -1,7 +1,6 @@
 package com.eyesmart.testapplication;
 
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Debug.startMethodTracing("Love_World_");
         setContentView(R.layout.activity_main);
         /**java*/
         Class[] java = {
@@ -152,11 +150,5 @@ public class MainActivity extends AppCompatActivity {
                 SystemInfoUtils.get_android_os_build();
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Debug.stopMethodTracing();
     }
 }
