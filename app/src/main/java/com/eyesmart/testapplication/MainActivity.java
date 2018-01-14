@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
                 MyCollection.class,     //集合、数组、栈、属性类
-                 MyThread.class,         //线程基础
+                MyThread.class,         //线程基础
 
                 MyGenericity.class,     //泛型、注解
                 MyEnum.class,           //反射、枚举
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 SystemInfoUtils.class,  //设备、系统信息
                 AppInfoUtils.class,     //应用信息
                 Safety.class,           //安全机制、反编译
+
 
                 ADB.class,              //adb
                 Git.class               //git
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket
-                TestXmlJson.class,      //TODO 数据解析
+                TestXmlJson.class,      //数据解析
 
                 TestMedia.class,        //多媒体：音频、视频、相机
                 SensorActivity.class,   //传感器

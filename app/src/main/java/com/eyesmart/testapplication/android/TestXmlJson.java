@@ -51,9 +51,9 @@ public class TestXmlJson {
         testPull();         //Pull解析，android默认
         testPullCreate();
 
-        testJSONObject();
+        testJSONObject();   //JSONObject
         testJSONObjectCreate();
-        testGson();
+        testGson();         //Gson
         testGsonCreate();
     }
 
