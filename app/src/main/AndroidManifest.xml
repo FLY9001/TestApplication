@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
     <!--
     <supports-screens   //多屏幕机制
         android:smallScreens=["true" | "false"] //是否支持小屏
@@ -58,8 +59,8 @@
         android:taskAffinity="string"                   //相同的affinity的Activity理论上属于相同的Task，默认值为包名
         android:theme="resource or theme"               //主题风格
         -->
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".MainActivity">
+
             <!--
             android:allowTaskReparenting=["true" | "false"]
             android:alwaysRetainTaskState=["true" | "false"]                   //是否保留状态不变，比如切换回home, 再从新打开，activity处于最后的状态
@@ -158,6 +159,7 @@
             android:name=".android.TestService"
             android:enabled="true"
             android:exported="true">
+
             <!--
             android:process=":remote"    //设置成远程服务
             <intent-filter>
@@ -181,12 +183,15 @@
             android:authorities="com.eyesmart.testapplication.android.TestContentProvider"
             android:enabled="false"
             android:exported="true">
-            <!--android:enabled="false" 不可用-->
+
+            <!-- android:enabled="false" 不可用 -->
         </provider>
 
         <activity android:name=".ui.viewprinciple.ViewPrincipleActivity"/>
         <activity android:name=".ui.viewwidget.ViewWidgetActivity"/>
         <activity android:name=".android.SensorActivity"/>
+        <activity android:name=".android.PermissionActivity">
+        </activity>
     </application>
 
 </manifest><!--

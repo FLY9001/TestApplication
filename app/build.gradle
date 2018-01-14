@@ -138,6 +138,7 @@ android {
 //依赖的库
 dependencies {
     //将libs文件夹中所有的jar文件视为依赖库
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile(name: 'testlibrary-debug', ext: 'aar')
 
