@@ -7,6 +7,7 @@ import android.view.View;
 import com.eyesmart.testapplication.android.ADB;
 import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
+import com.eyesmart.testapplication.android.PermissionActivity;
 import com.eyesmart.testapplication.android.Safety;
 import com.eyesmart.testapplication.android.SensorActivity;
 import com.eyesmart.testapplication.android.SystemInfoUtils;
@@ -34,6 +35,7 @@ import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestDesignPattern;
 import com.eyesmart.testapplication.project.ProjectCatalog;
 import com.eyesmart.testapplication.project.Resource;
+import com.eyesmart.testapplication.ui.CameraTextureView;
 import com.eyesmart.testapplication.ui.TestAnim;
 import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 SystemInfoUtils.class,  //设备、系统信息
                 AppInfoUtils.class,     //应用信息
                 Safety.class,           //安全机制、反编译
-
+                PermissionActivity.class,//权限
 
                 ADB.class,              //adb
                 Git.class               //git
@@ -93,12 +95,11 @@ public class MainActivity extends AppCompatActivity {
                 TestNet.class,          //Socket
                 TestXmlJson.class,      //数据解析
 
-                TestMedia.class,        //多媒体：音频、视频、相机
+                TestMedia.class,        //多媒体：音频、视频
+                CameraTextureView.class,//相机
                 SensorActivity.class,   //传感器
 
                 TestJni.class,          //Jni的编译、应用
-                //TODO Android 版本新特性：MD、权限
-
                 Resource.class,         //资源文件
         };
         /**UI*/
@@ -142,12 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
-                //startActivity(new Intent(this, SensorActivity.class));
-//                try {
-//                    new TestXmlJson().testGsonCreate();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
                 SystemInfoUtils.get_android_os_build();
                 break;
         }

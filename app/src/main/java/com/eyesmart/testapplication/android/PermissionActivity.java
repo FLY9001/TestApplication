@@ -44,7 +44,7 @@ public class PermissionActivity extends AppCompatActivity {
                 }
                 // 请求权限，数组传入多个值，可以一次请求多个权限
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUESTCODE);
-            }else {
+            } else {
                 go();
             }
         } else {
@@ -69,7 +69,8 @@ public class PermissionActivity extends AppCompatActivity {
 
         }
     }
-    void go(){
+
+    void go() {
 
     }
 }
