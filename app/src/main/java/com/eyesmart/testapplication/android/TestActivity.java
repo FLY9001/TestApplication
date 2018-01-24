@@ -22,7 +22,7 @@ public class TestActivity extends AppCompatActivity {
         //onRestart();
         onStart();
         //onRestoreInstanceState(null);
-        onResume();
+        onResume();                         //访问网络一般放在此
         onPause();
         //onSaveInstanceState(null);
         onStop();
