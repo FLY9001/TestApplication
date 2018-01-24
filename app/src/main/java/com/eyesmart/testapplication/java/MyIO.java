@@ -110,9 +110,9 @@ public class MyIO {
         InputStream is = new FileInputStream(fromFile);
         OutputStream os = new FileOutputStream(toFile);
         byte[] b = new byte[1024];
-        int n = 0;
-        while ((n = is.read(b)) != -1) {
-            os.write(b, 0, b.length);
+        int len = 0;
+        while ((len = is.read(b, 0, b.length)) != -1) {
+            os.write(b, 0, len);
         }
         is.close();
         os.close();
