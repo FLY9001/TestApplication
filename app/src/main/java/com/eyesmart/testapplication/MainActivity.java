@@ -41,9 +41,9 @@ import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
 import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
-import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
+import com.eyesmart.testapplication.ui.viewwidget.ListView;
 import com.eyesmart.testapplication.ui.viewwidget.MyView;
-import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
+import com.eyesmart.testapplication.ui.viewwidget.Recycler;
 import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
 /**
@@ -71,14 +71,16 @@ public class MainActivity extends AppCompatActivity {
         };
         /**android工程*/
         Class[] project = {
-                ProjectCatalog.class,   //工程、文件、sdk目录
-                SystemInfoUtils.class,  //设备、系统信息
+                ADB.class,              //adb
+                SystemInfoUtils.class,  //硬件、系统信息
                 AppInfoUtils.class,     //应用信息
                 Safety.class,           //安全机制、反编译
-                PermissionActivity.class,//权限
 
-                ADB.class,              //adb
-                Git.class               //git
+                Git.class,              //git
+                ProjectCatalog.class,   //工程、文件、sdk目录
+                PermissionActivity.class,//权限
+                Resource.class,         //资源文件
+                TestJni.class,          //Jni的编译、应用
         };
         /**android基础框架*/
         Class[] android = {
@@ -98,9 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 TestMedia.class,        //多媒体：音频、视频
                 CameraTextureView.class,//相机
                 SensorActivity.class,   //传感器
-
-                TestJni.class,          //Jni的编译、应用
-                Resource.class,         //资源文件
         };
         /**UI*/
         Class[] view = {
@@ -111,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)
 
-                TestAnim.class,         //动画
+                ListView.class,
+                Recycler.class,
 
-                ListViewFragment.class,
-                RecyclerFragment.class,
+                TestAnim.class,         //动画
         };
         /**android代码优化*/
         Class[] android2 = {

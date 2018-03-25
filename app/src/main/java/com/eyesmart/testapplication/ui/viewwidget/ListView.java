@@ -24,20 +24,20 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends Fragment {
-    private static final String TAG = "ListViewFragment";
+public class ListView extends Fragment {
+    private static final String TAG = "ListView";
     private View rootView;
-    private ListView mListView;
+    private android.widget.ListView mListView;
 
 
-    public ListViewFragment() {
+    public ListView() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
-        mListView = (ListView) rootView.findViewById(R.id.listview);
+        mListView = (android.widget.ListView) rootView.findViewById(R.id.listview);
         List<Bean> beens = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             if (i % 3 != 0) {
