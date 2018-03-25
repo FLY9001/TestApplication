@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.eyesmart.testapplication.R;
@@ -24,13 +23,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListView extends Fragment {
-    private static final String TAG = "ListView";
+public class ListViewFragment extends Fragment {
+    private static final String TAG = "ListViewFragment";
     private View rootView;
     private android.widget.ListView mListView;
 
 
-    public ListView() {
+    public ListViewFragment() {
         // Required empty public constructor
     }
 

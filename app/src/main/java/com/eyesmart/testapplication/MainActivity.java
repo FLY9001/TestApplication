@@ -41,9 +41,9 @@ import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
 import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
-import com.eyesmart.testapplication.ui.viewwidget.ListView;
+import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
 import com.eyesmart.testapplication.ui.viewwidget.MyView;
-import com.eyesmart.testapplication.ui.viewwidget.Recycler;
+import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
 import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
 /**
@@ -110,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)
 
-                ListView.class,
-                Recycler.class,
+                ListViewFragment.class,
+                RecyclerFragment.class,
 
                 TestAnim.class,         //动画
         };

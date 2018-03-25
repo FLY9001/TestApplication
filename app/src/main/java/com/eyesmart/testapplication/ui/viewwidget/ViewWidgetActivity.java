@@ -35,8 +35,8 @@ public class ViewWidgetActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new ListView());
-        fragments.add(new Recycler());
+        fragments.add(new ListViewFragment());
+        fragments.add(new RecyclerFragment());
         mViewPager.setAdapter(new ViewWidgetAdapter(getSupportFragmentManager(), fragments));
     }
 

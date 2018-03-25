@@ -23,11 +23,11 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Recycler extends Fragment {
+public class RecyclerFragment extends Fragment {
     private View rootView;
     RecyclerView rv_recycler;
 
-    public Recycler() {
+    public RecyclerFragment() {
         // Required empty public constructor
     }
 
@@ -39,9 +39,9 @@ public class Recycler extends Fragment {
         List<Bean> beens = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             if (i % 3 != 0) {
-                beens.add(new Bean(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher), "11111", ListView.Bean.TYPE_RECEIVED));
+                beens.add(new Bean(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher), "11111", ListViewFragment.Bean.TYPE_RECEIVED));
             } else {
-                beens.add(new Bean(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher), "11111", ListView.Bean.TYPE_SENT));
+                beens.add(new Bean(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher), "11111", ListViewFragment.Bean.TYPE_SENT));
             }
         }
 

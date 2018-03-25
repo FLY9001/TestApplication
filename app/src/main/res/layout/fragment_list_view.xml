@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".ui.viewwidget.ListView">
+             tools:context=".ui.viewwidget.ListViewFragment">
 
     <ListView
         android:id="@+id/listview"
