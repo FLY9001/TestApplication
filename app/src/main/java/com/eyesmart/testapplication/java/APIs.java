@@ -38,7 +38,7 @@ public class APIs {
         System.out.print("abc");            //输出
         System.getProperties();             //取得系统全部属性
         System.gc();                        //垃圾回收，调用Runtime.gc
-        System.exit(1);                     //系统提出，非0表示退出
+        System.exit(1);              //系统提出，非0表示退出
 
 //--------------------------------------------------------------------------------------------------
         StringBuffer buffer = new StringBuffer();      //StringBuffer，频繁修改字符串比String有效率

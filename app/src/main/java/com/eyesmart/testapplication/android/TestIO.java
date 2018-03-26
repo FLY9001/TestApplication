@@ -36,7 +36,7 @@ public class TestIO {
         FileOutputStream fos = context.openFileOutput("test.txt", Context.MODE_PRIVATE);//MODE_APPEND以追加的方式
 
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File sdCardDir = Environment.getExternalStorageDirectory(); // /mnt/sdcard/
+            File sdCardDir = Environment.getExternalStorageDirectory(); // /mnt/sdcard
 
             //文件位置：/mnt/sdcard/Android/data/<包名>/files/xxx
             context.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
