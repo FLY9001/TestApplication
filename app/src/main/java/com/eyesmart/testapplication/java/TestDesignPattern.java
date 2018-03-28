@@ -33,7 +33,6 @@ public class TestDesignPattern {
         new TestIterator().test();                      //迭代器模式
         new TestTemplate().test();                      //模板方法模式
 
-
         //结构型
 
     }
