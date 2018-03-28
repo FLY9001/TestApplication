@@ -19,22 +19,26 @@ import com.eyesmart.testapplication.TestApplication;
 public class TestDesignPattern {
     void test() throws CloneNotSupportedException {
         //创建型
-        Singleton.getInstance();                        //单例模式
-        ProductFactory.createProduct(ProductA.class);   //工厂模式、抽象工厂
-        new TestBuilder().build();                      //Builder模式
-        new TestClone().clone();                        //原型模式
+        Singleton.getInstance();                        //单例模式      只需要创建一个实例
+        ProductFactory.createProduct(ProductA.class);   //工厂模式      把怎么创建交给工厂类
+        new TestBuilder().build();                      //Builder模式   链式调用
+        new TestClone().clone();                        //原型模式      快速拷贝一个新对象
         //行为型
-        new TestStrateg().test();                       //策略模式
-        new TestState().test();                         //状态模式
-        new TestChain().test();                         //责任链模式
+        new TestStrateg().test();                       //策略模式      不同的策略子类处理不同
+        new TestTemplate().test();                      //模板方法模式  不同的子类扩展同一个模板方法
+
+        new TestObserver().test();                      //观察者模式    被观察者通知多个观察者
+        new TestIterator().test();                      //迭代器模式    遍历不同的类，用不同的迭代器实现
+        new TestChain().test();                         //责任链模式    请求交给责任这，但会依次执行
+        new TestCommand().test();                       //命令模式      把命令包装成类，作为对象便于记录取消等
+
+        new TestState().test();                         //状态模式      把状态包装成类，作为对象去执行此时行为
+        new TestMemento().test();                       //备忘录模式    把此时的数据包装成类，作为对象保存恢复
+
+        new TestVisitor().test();                       //访问者模式    访问不同的类，用不同的方法
+        new TestMediator().test();                      //中介者模式    通过中介者，一个改变通知其他
         //解释器模式
-        new TestCommand().test();                       //命令模式
-        new TestObserver().test();                      //观察者模式
-        new TestIterator().test();                      //迭代器模式
-        new TestTemplate().test();                      //模板方法模式
-        new TestVisitor().test();                       //访问者模式
-        new TestMediator().test();                      //中介者模式
-        
+
         //结构型
 
     }
@@ -326,7 +330,7 @@ class TestObserver {
 
 /**
  * 备忘录模式
- * 定义：观察者模式是一种行为类模式，它定义对象间一种一对多的依赖关系，使得每当一个对象改变状态，则所有依赖于它的对象都会得到通知并被自动更新。
+ * 定义：在不破坏封闭的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样，以后就可将该对象恢复到原先保存的状态。
  * 场景：
  * （1）需要保存一个对象在某一个时刻的状态或部分状态。
  * （2）如果用一个接口来让其他对象得到这些状态，将会暴露对象的实现细节并破坏对象的封装性，
