@@ -122,13 +122,13 @@ public class MainActivity extends AppCompatActivity {
                 HttpUtils.class,        //Http TODO 组合框架
                 TestRxJava.class,       //TODO 原理及应用
 
-                //TODO 架构：MVP、MVP、MVVM
                 //TODO 热修复
                 //TODO 混合开发
                 //TODO React Native
         };
         Class[] android3 = {
-                TestDesignPattern.class,//TODO 设计模式
+                TestDesignPattern.class,
+                //TODO 架构：MVP、MVP、MVVM
                 //TODO 算法
         };
     }
