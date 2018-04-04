@@ -164,4 +164,29 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.0.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+
+    //implementation
+    //这个指令的特点就是，对于使用了该命令编译的依赖，对该项目有依赖的项目将无法访问到使用该命令编译的依赖中的任何程序，
+    //也就是将该依赖隐藏在内部，而不对外部公开。
+    //编译速度会加快，优先使用
+
+//    下面是2.x版本依赖的说明，括号里对应的是3.0版本的依赖方式。
+
+//    compile（api）
+//    这种是我们最常用的方式，使用该方式依赖的库将会参与编译和打包。
+
+//    provided（compileOnly）
+//    只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
+
+//    apk（runtimeOnly）
+//    只在生成apk的时候参与打包，编译时不会参与，很少用。
+
+//    testCompile（testImplementation）
+//    testCompile 只在单元测试代码的编译以及最终打包测试apk时有效。
+
+//    debugCompile（debugImplementation）
+//    debugCompile 只在debug模式的编译和最终的debug apk打包时有效。
+
+//    releaseCompile（releaseImplementation）
+//    releaseCompile 仅仅针对Release模式的编译和最终的Release apk打包。
 }
