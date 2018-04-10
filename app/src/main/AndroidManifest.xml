@@ -192,6 +192,8 @@
         <activity android:name=".android.SensorActivity"/>
         <activity android:name=".android.PermissionActivity">
         </activity>
+        <activity android:name=".mvp.view.MVPActivity">
+        </activity>
     </application>
 
 </manifest><!--
