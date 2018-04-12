@@ -7,6 +7,7 @@ import android.view.View;
 import com.eyesmart.testapplication.android.ADB;
 import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
+import com.eyesmart.testapplication.android.HybridActivity;
 import com.eyesmart.testapplication.android.PermissionActivity;
 import com.eyesmart.testapplication.android.Safety;
 import com.eyesmart.testapplication.android.SensorActivity;
@@ -123,13 +124,12 @@ public class MainActivity extends AppCompatActivity {
                 HttpUtils.class,        //Http TODO 组合框架
                 TestRxJava.class,       //TODO 原理及应用
 
+                HybridActivity.class,   //混合开发
                 //TODO 热修复
-                //TODO 混合开发
-                //TODO React Native
         };
         Class[] android3 = {
-                TestDesignPattern.class,
-                TestArchitecture.class  //TODO 架构：MVP、MVP、MVVM
+                TestDesignPattern.class,//设计模式
+                TestArchitecture.class  //架构模式
                 //TODO 算法
         };
     }
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
-                SystemInfoUtils.get_android_os_build();
+                HybridActivity.actionStart(MainActivity.this);
                 break;
         }
     }

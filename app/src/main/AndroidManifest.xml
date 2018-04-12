@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <!--
     <supports-screens   //多屏幕机制
@@ -193,6 +194,8 @@
         <activity android:name=".android.PermissionActivity">
         </activity>
         <activity android:name=".mvp.view.MVPActivity">
+        </activity>
+        <activity android:name=".android.HybridActivity">
         </activity>
     </application>
 
