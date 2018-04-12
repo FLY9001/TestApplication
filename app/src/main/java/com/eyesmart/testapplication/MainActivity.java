@@ -34,6 +34,7 @@ import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
 import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
+import com.eyesmart.testapplication.java.TestArithmetic;
 import com.eyesmart.testapplication.java.TestDesignPattern;
 import com.eyesmart.testapplication.project.ProjectCatalog;
 import com.eyesmart.testapplication.project.Resource;
@@ -129,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
         };
         Class[] android3 = {
                 TestDesignPattern.class,//设计模式
-                TestArchitecture.class  //架构模式
-                //TODO 算法
+                TestArchitecture.class, //架构模式
+                TestArithmetic.class    //TODO 算法
         };
     }
 
