@@ -121,6 +121,7 @@ public class MyCollection {
         Collections.replaceAll(list, "111", "222"); //替换
         Collections.sort(list);                     //排序
         Collections.swap(list, 0, 1);               //交换
+        Collections.shuffle(list);                  //乱序
 //--------------------------------------------------------------------------------------------------
         //栈，先进后出
         Stack<String> stringStack = new Stack<>();

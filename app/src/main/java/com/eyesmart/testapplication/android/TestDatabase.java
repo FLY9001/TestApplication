@@ -77,6 +77,8 @@ public class TestDatabase {
             Log.d(TAG, "删除数据个数：" + rows);
             /**若通过语句*/
             db.execSQL("delete <表名> where <whereClause>");
+            //按默认即"_id"，删除前N条数据
+            //db.execSQL("DELETE FROM  " + DBHelper.TABAL_RECORD + "  where  " + "_id" + " in (SELECT " + "_id" + " FROM " + DBHelper.TABAL_RECORD + " order by " + "_id" + "  limit " + count + ")");
 
             return rows;
         }
@@ -113,7 +115,7 @@ public class TestDatabase {
             //group by 以列名1分组
             //having   组内列名2的值的和大于10
             db.execSQL("select 列名1，列名2... from <表名> where <whereClause> order by 列名1 asc,列名2 desc");
-            //order by 排序：asc 升序(默认)，dese 降序
+            //order by 排序：asc 升序(默认)，desc 降序
 
             return queryId;
         }

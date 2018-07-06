@@ -16,7 +16,7 @@ public class MyThread {
     public void test() throws InterruptedException {
         /**线程*/
         Thread thread = Thread.currentThread(); //取得当前线程
-        Thread.sleep(1000);                     //使当前线程休眠1000毫秒
+        Thread.sleep(1000);               //使当前线程休眠1000毫秒
 
         new Thread(new Runnable() {             //添加一个任务，并启动线程
             @Override
