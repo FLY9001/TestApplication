@@ -41,9 +41,14 @@ public class TestHandler {
         });
 
         /**AsyncTask*/
-        new TestAsyncTask().execute("test");
         //适合：边执行后台边更新UI
         //不适合：特别耗时操作
+        TestAsyncTask task = new TestAsyncTask();
+        task.execute("test");
+        //取消
+        if (!task.isCancelled()) {
+            task.cancel(true);
+        }
 
         /**HandlerThread*/
         //封装Looper的Thread，可创建Handler执行消息队列，最后需quit()终止looper
