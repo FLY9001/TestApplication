@@ -20,7 +20,7 @@ import com.eyesmart.testapplication.R;
  * Created by FLY on 2017/12/7.
  */
 
-public class MyView extends View {
+public class DrawView extends View {
 
     private Paint mPaint;
 
@@ -35,19 +35,19 @@ public class MyView extends View {
         //canvas.clipRect()
     }
 
-    public MyView(Context context) {
+    public DrawView(Context context) {
         this(context, null);
     }
 
-    public MyView(Context context, @Nullable AttributeSet attrs) {
+    public DrawView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DrawView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    public MyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DrawView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         testPain();
     }

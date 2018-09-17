@@ -8,6 +8,7 @@ public class ADB {
     /**
      adb的全称为Android Debug Bridge 调试桥，是连接Android手机与PC端的桥梁，
      通过adb可以管理、操作模拟器和设备，如安装软件、系统升级、运行shell命令等。
+     adb工具位于SDK的platform-tools目录下
 
      ------------------管理设备-------------------------------------------
 

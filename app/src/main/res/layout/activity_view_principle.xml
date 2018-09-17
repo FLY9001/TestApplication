@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.eyesmart.testapplication.ui.viewwidget.MyView
+        <com.eyesmart.testapplication.ui.viewwidget.DrawView
             android:layout_width="match_parent"
             android:layout_height="280dp"/>
 

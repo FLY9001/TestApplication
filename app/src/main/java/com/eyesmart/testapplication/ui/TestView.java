@@ -208,18 +208,6 @@ public class TestView extends LinearLayout {
         return super.onInterceptTouchEvent(ev);
     }
 
-    //当外部设置OnTouchListener时，onTouchEvent前会先判断onTouch
-    @Override
-    public void setOnTouchListener(OnTouchListener l) {
-        l = new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        };
-        super.setOnTouchListener(l);
-    }
-
     //处理事件
     @Override
     public boolean onTouchEvent(MotionEvent e) {
@@ -253,6 +241,18 @@ public class TestView extends LinearLayout {
                 break;
         }
         return super.onTouchEvent(e);
+    }
+
+    //当外部设置OnTouchListener时，onTouchEvent前会先判断onTouch
+    @Override
+    public void setOnTouchListener(OnTouchListener l) {
+        l = new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        };
+        super.setOnTouchListener(l);
     }
 
     //若外部设置点击监听，在ACTION_UP中执行onClick或onLongClick

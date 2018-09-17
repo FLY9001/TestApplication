@@ -25,7 +25,7 @@ import com.eyesmart.testapplication.R;
 public class TestAnim extends Activity {
     View view = new View(this);
 
-    private void test() {
+    public void test() {
         frameAnimation();       //帧动画
         tweenAnimation();       //view（补间）动画
         propertyAnimator();     //属性动画

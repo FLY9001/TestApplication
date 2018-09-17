@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.eyesmart.testapplication.android.ADB;
+import com.eyesmart.testapplication.android.Android;
 import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
 import com.eyesmart.testapplication.android.HybridActivity;
@@ -36,7 +37,6 @@ import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
 import com.eyesmart.testapplication.java.TestDesignPattern;
-import com.eyesmart.testapplication.project.ProjectCatalog;
 import com.eyesmart.testapplication.project.Resource;
 import com.eyesmart.testapplication.ui.CameraTextureView;
 import com.eyesmart.testapplication.ui.TestAnim;
@@ -45,7 +45,7 @@ import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
 import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
 import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
-import com.eyesmart.testapplication.ui.viewwidget.MyView;
+import com.eyesmart.testapplication.ui.viewwidget.DrawView;
 import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
 import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
@@ -74,18 +74,14 @@ public class MainActivity extends AppCompatActivity {
         };
         /**android工程*/
         Class[] project = {
-
-
+                Android.class,          //Android系统架构、开发框架
+                Safety.class,           //安全机制、反编译
                 ADB.class,              //adb
+                Git.class,              //git
+
                 SystemInfoUtils.class,  //硬件、系统信息
                 AppInfoUtils.class,     //应用信息
-                Safety.class,           //安全机制、反编译
-
-                Git.class,              //git
-                ProjectCatalog.class,   //工程、文件、sdk目录
                 PermissionActivity.class,//权限
-                Resource.class,         //资源文件
-                TestJni.class,          //Jni的编译、应用
         };
         /**android基础框架*/
         Class[] android = {
@@ -105,20 +101,26 @@ public class MainActivity extends AppCompatActivity {
                 TestMedia.class,        //多媒体：音频、视频
                 CameraTextureView.class,//相机
                 SensorActivity.class,   //传感器
+
+                TestJni.class,          //Jni的编译、应用
         };
         /**UI*/
         Class[] view = {
+                Resource.class,         //资源文件
+                TestAnim.class,         //动画
+
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
-                MyView.class,
-                AnalogClock.class,      //完全自定义View(重写onDraw)
-                StaggerLayout.class,    //完全自定义ViewGroup(重写)
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)
+                AnalogClock.class,      //完全自定义View(重写onDraw)
+                StaggerLayout.class,    //完全自定义ViewGroup(重写)
+
+                //Resource.drawable();  (drawable)普通图片、xml自定义
+                DrawView.class,         //canvas绘图
+                //图像处理
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
-
-                TestAnim.class,         //动画
         };
         /**android代码优化*/
         Class[] android2 = {

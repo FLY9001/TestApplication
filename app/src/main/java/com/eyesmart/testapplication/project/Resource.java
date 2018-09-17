@@ -2,7 +2,6 @@ package com.eyesmart.testapplication.project;
 
 import com.eyesmart.testapplication.R;
 import com.eyesmart.testapplication.ui.TestView;
-import com.eyesmart.testapplication.ui.viewwidget.MyAnim;
 
 /**
  * 资源文件，可通过R类进行访问
@@ -44,30 +43,28 @@ public class Resource {
                 R.anim.tween_animation, //补间动画
                 R.anim.layout_animation,//Layout动画
         };
-        new MyAnim().test();
     }
 
     void animator() {
         int[] animator = {
                 R.animator.property_animator,
         };
-        new MyAnim().test();
     }
 
-    void drawable() {
+    public static void drawable() {
         int[] drawable = {
-                R.drawable.xy,                  //普通位图
+                R.drawable.xy,                  //普通图片
                 R.drawable.message_left,        //9patch图片
 
-                R.drawable.bitmap_drawable,     //相对普通图片，可设置更多效果
-                R.drawable.layer_drawable,      //层级叠加图片，可设置SeekBar的外观
-                R.drawable.levellist_drawable,  //根据等级显示图片
-                R.drawable.shape_drawable,      //自定义图形
-                R.drawable.select_drawable,     //根据状态显示图片
+                //xml自定义
+                R.drawable.bitmap_drawable,     //bitmap图片，可设置更多效果
+                R.drawable.layer_drawable,      //layer 图片，可设置SeekBar的外观
+                R.drawable.levellist_drawable,  //level 图片
+                R.drawable.shape_drawable,      //shape 图形
+                R.drawable.select_drawable,     //select图片
 
                 R.drawable.frame_animation,     //帧动画
         };
-        new MyAnim().test();
     }
 
     void layout() {

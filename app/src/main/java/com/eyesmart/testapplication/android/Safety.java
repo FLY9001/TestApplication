@@ -18,7 +18,8 @@ public class Safety {
      * 反编译：
      *
      * 反编译xml文件：
-     * 1、工具：apktool（直接解压apk，xml文件会乱码）  命令行：反编译：apktool.jar d test.apk，重新编译：apktool.jar b test，apk文件在dist文件夹
+     * 1、工具：apktool（直接解压apk，xml文件会乱码）
+     *    命令行：apktool.jar d test.apk（反编译），apktool.jar b test（重新编译），apk文件在dist文件夹
      *
      * 反编译java代码：
      * 1、解压apk文件，得到classes.dex
