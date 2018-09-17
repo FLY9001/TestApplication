@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         };
         /**android工程*/
         Class[] project = {
+
+
                 ADB.class,              //adb
                 SystemInfoUtils.class,  //硬件、系统信息
                 AppInfoUtils.class,     //应用信息
