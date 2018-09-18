@@ -22,6 +22,15 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ * 技巧：
+ * 1、ViewHolder模式提高效率
+ * 2、item间分割线：  android:divider="@color/colorAccent" android:dividerHeight="10dp"
+ * 3、隐藏滚动条：    android:scrollbars="none"
+ * 4、item点击效果：  android:listSelector="@android:color/transparent"
+ * 5、滚动到某处      mListView.setSelection(0); mListView.smoothScrollToPosition(0);
+ *
+ * 滑动监听：用于特殊交互
+ * 其他扩展
  */
 public class ListViewFragment extends Fragment {
     private static final String TAG = "ListViewFragment";

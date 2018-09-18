@@ -9,11 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+
         android:listSelector="@android:color/transparent">
     </ListView>
     <!--
         android:divider="@color/colorAccent" 分割线颜色      @null为透明
         android:dividerHeight="10dp"         分割线高度
+
+        android:scrollbars="none"            隐藏滚动条
 
         android:listSelector="@android:color/transparent"   item点击效果
     -->
