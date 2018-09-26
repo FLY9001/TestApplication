@@ -9,7 +9,7 @@ import android.util.DisplayMetrics;
  * px：      像素数
  * dpi：     屏幕对角线像素个数除以长度
  * density： 换算比例，密度，density = dpi / 160
- * dp：      设置的长度单位，px = dp * density
+ * dp：      设置的长度单位，px = dp * density, ！！！320dp * 480dp必然充满屏幕！！！
  * <p>
  * 为方便适配，系统规定几个标准dpi：
  * ldpi：   240*320     120dpi   0.75
