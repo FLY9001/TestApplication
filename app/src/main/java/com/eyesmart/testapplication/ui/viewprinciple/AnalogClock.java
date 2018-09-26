@@ -199,7 +199,7 @@ public class AnalogClock extends View {
 
         /**绘制时针*/
         canvas.save();
-        //以点(x,y)为中心旋转坐标系
+        //以点(x,y)为原点旋转坐标系,
         canvas.rotate(mHour / 12.0f * 360.0f, x, y);
         final Drawable hourHand = mHourHand;
         w = hourHand.getIntrinsicWidth();

@@ -25,7 +25,11 @@ public class DrawView extends View {
     private Paint mPaint;
 
 
-    void testCanvas(Canvas canvas) {
+    void test(Canvas canvas) {
+        initPain();         //画笔设置
+        testDraw(canvas);   //画图形
+        testBitmap(canvas);
+        canvasTest(canvas); //画布变换
         // canvas.drawBitmap
         // canvas.drawLines();
 //        canvas.drawPoint();
@@ -49,10 +53,10 @@ public class DrawView extends View {
 
     public DrawView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        testPain();
+        initPain();
     }
 
-    private void testPain() {
+    private void initPain() {
         mPaint = new Paint();
         mPaint.setColor(Color.RED);         //颜色
         mPaint.setStyle(Paint.Style.FILL);  //填充风格
@@ -83,29 +87,29 @@ public class DrawView extends View {
         super.onDraw(canvas);
         testDraw(canvas);
         testBitmap(canvas);
-        //canvasTest(canvas);
+        canvasTest(canvas);
     }
 
     private void testDraw(Canvas canvas) {
         canvas.drawColor(Color.LTGRAY);                                     // 绘制画布
 
-        canvas.drawCircle(100 , 100 , 100, mPaint);          // 绘制圆形
-        canvas.drawRect(0, 220, 200 , 320, mPaint); // 绘制矩形
+        canvas.drawCircle(100, 100, 100, mPaint);          //圆形
+        canvas.drawRect(0, 220, 200, 320, mPaint); //矩形
         RectF re1 = new RectF(0, 340, 200, 440);
-        canvas.drawRoundRect(re1, 20, 20, mPaint);                   // 绘制圆角矩形
-        RectF re11 = new RectF(0, 460,  200, 560);
-        canvas.drawOval(re11, mPaint);                                      // 绘制椭圆
+        canvas.drawRoundRect(re1, 20, 20, mPaint);                   //圆角矩形
+        RectF re11 = new RectF(0, 460, 200, 560);
+        canvas.drawOval(re11, mPaint);                                      //椭圆
         Path path1 = new Path();
-        path1.moveTo(100, 580);
-        path1.lineTo(0 , 780);
+        path1.moveTo(100, 580);                                       //路径
+        path1.lineTo(0, 780);
         path1.lineTo(200, 780);
         path1.close();//封闭
-        canvas.drawPath(path1, mPaint);                                     // 封闭成一个三角形
+        canvas.drawPath(path1, mPaint);                                     //封闭成一个三角形
 
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.BLUE);
-        canvas.drawPoint(400,100,mPaint);                             //点
-        canvas.drawLine(300,270,500,270,mPaint); //线
+        canvas.drawPoint(400, 100, mPaint);                             //点
+        canvas.drawLine(300, 270, 500, 270, mPaint); //线
         RectF re2 = new RectF(300, 340, 500, 440);  //绘制圆弧、弧形
         canvas.drawArc(re2, 10, 270, false, mPaint);
         RectF re3 = new RectF(300, 460, 500, 560);
@@ -124,52 +128,63 @@ public class DrawView extends View {
         canvas.drawPath(path, mPaint);
         canvas.drawTextOnPath("沿路径绘制文字沿路径绘制文字沿路径绘制文字沿路径绘制文字", path, -20, -20, mPaint);
     }
+
     Matrix matrix = new Matrix();
     Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.xy)).getBitmap();
 
-    private void testBitmap(Canvas canvas){
-        matrix.setTranslate(30,30);                 //矩阵
-        matrix.setScale(0.15f,0.15f,0,0);
-        matrix.setRotate(90,30,30);
-        matrix.setSkew(30,30,0,0);
+    private void testBitmap(Canvas canvas) {
+        matrix.setTranslate(30, 30);                 //矩阵
+        matrix.setScale(0.15f, 0.15f, 0, 0);
+        matrix.setRotate(90, 30, 30);
+        matrix.setSkew(30, 30, 0, 0);
 
         //Bitmap bitmap1 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        canvas.drawBitmap(bitmap,matrix,null);
+        canvas.drawBitmap(bitmap, matrix, null);
 
         //canvas.drawBitmapMesh();                          //扭曲
     }
+
     /**
      * 绘制方法练习
      *
      * @param canvas
      */
     private void canvasTest(Canvas canvas) {
+        //translate平移、scale缩放、rotate旋转、skew错切
+        //save保存画布坐标体系，restore恢复到保存时画布坐标体系
+        //saveLayer新建图层
+
         //平移
         canvas.translate(50, 900);
         canvas.drawRect(new Rect(0, 0, 100, 100), mPaint);
         canvas.translate(50, 50);
         canvas.drawRect(new Rect(0, 0, 100, 100), mPaint);
-        //缩放
         canvas.translate(100, -50);
         canvas.drawRect(new Rect(0, 0, 300, 300), mPaint);
+
         // 保存画布状态
         canvas.save();
+        //缩放
         canvas.scale(0.5f, 0.5f);
         mPaint.setColor(Color.YELLOW);
         canvas.drawRect(new Rect(0, 0, 300, 300), mPaint);
         // 画布状态回滚
         canvas.restore();
+
         // 先将画布平移到矩形的中心
         canvas.translate(400, -50);
         canvas.drawRect(new Rect(0, 0, 300, 300), mPaint);
+
         //旋转测试
         canvas.save();
         canvas.translate(350, 50);
         canvas.drawRect(new Rect(0, 0, 200, 200), mPaint);
         mPaint.setColor(Color.RED);
+        //以点(x,y)为原点旋转坐标系,
         canvas.rotate(45, 200, 200);
         canvas.drawRect(new Rect(0, 0, 200, 200), mPaint);
         canvas.restore();
+
         //画布错切 三角函数tan的值
         canvas.translate(350, 300);
         canvas.drawRect(new Rect(0, 0, 400, 400), mPaint);
@@ -177,5 +192,13 @@ public class DrawView extends View {
         canvas.skew(0, 1);
         mPaint.setColor(0x8800ff00);
         canvas.drawRect(new Rect(0, 0, 400, 400), mPaint);
+
+        //新建图层
+        canvas.saveLayer(0, 0, 200, 200, mPaint);
+        canvas.saveLayerAlpha(0, 0, 200, 200, 0x88);
+        //复位图层，并画出内容
+        canvas.restore();
+        //canvas.restoreToCount();
     }
+
 }

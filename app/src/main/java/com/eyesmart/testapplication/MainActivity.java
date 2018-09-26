@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 StaggerLayout.class,    //完全自定义ViewGroup(重写)
 
                 /**控件中图像显示及处理*/
-                //Resource.drawable();  (drawable)普通图片、xml自定义
-                DrawView.class,         //canvas绘图
+                //Resource.drawable();  (drawable)图片设置、层叠、变换
+                DrawView.class,         //绘制图形
                 //图像处理+
 
                 ListViewFragment.class,
