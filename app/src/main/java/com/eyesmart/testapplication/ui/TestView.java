@@ -142,9 +142,9 @@ public class TestView extends LinearLayout {
 
     void testDraw() {
         //ViewRoot的performTraversals执行遍历，分别执行performMeasure、performLayout、performDraw
-        measure(0, 0);      //测量自身及遍历测量子View（onMeasure）
-        layout(0, 0, 0, 0); //依次布局自己（确定四顶点），遍历布局子View（onLayout）
-        draw(null);         //依次绘制背景，绘制自己（onDraw），遍历绘制子View，绘制装饰（如scrollBars）
+        measure(0, 0);  //测量自身及遍历测量子View（onMeasure）
+        layout(0, 0, 0, 0);                       //依次布局自己（确定四顶点），遍历布局子View（onLayout）
+        draw(null);                                  //依次绘制背景，绘制自己（onDraw），遍历绘制子View，绘制装饰（如scrollBars）
 
         //都会触发ViewRoot的performTraversals完成遍历
         requestLayout();    //触发onMeasure、onLayout；只有四坐标发生改变才触发onDraw

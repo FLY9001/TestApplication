@@ -9,14 +9,17 @@ import com.eyesmart.testapplication.ui.TestView;
 
 public class Resource {
     void test() {
-        values();       //简单值xml
+        values();       //简单值xml，数组、颜色、数值、字段、风格
 
         anim();         //动画文件
         animator();     //属性动画文件
+        
         drawable();     //图片文件、drawable的xml
+        mipmap();       //图标
+
         layout();       //布局文件
         menu();         //菜单定义文件
-        mipmap();       //图标
+
         raw();          //原生多媒体文件
         xml();          //原生xml
 

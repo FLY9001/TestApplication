@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 Git.class,              //git
 
                 SystemInfoUtils.class,  //硬件、系统信息
-                AppInfoUtils.class,     //应用信息
+                AppInfoUtils.class,     //各个应用信息
+
                 PermissionActivity.class,//权限
         };
         /**android基础框架*/
@@ -106,18 +107,21 @@ public class MainActivity extends AppCompatActivity {
         };
         /**UI*/
         Class[] view = {
+                DisplayUtil.class,
                 Resource.class,         //资源文件
                 TestAnim.class,         //动画
 
+                /**自定义控件*/
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
                 //扩展已有View(如密码输入EditText)
                 //扩展已有ViewGroup(inflate)
                 AnalogClock.class,      //完全自定义View(重写onDraw)
                 StaggerLayout.class,    //完全自定义ViewGroup(重写)
 
+                /**控件中图像显示及处理*/
                 //Resource.drawable();  (drawable)普通图片、xml自定义
                 DrawView.class,         //canvas绘图
-                //图像处理
+                //图像处理+
 
                 ListViewFragment.class,
                 RecyclerFragment.class,

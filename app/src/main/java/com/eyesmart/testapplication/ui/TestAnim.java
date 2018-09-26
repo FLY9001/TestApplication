@@ -29,6 +29,7 @@ public class TestAnim extends Activity {
         frameAnimation();       //帧动画
         tweenAnimation();       //view（补间）动画
         propertyAnimator();     //属性动画
+
         layoutAnimation();      //Layout动画
         transitionActivity();   //activity切换效果
 

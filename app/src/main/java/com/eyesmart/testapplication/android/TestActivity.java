@@ -8,11 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * 启动模式；
+ * 启动模式（通过AndroidManifest和intent设置）；
  * standard：大多数Activity
  * singleTop：不在栈顶，都会创建新的实例；如新闻类或者阅读类App的内容页面
  * singleTask：重用时，会让该实例回到栈顶，它上面的实例将会被移出栈(会调用实例的onNewIntent())；如浏览器的主界面
  * singleInstance：任何应用再激活该Activity时都会重用该栈中的实例( 会调用实例的 onNewIntent())；如闹铃提醒
+ *
+ * 清空任务栈：通过AndroidManifest和intent设置
  */
 
 public class TestActivity extends AppCompatActivity {
