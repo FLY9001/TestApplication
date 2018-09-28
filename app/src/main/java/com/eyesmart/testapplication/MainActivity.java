@@ -14,6 +14,7 @@ import com.eyesmart.testapplication.android.Safety;
 import com.eyesmart.testapplication.android.SensorActivity;
 import com.eyesmart.testapplication.android.SystemInfoUtils;
 import com.eyesmart.testapplication.android.TestActivity;
+import com.eyesmart.testapplication.android.TestBitmap;
 import com.eyesmart.testapplication.android.TestDatabase;
 import com.eyesmart.testapplication.android.TestFragment;
 import com.eyesmart.testapplication.android.TestHandler;
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 /**控件中图像显示及处理*/
                 //Resource.drawable();  (drawable)图片设置、层叠、变换
                 DrawView.class,         //绘制图形
-                //图像处理+
+                TestBitmap.class,       //图像处理+
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
