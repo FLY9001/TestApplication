@@ -22,22 +22,16 @@ import com.eyesmart.testapplication.R;
 
 public class DrawView extends View {
 
-    private Paint mPaint;
-
-
     void test(Canvas canvas) {
         initPain();         //画笔设置
         testDraw(canvas);   //画图形
-        testBitmap(canvas);
-        canvasTest(canvas); //画布变换
-        // canvas.drawBitmap
-        // canvas.drawLines();
-//        canvas.drawPoint();
-//        canvas.drawPoints();
-        //canvas.drawText();
-        //canvas.drawTextOnPath();
-        //canvas.clipRect()
+        testcanvas(canvas); //画布变换
+
+        testBitmapMatrix(canvas); //Matrix图像变换
+        testBitmapMesh(canvas);   //Mesh图像扭曲
     }
+
+    private Paint mPaint;
 
     public DrawView(Context context) {
         this(context, null);
@@ -86,8 +80,8 @@ public class DrawView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         testDraw(canvas);
-        testBitmap(canvas);
-        canvasTest(canvas);
+        testBitmapMatrix(canvas);
+        testcanvas(canvas);
     }
 
     private void testDraw(Canvas canvas) {
@@ -129,27 +123,13 @@ public class DrawView extends View {
         canvas.drawTextOnPath("沿路径绘制文字沿路径绘制文字沿路径绘制文字沿路径绘制文字", path, -20, -20, mPaint);
     }
 
-    Matrix matrix = new Matrix();
-    Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.xy)).getBitmap();
-
-    private void testBitmap(Canvas canvas) {
-        matrix.setTranslate(30, 30);                 //矩阵
-        matrix.setScale(0.15f, 0.15f, 0, 0);
-        matrix.setRotate(90, 30, 30);
-        matrix.setSkew(30, 30, 0, 0);
-
-        //Bitmap bitmap1 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        canvas.drawBitmap(bitmap, matrix, null);
-
-        //canvas.drawBitmapMesh();                          //扭曲
-    }
 
     /**
      * 绘制方法练习
      *
      * @param canvas
      */
-    private void canvasTest(Canvas canvas) {
+    private void testcanvas(Canvas canvas) {
         //translate平移、scale缩放、rotate旋转、skew错切
         //save保存画布坐标体系，restore恢复到保存时画布坐标体系
         //saveLayer新建图层
@@ -201,4 +181,51 @@ public class DrawView extends View {
         //canvas.restoreToCount();
     }
 
+
+    Matrix matrix = new Matrix();
+    Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.xy)).getBitmap();
+
+    private void testBitmapMatrix(Canvas canvas) {
+        float[] matrix_value = new float[]{
+                1, 0, 0,
+                0, 1, 0,
+                0, 0, 1};
+        matrix.setValues(matrix_value); //3*3的矩阵，表现为9位的float数组(可直接修改其值，用于复杂变换)
+
+        /**简单API矩阵变换*/
+        matrix.setTranslate(30, 30);                //平移
+        matrix.setRotate(90, 0, 0);        //旋转
+        matrix.setScale(0.15f, 0.15f, 0, 0);//缩放
+        matrix.setSkew(30, 30, 0, 0);       //错切
+
+        //根据原始位图与Matrix创建新图片
+        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        //绘制新位图
+        canvas.drawBitmap(bmp, matrix, null);
+
+        /**将图片分为网格，修改网格坐标进行扭曲*/
+        //canvas.drawBitmapMesh();                          //扭曲
+    }
+    private void testBitmapMesh(Canvas canvas) {
+        /**将图片分为网格，修改网格坐标进行扭曲*/
+        int widthNum = 100;                                 //图宽网格的个数
+        int heightNum = 100;                                //图高网格的个数
+        int pointNum = (widthNum + 1) * (heightNum + 1);    //网格坐标点的个数
+        float[] oldVerts = new float[pointNum * 2];         //存储原网格坐标点数值的数组
+        float[] verts = new float[pointNum * 2];            //存储修改后的网格坐标点数值的数组
+
+        int index = 0;
+        for (int y = 0; y < heightNum; y++) {
+            int fy = bitmap.getHeight() * y / heightNum;
+            for (int x = 0; x < widthNum; x++) {
+                int fx = bitmap.getWidth() * x / widthNum;
+                oldVerts[index * 2 + 0] = verts[index * 2 + 0] = fx;
+                oldVerts[index * 2 + 0] = verts[index * 2 + 1] = fx;
+                index++;
+            }
+        }
+        //修改verts中指定坐标数据，扭曲图像
+
+        canvas.drawBitmapMesh(bitmap, widthNum, heightNum, verts, 0, null, 0, null);
+    }
 }

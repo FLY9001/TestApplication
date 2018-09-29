@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
                 /**控件中图像显示及处理*/
                 //Resource.drawable();  (drawable)图片设置、层叠、变换
-                DrawView.class,         //绘制图形
-                TestBitmap.class,       //图像处理+
+                DrawView.class,         //Paint、Canvas绘制图形
+                TestBitmap.class,       //ColorMatrix、Pixels颜色效果，Matrix、Mesh变换扭曲
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
