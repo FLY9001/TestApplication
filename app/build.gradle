@@ -4,14 +4,14 @@ apply plugin: 'com.android.application'//应用此插件，可构建应用程序
 
 android {
     //必须有的两个属性
-    compileSdkVersion rootProject.ext.compileSdkVersion     //编译app时候，使用的sdk版本号
+    compileSdkVersion rootProject.ext.compileSdkVersion     //编译时使用的sdk版本，建议（总是）采用最新版本
     buildToolsVersion rootProject.ext.buildToolsVersion     //构建工具的版本号
 
     //默认配置,重写AndroidManifest或在其上添加 自定义属性
     defaultConfig {
         applicationId "com.eyesmart.testapplication"    //只会修改当前程序的包名,不影响源码中资源文件对包名的引用
-        minSdkVersion 19                                //最小支持的sdk版本
-        targetSdkVersion 25                             //目标sdk版本
+        minSdkVersion 19                                //最小支持的sdk版本（必须>=所有依赖库所支持的最低版本）
+        targetSdkVersion 25                             //目标sdk版本（compileSdkVersion采用了23（6.0），但是项目暂时还未对6.0的特性（如运行时权限）做相应的处理，那么可以设置targetSdkVersion的版本低于23。这样，应用仍可以正常运行在6.0的机子上（当然也就不具有运行时权限的特性）。）
         versionCode 1                                   //app版本号
         versionName "1.0"                               //app版本名，无作用
         flavorDimensions "versionCode"
