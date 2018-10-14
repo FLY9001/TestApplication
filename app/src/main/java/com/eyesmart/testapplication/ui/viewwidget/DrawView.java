@@ -1,20 +1,18 @@
 package com.eyesmart.testapplication.ui.viewwidget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
+import android.graphics.CornerPathEffect;
+import android.graphics.DashPathEffect;
+import android.graphics.DiscretePathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.eyesmart.testapplication.R;
 
 /**
  * Created by FLY on 2017/12/7.
@@ -26,9 +24,6 @@ public class DrawView extends View {
         initPain();         //画笔设置
         testDraw(canvas);   //画图形
         testcanvas(canvas); //画布变换
-
-        testBitmapMatrix(canvas); //Matrix图像变换
-        testBitmapMesh(canvas);   //Mesh图像扭曲
     }
 
     private Paint mPaint;
@@ -80,14 +75,13 @@ public class DrawView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         testDraw(canvas);
-        testBitmapMatrix(canvas);
         testcanvas(canvas);
     }
 
     private void testDraw(Canvas canvas) {
         canvas.drawColor(Color.LTGRAY);                                     // 绘制画布
 
-        canvas.drawCircle(100, 100, 100, mPaint);          //圆形
+        canvas.drawCircle(100, 100, 100, mPaint);            //圆形
         canvas.drawRect(0, 220, 200, 320, mPaint); //矩形
         RectF re1 = new RectF(0, 340, 200, 440);
         canvas.drawRoundRect(re1, 20, 20, mPaint);                   //圆角矩形
@@ -121,8 +115,22 @@ public class DrawView extends View {
         mPaint.setTextSize(46);
         canvas.drawPath(path, mPaint);
         canvas.drawTextOnPath("沿路径绘制文字沿路径绘制文字沿路径绘制文字沿路径绘制文字", path, -20, -20, mPaint);
+
+        testPathEffect(canvas, path);
     }
 
+    //PathEffect：线条效果（实线、虚线、圆角线等）
+    private void testPathEffect(Canvas canvas, Path path) {
+        mPaint.setPathEffect(new CornerPathEffect(10));                      //拐角圆滑的线
+        mPaint.setPathEffect(new DiscretePathEffect(1, 1));//线上带有杂点
+        mPaint.setPathEffect(new DashPathEffect(new float[10], 0));          //虚线
+//        mPaint.setPathEffect(new PathDashPathEffect());     //虚线点的形状
+//        mPaint.setPathEffect(new ComposePathEffect());     //组合效果
+
+        mPaint.setPathEffect(new CornerPathEffect(10));              //PathEffect：线条效果（实线、虚线、圆角线等）
+        path.addRect(0, 0, 8, 8, Path.Direction.CCW);
+        canvas.drawPath(path, mPaint);
+    }
 
     /**
      * 绘制方法练习
@@ -179,53 +187,5 @@ public class DrawView extends View {
         //复位图层，并画出内容
         canvas.restore();
         //canvas.restoreToCount();
-    }
-
-
-    Matrix matrix = new Matrix();
-    Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.xy)).getBitmap();
-
-    private void testBitmapMatrix(Canvas canvas) {
-        float[] matrix_value = new float[]{
-                1, 0, 0,
-                0, 1, 0,
-                0, 0, 1};
-        matrix.setValues(matrix_value); //3*3的矩阵，表现为9位的float数组(可直接修改其值，用于复杂变换)
-
-        /**简单API矩阵变换*/
-        matrix.setTranslate(30, 30);                //平移
-        matrix.setRotate(90, 0, 0);        //旋转
-        matrix.setScale(0.15f, 0.15f, 0, 0);//缩放
-        matrix.setSkew(30, 30, 0, 0);       //错切
-
-        //根据原始位图与Matrix创建新图片
-        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        //绘制新位图
-        canvas.drawBitmap(bmp, matrix, null);
-
-        /**将图片分为网格，修改网格坐标进行扭曲*/
-        //canvas.drawBitmapMesh();                          //扭曲
-    }
-    private void testBitmapMesh(Canvas canvas) {
-        /**将图片分为网格，修改网格坐标进行扭曲*/
-        int widthNum = 100;                                 //图宽网格的个数
-        int heightNum = 100;                                //图高网格的个数
-        int pointNum = (widthNum + 1) * (heightNum + 1);    //网格坐标点的个数
-        float[] oldVerts = new float[pointNum * 2];         //存储原网格坐标点数值的数组
-        float[] verts = new float[pointNum * 2];            //存储修改后的网格坐标点数值的数组
-
-        int index = 0;
-        for (int y = 0; y < heightNum; y++) {
-            int fy = bitmap.getHeight() * y / heightNum;
-            for (int x = 0; x < widthNum; x++) {
-                int fx = bitmap.getWidth() * x / widthNum;
-                oldVerts[index * 2 + 0] = verts[index * 2 + 0] = fx;
-                oldVerts[index * 2 + 0] = verts[index * 2 + 1] = fx;
-                index++;
-            }
-        }
-        //修改verts中指定坐标数据，扭曲图像
-
-        canvas.drawBitmapMesh(bitmap, widthNum, heightNum, verts, 0, null, 0, null);
     }
 }
