@@ -2,19 +2,24 @@ package com.eyesmart.testapplication.ui.viewwidget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
+import android.graphics.ComposeShader;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.eyesmart.testapplication.R;
+import com.eyesmart.testapplication.android.TestBitmap;
 
 /**
  * Created by FLY on 2017/12/7.
@@ -22,13 +27,13 @@ import com.eyesmart.testapplication.R;
 
 public class DrawView extends View {
 
-    void test(Canvas canvas) {
+    void test(Bitmap bitmap, Canvas canvas) {
         initPain();         //画笔设置
+        testShader();       //Shader渲染
         testDraw(canvas);   //画图形
         testcanvas(canvas); //画布变换
 
-        testBitmapMatrix(canvas); //Matrix图像变换
-        testBitmapMesh(canvas);   //Mesh图像扭曲
+        TestBitmap.test(bitmap, canvas);//Bitmap相关
     }
 
     private Paint mPaint;
@@ -63,7 +68,10 @@ public class DrawView extends View {
 
         mPaint.setTextSize(58);             //文字大小
         mPaint.setTextAlign(Paint.Align.LEFT);//文字对齐方式
+    }
 
+    private void testShader() {
+        int[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW};
         // Shader可用几种效果来填充view，包括 平铺、线性渐变、圆形渐变、角度渐变
         //参数一为渐变起初点坐标x位置，参数二为y轴位置，参数三和四分辨对应渐变终点,其中参数new int[]{startColor, midleColor,endColor}是参与渐变效果的颜色集合，
         // 其中参数new float[]{0 , 0.5f, 1.0f}是定义每个颜色处于的渐变相对位置， 这个参数可以为null，如果为null表示所有的颜色按顺序均匀的分布
@@ -71,16 +79,24 @@ public class DrawView extends View {
         // REPEAT:沿着渐变方向循环重复
         // CLAMP:如果在预先定义的范围外画的话，就重复边界的颜色
         // MIRROR:与REPEAT一样都是循环重复，但这个会对称重复
-        // 为Paint设置渐变器
-//        Shader mShader = new LinearGradient(0, 0, 40, 60, new int[]{Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW}, null, Shader.TileMode.REPEAT);
-//        mPaint.setShader(mShader);
+
+        //平铺渲染
+        Shader bitmapShader = new BitmapShader(Bitmap.createBitmap(null), Shader.TileMode.REPEAT, Shader.TileMode.MIRROR);//x方向重复，y方向镜像
+        //线性渐变
+        Shader linearGradient = new LinearGradient(0, 0, 40, 60, colors, null, Shader.TileMode.REPEAT);
+        //圆形渐变
+        Shader radialGradient = new RadialGradient(0f, 0f, 80, colors, null, Shader.TileMode.REPEAT);
+        //角度渐变
+        Shader sweepGradient = new SweepGradient(160, 160, colors, null);
+        //组合
+        Shader composeShader = new ComposeShader(linearGradient, radialGradient, PorterDuff.Mode.DARKEN);
+        mPaint.setShader(composeShader);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         testDraw(canvas);
-        testBitmapMatrix(canvas);
         testcanvas(canvas);
     }
 
@@ -179,53 +195,5 @@ public class DrawView extends View {
         //复位图层，并画出内容
         canvas.restore();
         //canvas.restoreToCount();
-    }
-
-
-    Matrix matrix = new Matrix();
-    Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.xy)).getBitmap();
-
-    private void testBitmapMatrix(Canvas canvas) {
-        float[] matrix_value = new float[]{
-                1, 0, 0,
-                0, 1, 0,
-                0, 0, 1};
-        matrix.setValues(matrix_value); //3*3的矩阵，表现为9位的float数组(可直接修改其值，用于复杂变换)
-
-        /**简单API矩阵变换*/
-        matrix.setTranslate(30, 30);                //平移
-        matrix.setRotate(90, 0, 0);        //旋转
-        matrix.setScale(0.15f, 0.15f, 0, 0);//缩放
-        matrix.setSkew(30, 30, 0, 0);       //错切
-
-        //根据原始位图与Matrix创建新图片
-        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        //绘制新位图
-        canvas.drawBitmap(bmp, matrix, null);
-
-        /**将图片分为网格，修改网格坐标进行扭曲*/
-        //canvas.drawBitmapMesh();                          //扭曲
-    }
-    private void testBitmapMesh(Canvas canvas) {
-        /**将图片分为网格，修改网格坐标进行扭曲*/
-        int widthNum = 100;                                 //图宽网格的个数
-        int heightNum = 100;                                //图高网格的个数
-        int pointNum = (widthNum + 1) * (heightNum + 1);    //网格坐标点的个数
-        float[] oldVerts = new float[pointNum * 2];         //存储原网格坐标点数值的数组
-        float[] verts = new float[pointNum * 2];            //存储修改后的网格坐标点数值的数组
-
-        int index = 0;
-        for (int y = 0; y < heightNum; y++) {
-            int fy = bitmap.getHeight() * y / heightNum;
-            for (int x = 0; x < widthNum; x++) {
-                int fx = bitmap.getWidth() * x / widthNum;
-                oldVerts[index * 2 + 0] = verts[index * 2 + 0] = fx;
-                oldVerts[index * 2 + 0] = verts[index * 2 + 1] = fx;
-                index++;
-            }
-        }
-        //修改verts中指定坐标数据，扭曲图像
-
-        canvas.drawBitmapMesh(bitmap, widthNum, heightNum, verts, 0, null, 0, null);
     }
 }
