@@ -45,8 +45,8 @@ import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
 import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
-import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
 import com.eyesmart.testapplication.ui.viewwidget.DrawView;
+import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
 import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
 import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         Class[] view = {
                 DisplayUtil.class,
                 Resource.class,         //资源文件
-                TestAnim.class,         //动画
 
                 /**自定义控件*/
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 //扩展已有ViewGroup(inflate)
                 AnalogClock.class,      //完全自定义View(重写onDraw)
                 StaggerLayout.class,    //完全自定义ViewGroup(重写)
-
+                TestAnim.class,         //动画
                 /**控件中图像显示及处理*/
                 //Resource.drawable();  (drawable)图片设置、层叠、变换
                 DrawView.class,         //Paint、Canvas绘制图形

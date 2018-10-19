@@ -18,7 +18,7 @@ import android.util.DisplayMetrics;
  * xhdpi：  720*1280    320dpi   2
  * xxhdpi： 1080*1920   480dpi   3
  * xxxhdpi：1440*2560   640dpi   4
- *
+ * <p>
  * 图片应根据大小放在指定目录
  */
 

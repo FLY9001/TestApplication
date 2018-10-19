@@ -1,28 +1,37 @@
 package com.eyesmart.testapplication.android;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+
+import com.eyesmart.testapplication.R;
 
 /**
  * 图像处理
  */
 
 public class TestBitmap {
-    void test(Bitmap bm, Canvas canvas) {
+    public static void test(Bitmap bm, Canvas canvas) {
         testBitmapColorMatrix(bm);//ColorMatrix改变图像效果
         testBitmapPixels(bm);     //Pixels像素值改变图像效果
+
         testBitmapMatrix(canvas); //Matrix变换图像
         testBitmapMesh(canvas);   //Mesh网格扭曲图像
+
+        testXformode(canvas);     //图像叠加
     }
 
     //根据颜色矩阵改变图像效果
     //实现如：灰度效果、颜色反转、怀旧效果、高饱和度等
-    public Bitmap testBitmapColorMatrix(Bitmap bm) {
+    public static Bitmap testBitmapColorMatrix(Bitmap bm) {
         /**颜色矩阵初始化*/
         ColorMatrix colorMatrix0 = new ColorMatrix(new float[]{
                 1, 0, 0, 0, 0,  //红R
@@ -63,7 +72,7 @@ public class TestBitmap {
     }
 
     //根据改变像素值改变图像效果
-    public Bitmap testBitmapPixels(Bitmap bm) {
+    public static Bitmap testBitmapPixels(Bitmap bm) {
         int width = bm.getWidth();
         int height = bm.getHeight();
         int[] oldPx = new int[width * height];
@@ -86,11 +95,11 @@ public class TestBitmap {
     }
 
 
-    Matrix matrix = new Matrix();
-    Bitmap bitmap = Bitmap.createBitmap(null);
+    static Matrix matrix = new Matrix();
+    static Bitmap bitmap = Bitmap.createBitmap(null);
 
     //Matrix图像变换
-    private void testBitmapMatrix(Canvas canvas) {
+    private static void testBitmapMatrix(Canvas canvas) {
         float[] matrix_value = new float[]{
                 1, 0, 0,
                 0, 1, 0,
@@ -104,12 +113,12 @@ public class TestBitmap {
         matrix.setSkew(30, 30, 0, 0);       //错切
 
         //根据原始位图与Matrix创建新图片
-        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), this.matrix, true);
+        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         //绘制新位图
-        canvas.drawBitmap(bmp, this.matrix, null);
+        canvas.drawBitmap(bmp, matrix, null);
     }
 
-    private void testBitmapMesh(Canvas canvas) {
+    private static void testBitmapMesh(Canvas canvas) {
         /**将图片分为网格，修改网格坐标进行扭曲*/
         int widthNum = 100;                                 //图宽网格的个数
         int heightNum = 100;                                //图高网格的个数
@@ -130,5 +139,18 @@ public class TestBitmap {
         //修改verts中指定坐标数据，扭曲图像
 
         canvas.drawBitmapMesh(bitmap, widthNum, heightNum, verts, 0, null, 0, null);
+    }
+
+    static Paint mPaint = new Paint();
+    static Context context;
+
+    //图像叠加
+    private static void testXformode(Canvas canvas) {
+        Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.xformod);
+
+        canvas.drawBitmap(bitmap, 0, 0, mPaint);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap1, 0, 0, mPaint);
+        mPaint.setXfermode(null);
     }
 }

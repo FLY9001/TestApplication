@@ -1,18 +1,28 @@
 package com.eyesmart.testapplication.ui.viewwidget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ComposeShader;
+import android.graphics.LinearGradient;
 import android.graphics.CornerPathEffect;
 import android.graphics.DashPathEffect;
 import android.graphics.DiscretePathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.eyesmart.testapplication.android.TestBitmap;
 
 /**
  * Created by FLY on 2017/12/7.
@@ -20,10 +30,13 @@ import android.view.View;
 
 public class DrawView extends View {
 
-    void test(Canvas canvas) {
+    void test(Bitmap bitmap, Canvas canvas) {
         initPain();         //画笔设置
+        testShader();       //Shader渲染
         testDraw(canvas);   //画图形
         testcanvas(canvas); //画布变换
+
+        TestBitmap.test(bitmap, canvas);//Bitmap相关
     }
 
     private Paint mPaint;
@@ -58,7 +71,10 @@ public class DrawView extends View {
 
         mPaint.setTextSize(58);             //文字大小
         mPaint.setTextAlign(Paint.Align.LEFT);//文字对齐方式
+    }
 
+    private void testShader() {
+        int[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW};
         // Shader可用几种效果来填充view，包括 平铺、线性渐变、圆形渐变、角度渐变
         //参数一为渐变起初点坐标x位置，参数二为y轴位置，参数三和四分辨对应渐变终点,其中参数new int[]{startColor, midleColor,endColor}是参与渐变效果的颜色集合，
         // 其中参数new float[]{0 , 0.5f, 1.0f}是定义每个颜色处于的渐变相对位置， 这个参数可以为null，如果为null表示所有的颜色按顺序均匀的分布
@@ -66,9 +82,18 @@ public class DrawView extends View {
         // REPEAT:沿着渐变方向循环重复
         // CLAMP:如果在预先定义的范围外画的话，就重复边界的颜色
         // MIRROR:与REPEAT一样都是循环重复，但这个会对称重复
-        // 为Paint设置渐变器
-//        Shader mShader = new LinearGradient(0, 0, 40, 60, new int[]{Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW}, null, Shader.TileMode.REPEAT);
-//        mPaint.setShader(mShader);
+
+        //平铺渲染
+        Shader bitmapShader = new BitmapShader(Bitmap.createBitmap(null), Shader.TileMode.REPEAT, Shader.TileMode.MIRROR);//x方向重复，y方向镜像
+        //线性渐变
+        Shader linearGradient = new LinearGradient(0, 0, 40, 60, colors, null, Shader.TileMode.REPEAT);
+        //圆形渐变
+        Shader radialGradient = new RadialGradient(0f, 0f, 80, colors, null, Shader.TileMode.REPEAT);
+        //角度渐变
+        Shader sweepGradient = new SweepGradient(160, 160, colors, null);
+        //组合
+        Shader composeShader = new ComposeShader(linearGradient, radialGradient, PorterDuff.Mode.DARKEN);
+        mPaint.setShader(composeShader);
     }
 
     @Override
