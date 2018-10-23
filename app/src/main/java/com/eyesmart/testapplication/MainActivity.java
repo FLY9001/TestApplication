@@ -28,6 +28,7 @@ import com.eyesmart.testapplication.android.TestReceiver;
 import com.eyesmart.testapplication.android.TestRxJava;
 import com.eyesmart.testapplication.android.TestService;
 import com.eyesmart.testapplication.android.TestUI;
+import com.eyesmart.testapplication.android.TestWindow;
 import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.MyCollection;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 DisplayUtil.class,
                 Resource.class,         //资源文件
 
+                TestWindow.class,       //显示窗口
                 /**自定义控件*/
                 TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
                 //扩展已有View(如密码输入EditText)

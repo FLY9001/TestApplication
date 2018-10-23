@@ -47,10 +47,8 @@ public class TestService extends Service {
 
         /**远程Service*/
         //AIDL：Android接口定义语言，远程Service进行跨进程通信
-
         //服务端：1、aidl文件夹下定义接口；2、Binder实现接口；3、清单文件设置为远程Service
         mBinder.asBinder();
-
         //客户端：1、复制aidl文件夹；2、绑定启动Service；3、IBinder转换为接口对象
         //参数与服务器端的action要一致,即"服务器包名.aidl接口文件名"
         intent = new Intent("com.eyesmart.testapplication.IMyAidlInterface");
