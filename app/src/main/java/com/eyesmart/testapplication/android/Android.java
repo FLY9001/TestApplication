@@ -17,9 +17,10 @@ public class Android {
     /**
      ******************架构********************************************
 
-     Application：               应用程序层              app
-     Framework：                 应用程序框架层          APIS
-     Libraries(Android Runtime)：系统运行库运行环境层    各种C、C++本地库和虚拟机（Dalvik、ART）
+     Application：               应用层                 app
+     Framework：                 应用框架层             APIS
+     Libraries(Android Runtime)  系统运行库运行环境层    各种C、C++本地库和虚拟机（Dalvik、ART）
+     HAL                         硬件抽象层             硬件控制接口层
      Linux Kernel：              Linux内核层            驱动程序
 
      Android 4.4以上 时虚拟机由 Dalvik 变为 ART
