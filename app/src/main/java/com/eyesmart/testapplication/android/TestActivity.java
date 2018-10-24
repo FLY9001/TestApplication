@@ -26,10 +26,8 @@ public class TestActivity extends Activity {
         onCreate(null);
         //onRestart();
         onStart();
-        //onRestoreInstanceState(null);
         onResume();                         //访问网络一般放在此
         onPause();
-        //onSaveInstanceState(null);
         onStop();
         onDestroy();
 
@@ -45,7 +43,7 @@ public class TestActivity extends Activity {
 
         //最终调用PhoneWindow的setContentView
         //1、得到DecorView，其是Activity的顶级根View，包括标题栏(ActionBar)和内容栏(contentParent)
-        //2、设置DecorView内容栏的View，即contentView，可通过findViewById(android.R.id.content)获得，content
+        //2、设置DecorView内容栏的View，即contentView(FrameLayout)，可通过findViewById(android.R.id.content)获得，content
         //3、在onResume中调用WindowManager的addView方法，接着setVisibility显示出来
         setContentView(R.layout.activity_main);
 

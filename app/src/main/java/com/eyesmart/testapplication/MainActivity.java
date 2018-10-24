@@ -9,6 +9,7 @@ import com.eyesmart.testapplication.android.Android;
 import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
 import com.eyesmart.testapplication.android.HybridActivity;
+import com.eyesmart.testapplication.android.IPC;
 import com.eyesmart.testapplication.android.PermissionActivity;
 import com.eyesmart.testapplication.android.Safety;
 import com.eyesmart.testapplication.android.SensorActivity;
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 TestProvider.class,     //ContentProvider
                 TestFragment.class,     //Fragment
                 TestHandler.class,      //线程及消息通讯
+                IPC.class,              
 
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
