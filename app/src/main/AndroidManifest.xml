@@ -59,6 +59,7 @@
         android:restoreAnyVersion=["true" | "false"]    //是否准备尝试恢复所有的备份？默认为false
         android:taskAffinity="string"                   //相同的affinity的Activity理论上属于相同的Task，默认值为包名
         android:theme="resource or theme"               //主题风格
+        android:resizeableActivity="["true" | "false"]  //是否禁用分屏
         -->
         <activity android:name=".MainActivity">
 

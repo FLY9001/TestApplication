@@ -24,4 +24,22 @@ public class Version {
         //CardView，继承FrameLayout，可设置 圆角和阴影，具有立体性
         //Notification，3种
     }
+
+    /**
+     * Android7.0 新特性：
+     * 1、多窗口模式
+     * 2、Data SAVER，流量保护机制
+     * 3、Java8语言支持
+     * 4、自定义壁纸
+     * 5、快速回复
+     * 6、Daydream VR平台支持
+     * 7、后台省电
+     * 8、快速开关设置
+     * 9、Unicode 9支持，全新emoji表情符号
+     * 10、Google Assistant
+     */
+    void version7() {
+        //禁用分屏
+        //android:resizeableActivity="false"
+    }
 }
