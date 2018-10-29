@@ -11,7 +11,6 @@ public class Android {
     void test() {
         int framwork = R.drawable.framwork; //架构图
         int source = R.drawable.source;     //源码目录结构
-
         int sdk_ = R.drawable.sdk_manager;  //SDK管理器详情
     }
     /**

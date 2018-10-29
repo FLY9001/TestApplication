@@ -41,7 +41,9 @@ public class TestActivity extends Activity {
         //设置Window属性
         TestWindow.activityWindow(this);
 
-        //最终调用PhoneWindow的setContentView
+        int activity = R.drawable.activity;     //activity根View
+
+        /**最终调用PhoneWindow的setContentView*/
         //1、得到DecorView，其是Activity的顶级根View，包括标题栏(ActionBar)和内容栏(contentParent)
         //2、设置DecorView内容栏的View，即contentView(FrameLayout)，可通过findViewById(android.R.id.content)获得，content
         //3、在onResume中调用WindowManager的addView方法，接着setVisibility显示出来

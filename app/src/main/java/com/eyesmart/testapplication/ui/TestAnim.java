@@ -1,5 +1,6 @@
 package com.eyesmart.testapplication.ui;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -76,19 +77,24 @@ public class TestAnim extends Activity {
 
     //属性动画，分为ObjectAnimator、ValueAnimator
     void propertyAnimator() {
-        ObjectAnimator tAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, 100f);//对某个对象进行操作
+        /**ObjectAnimator，对Object的属性XXX进行操作，属性变量一定要有setXXX、getXXX方法（但不需要单独设置成员变量XXX本身*/
+        ObjectAnimator tAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, 100f);
         tAnimator.setInterpolator(new AccelerateDecelerateInterpolator());  //插值器，可自定义
         tAnimator.addListener(null);//监听
         tAnimator.start();
 
+        /**AnimatorSet，组合动画*/
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(tAnimator, tAnimator);//……
+        //animatorSet.play(tAnimator).before(tAnimator).with(tAnimator).after(1000).after(tAnimator);//可设置播放顺序
         animatorSet.setDuration(1000).start();
 
+        /**在XML定义*/
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.property_animator);
         set.setTarget(view);
         set.start();
 
+        /**ValueAnimator，数值发生器，对数值变化进行操作*/
         final ValueAnimator animator = ValueAnimator.ofInt(0, 100);//对数值变化进行操作
         animator.setDuration(5000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -105,6 +111,29 @@ public class TestAnim extends Activity {
             }
         });
         animator.start();
+
+        /**动画监听*/
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
     }
 
     //Layout动画，ViewGroup中子View的出场动画

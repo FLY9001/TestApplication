@@ -31,6 +31,7 @@ import com.eyesmart.testapplication.android.TestService;
 import com.eyesmart.testapplication.android.TestUI;
 import com.eyesmart.testapplication.android.TestWindow;
 import com.eyesmart.testapplication.android.TestXmlJson;
+import com.eyesmart.testapplication.android.Version;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.MyCollection;
 import com.eyesmart.testapplication.java.MyEnum;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 AppInfoUtils.class,     //各个应用信息
 
                 PermissionActivity.class,//权限
+                Version.class
         };
         /**android基础框架*/
         Class[] android = {
@@ -96,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 TestProvider.class,     //ContentProvider
                 TestFragment.class,     //Fragment
                 TestHandler.class,      //线程及消息通讯
-                IPC.class,              
 
+                IPC.class,              //多进程
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket
@@ -115,14 +117,16 @@ public class MainActivity extends AppCompatActivity {
                 Resource.class,         //资源文件
 
                 TestWindow.class,       //显示窗口
-                /**自定义控件*/
-                TestView.class,         //View的基本参数、初始化、绘制流程、事件体系
-                //扩展已有View(如密码输入EditText)
-                //扩展已有ViewGroup(inflate)
-                AnalogClock.class,      //完全自定义View(重写onDraw)
-                StaggerLayout.class,    //完全自定义ViewGroup(重写)
+                TestView.class,         //坐标系、初始化；绘制流程、事件体系
                 TestAnim.class,         //动画
-                /**控件中图像显示及处理*/
+
+                /**自定义控件*/
+                //继承已有View(如密码输入EditText)
+                //继承已有ViewGroup(组合内部控件，inflate)
+                AnalogClock.class,      //直接继承View(自定义属性，重写onDraw)
+                StaggerLayout.class,    //直接继承ViewGroup(重写onLayout)
+
+                /**图像显示及处理*/
                 //Resource.drawable();  (drawable)图片设置、层叠、变换
                 DrawView.class,         //Paint、Canvas绘制图形
                 TestBitmap.class,       //ColorMatrix、Pixels颜色效果，Matrix、Mesh变换扭曲

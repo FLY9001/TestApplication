@@ -30,6 +30,7 @@ buildscript {
 //定义的属性会被应用到所有moudle中
 allprojects {
     repositories {
+        maven { url "https://maven.google.com" }
         jcenter()
         google()
     }
@@ -37,10 +38,10 @@ allprojects {
 
 //extra property,第一次被声明，可用于全局
 ext {
-    compileSdkVersion = 25
-    buildToolsVersion = "25.0.2"
-    minSdkVersion = 14
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.2"
     targetSdkVersion = 22
+    minSdkVersion = 14
 
     versionCode = 100900000
     versionName = '1.9.0'

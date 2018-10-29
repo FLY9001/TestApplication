@@ -70,6 +70,7 @@ public class TestView extends LinearLayout {
         int top = getTop();
         int right = getRight();
         int bottom = getBottom();
+
         int width = getWidth(); //宽高，width = right - left，herght = bottom - top
         int herght = getHeight();
 
@@ -269,7 +270,7 @@ public class TestView extends LinearLayout {
 
 //**************************************************************************************************
 
-    Scroller mScroller = new Scroller(getContext());
+    Scroller mScroller = new Scroller(getContext(), null);//可自定义插值器
 
     /**
      * 弹性滑动
@@ -277,14 +278,14 @@ public class TestView extends LinearLayout {
     public void smoothScrollTo(int destX, int destY) {
         int scrollX = getScrollX();
         int delta = destX - scrollX;
-        mScroller.startScroll(scrollX, 0, delta, 0, 1000);
-        invalidate();
+        mScroller.startScroll(scrollX, 0, delta, 0, 1000);//Scroller保存参数
+        invalidate();//重绘会调用draw(),然后调用computeScroll()
     }
 
     @Override
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
-            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());   //获取Scroller中的当前参数
             postInvalidate();//通过不断的重绘不断的调用computeScroll方法
         }
     }

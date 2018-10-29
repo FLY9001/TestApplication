@@ -11,7 +11,8 @@ android {
     defaultConfig {
         applicationId "com.eyesmart.testapplication"    //只会修改当前程序的包名,不影响源码中资源文件对包名的引用
         minSdkVersion 19                                //最小支持的sdk版本（必须>=所有依赖库所支持的最低版本）
-        targetSdkVersion 25                             //目标sdk版本（compileSdkVersion采用了23（6.0），但是项目暂时还未对6.0的特性（如运行时权限）做相应的处理，那么可以设置targetSdkVersion的版本低于23。这样，应用仍可以正常运行在6.0的机子上（当然也就不具有运行时权限的特性）。）
+        targetSdkVersion 22
+        //目标sdk版本（compileSdkVersion采用了23（6.0），但是项目暂时还未对6.0的特性（如运行时权限）做相应的处理，那么可以设置targetSdkVersion的版本低于23。这样，应用仍可以正常运行在6.0的机子上（当然也就不具有运行时权限的特性）。）
         versionCode 1                                   //app版本号
         versionName "1.0"                               //app版本名，无作用
         flavorDimensions "versionCode"
@@ -143,13 +144,14 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile(name: 'testlibrary-debug', ext: 'aar')
-
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         //根据不同编译类型，依赖不同的库
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:palette-v7:26.1.0'
     testCompile 'junit:junit:4.12'
     //用于Java编写执行Java测试用例
     compile 'com.dubsmash.volley:library:2.0.1'
@@ -157,36 +159,27 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-
     compile 'io.reactivex.rxjava2:rxjava:2.1.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'jp.wasabeef:glide-transformations:1.0.6'
     compile 'com.github.bumptech.glide:glide:4.0.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-
     //implementation
     //这个指令的特点就是，对于使用了该命令编译的依赖，对该项目有依赖的项目将无法访问到使用该命令编译的依赖中的任何程序，
     //也就是将该依赖隐藏在内部，而不对外部公开。
     //编译速度会加快，优先使用
-
-//    下面是2.x版本依赖的说明，括号里对应的是3.0版本的依赖方式。
-
-//    compile（api）
-//    这种是我们最常用的方式，使用该方式依赖的库将会参与编译和打包。
-
-//    provided（compileOnly）
-//    只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
-
-//    apk（runtimeOnly）
-//    只在生成apk的时候参与打包，编译时不会参与，很少用。
-
-//    testCompile（testImplementation）
-//    testCompile 只在单元测试代码的编译以及最终打包测试apk时有效。
-
-//    debugCompile（debugImplementation）
-//    debugCompile 只在debug模式的编译和最终的debug apk打包时有效。
-
-//    releaseCompile（releaseImplementation）
-//    releaseCompile 仅仅针对Release模式的编译和最终的Release apk打包。
+    //    下面是2.x版本依赖的说明，括号里对应的是3.0版本的依赖方式。
+    //    compile（api）
+    //    这种是我们最常用的方式，使用该方式依赖的库将会参与编译和打包。
+    //    provided（compileOnly）
+    //    只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
+    //    apk（runtimeOnly）
+    //    只在生成apk的时候参与打包，编译时不会参与，很少用。
+    //    testCompile（testImplementation）
+    //    testCompile 只在单元测试代码的编译以及最终打包测试apk时有效。
+    //    debugCompile（debugImplementation）
+    //    debugCompile 只在debug模式的编译和最终的debug apk打包时有效。
+    //    releaseCompile（releaseImplementation）
+    //    releaseCompile 仅仅针对Release模式的编译和最终的Release apk打包。
 }
