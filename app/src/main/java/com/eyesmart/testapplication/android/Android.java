@@ -10,15 +10,28 @@ import com.eyesmart.testapplication.R;
 public class Android {
     void test() {
         int framwork = R.drawable.framwork; //架构图
-        int source = R.drawable.source;     //源码目录结构
         int sdk_ = R.drawable.sdk_manager;  //SDK管理器详情
+    }
+
+    void testFramwork() {
+        int manager = R.drawable.manager;       //应用框架层组件
+        int libraries = R.drawable.libraries;   //C、C++本地库
+
+
+        int source = R.drawable.source;         //源码目录结构
+        int source2 = R.drawable.source2;       //源码目录结构
+
+        int app_source = R.drawable.app_source;             //packages目录；存放着系统核心应用程序、第三方的应用程序和输入法等
+        int frameworks_base = R.drawable.framework_source;  //frameworks/base目录，对应系统框架层；向上提供接口给应用层调用，向下与C/C++程序库以及硬件抽象层等进行衔接
+        int lib_source = R.drawable.lib_source;             //部分C、C++本地库目录
+        //硬件抽象层的代码放在 hardware/目录中，这是手机厂商改动最大的一部分，根据手机终端所采用的硬件平台会有不同的实现
     }
     /**
      ******************架构********************************************
 
      Application：               应用层                 app
      Framework：                 应用框架层             APIS
-     Libraries(Android Runtime)  系统运行库运行环境层    各种C、C++本地库和虚拟机（Dalvik、ART）
+     Libraries(Android Runtime)  系统运行库运行环境层   各种C、C++本地库和虚拟机（Dalvik、ART）
      HAL                         硬件抽象层             硬件控制接口层
      Linux Kernel：              Linux内核层            驱动程序
 

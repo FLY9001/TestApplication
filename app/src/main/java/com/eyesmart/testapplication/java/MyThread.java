@@ -1,5 +1,7 @@
 package com.eyesmart.testapplication.java;
 
+import com.eyesmart.testapplication.R;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -8,12 +10,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 多线程
+ * 进程：系统进行资源分配和调度的基本单位
+ * 线程：操作系统调度的最小单元，也叫作轻量级进程
+ *
  * 至少存在两个线程：main线程及JVM垃圾回收线程
  */
 
 public class MyThread {
     public void test() throws InterruptedException {
+        /**线程6种状态*/
+        int t = R.drawable.thread;
+
         /**线程*/
         Thread thread = Thread.currentThread(); //取得当前线程
         Thread.sleep(1000);               //使当前线程休眠1000毫秒
