@@ -8,11 +8,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 进程：系统进行资源分配和调度的基本单位
  * 线程：操作系统调度的最小单元，也叫作轻量级进程
- *
+ * <p>
  * 至少存在两个线程：main线程及JVM垃圾回收线程
  */
 
@@ -85,12 +87,43 @@ public class MyThread {
         /**
          * 资源同步，注意：有可能产生死锁！！！！
          */
-        private synchronized void syn() throws InterruptedException {   //其同步对象为当前方法所在的对象自身
+        public synchronized void syn() throws InterruptedException {   //其同步对象为当前方法所在的对象自身
             //TODO 需要同步的方法                 //只有当线程执行完此同步方法后，才会释放锁对象，其他的线程才有可能获取此同步锁，以此类推...
 
-            wait();         //导致当前线程等待并使其进入到等待阻塞状态。直到其他线程调用该同步锁对象的notify()或notifyAll()方法来唤醒此线程。
-            notify();       //唤醒在此同步锁对象上等待的单个线程，如果有多个线程，则会任意选择其中某个线程进行唤醒操作，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
-            notifyAll();    //唤醒在此同步锁对象上等待的所有线程，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
+            this.wait();         //导致当前线程等待并使其进入到等待阻塞状态。直到其他线程调用该同步锁对象的notify()或notifyAll()方法来唤醒此线程。
+            this.notify();       //唤醒在此同步锁对象上等待的单个线程，如果有多个线程，则会任意选择其中某个线程进行唤醒操作，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
+            this.notifyAll();    //唤醒在此同步锁对象上等待的所有线程，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
         }
     }
+
+    /**
+     * ReentrantLock，重入锁
+     * 独有功能：
+     * 1、可以实现公平锁（先等待的线程先获得锁）
+     * 2、提供了一个Condition（条件）类，可分组唤醒需要唤醒的线程们，synchronized只能随机唤醒一个线程要么唤醒全部线程。
+     * 3、提供了一种能够中断等待锁的线程的机制，通过lock.lockInterruptibly()来实现这个机制。
+     * <p>
+     * 以下代码等同于synchronized
+     */
+    private Lock mLock;
+
+    public MyThread() {
+        mLock = new ReentrantLock();
+    }
+
+    public void testLock() {
+        mLock.lock();
+        try {
+            //TODO 同步的方法
+        } finally {
+            mLock.unlock();
+        }
+    }
+
+    /**
+     * volatile：声明一个域为volatile，那么编译器和虚拟机就知道该域是可能被另一个线程并发更新的
+     * 并发编程中的3个特性：原子性、可见性、有序性
+     * volatile不保证原子性
+     */
+    public volatile boolean isRunning = true;
 }
