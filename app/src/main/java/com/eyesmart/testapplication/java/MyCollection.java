@@ -23,13 +23,16 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 类集，动态的对象数组，数据结构的包装
  */
 
 public class MyCollection {
-    void test() throws IOException {
+    void test() throws IOException, InterruptedException {
         int[] temp = {4, 2, 6, 3, 1, 7, 5};
         Student[] students = {};                //对对象数组进行排列
 
@@ -143,5 +146,37 @@ public class MyCollection {
         File xmlFile = new File("D:" + File.separator + "myPro.xml");    //从xml文件保存读取属性
         pro.storeToXML(new FileOutputStream(xmlFile), "info");
         pro.loadFromXML(new FileInputStream(xmlFile));
+
+//--------------------------------------------------------------------------------------------------
+        //阻塞队列
+        BlockingQueue<Action> actionQueue = new LinkedBlockingQueue<>(100);
+        Action action = new Action();
+
+        //放入
+        actionQueue.offer(action);//试图添加BlockingQueue里。如果可以，容纳，返回true，否则返回false。(本方法不阻塞当前执行方法的线程。)
+        actionQueue.offer(action, 1, TimeUnit.SECONDS);//可以设定等待的时间。如果在指定的时间内还不能往队列中加入BlockingQueue，则返回失败。
+        actionQueue.put(action);//将anObject加到BlockingQueue里。如果BlockQueue没有空间，则调用此方法的线程被阻断，直到BlockingQueue里面有空间再继续。
+        //获取
+        actionQueue.poll();//取走 BlockingQueue 里排在首位的对象。若不能立即取出，则可以等 time参数规定的时间。取不到时返回null。
+        actionQueue.poll(1, TimeUnit.SECONDS); //从BlockingQueue中取出一个队首的对象。如果在指定时间内，队列一旦有数据可取，则立即返回队列中的数据；否则直到时间超时还没有数据可取，返回失败。
+        actionQueue.take();//取走BlockingQueue里排在首位的对象。若BlockingQueue为空，则阻断进入等待状态，直到 BlockingQueue有新的数据被加入。
+        actionQueue.drainTo(new ArrayList<Action>());//一次性从BlockingQueue获取所有可用的数据对象(还可以指定获取数据的个数)。通过该方法，可以提升获取数据的效率；无须多次分批加锁或释放锁。
+        /**
+         * 在Java中提供了7个阻塞队列，它们分别如下所示。
+         • ArrayBlockingQueue：由数组结构组成的有界阻塞队列。
+         • LinkedBlockingQueue：由链表结构组成的有界阻塞队列。
+         • PriorityBlockingQueue：支持优先级排序的无界阻塞队列。
+         • DelayQueue：使用优先级队列实现的无界阻塞队列。
+         • SynchronousQueue：不存储元素的阻塞队列。
+         • LinkedTransferQueue：由链表结构组成的无界阻塞队列。
+         • LinkedBlockingDeque：由链表结构组成的双向阻塞队列
+         */
+
+    }
+
+    class Action {
+        void action() {
+
+        }
     }
 }

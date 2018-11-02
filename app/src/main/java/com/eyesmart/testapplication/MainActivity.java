@@ -97,12 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 TestReceiver.class,     //BroadcastReceiver
                 TestProvider.class,     //ContentProvider
                 TestFragment.class,     //Fragment
-                TestHandler.class,      //线程及消息通讯
 
+                TestHandler.class,      //线程及消息通讯
                 IPC.class,              //多进程
+
                 TestIO.class,           //存储
                 TestDatabase.class,     //数据库
                 TestNet.class,          //Socket
+                HttpUtils.class,        //Http TODO 组合框架
                 TestXmlJson.class,      //数据解析
 
                 TestMedia.class,        //多媒体：音频、视频
@@ -138,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         Class[] android2 = {
                 TestUI.class,           //布局优化
                 TestMemory.class,       //TODO 内存泄漏、优化、图片优化
-                HttpUtils.class,        //Http TODO 组合框架
                 TestRxJava.class,       //TODO 原理及应用
 
                 HybridActivity.class,   //混合开发

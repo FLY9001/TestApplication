@@ -6,7 +6,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -54,6 +56,15 @@ public class MyThread {
 
         ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);//类似Timer
         scheduledThreadPool.scheduleAtFixedRate(new MyThreadRunnable(), 1, 3, TimeUnit.SECONDS);
+
+        //以上底层实现为ThreadPoolExecutor，例如单线程池：
+        new ThreadPoolExecutor(1,         //核心线程池大小
+                1,                   //最大线程池大小
+                0L,                     //线程池中超过corePoolSize数目的空闲线程最大存活时间；可以allowCoreThreadTimeOut(true)成为核心线程的有效时间
+                TimeUnit.MILLISECONDS,                //keepAliveTime的时间单位
+                new LinkedBlockingQueue<Runnable>(),  //阻塞任务队列
+                null,                   //线程工厂
+                new ThreadPoolExecutor.AbortPolicy());//当提交任务数超过maxmumPoolSize+workQueue之和时，任务会交给RejectedExecutionHandler来处理
 
         /**Timer，定时工具*/
         //可以计划执行一个任务一次或反复多次
