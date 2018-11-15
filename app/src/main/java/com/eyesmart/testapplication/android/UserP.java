@@ -18,17 +18,17 @@ public class UserP implements Parcelable {
     //文件描述
     @Override
     public int describeContents() {
-        return 0;
+        return 0;   //几乎所有情况下都为0
     }
 
     //序列化，通过Parcel.write
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(userID);
-        dest.writeParcelable(userP2, flags);
+        dest.writeParcelable(userP2, flags);    //flags几乎所有情况下都为0
     }
 
-    //反序列化,通过Parcel.read
+    //反序列化，通过Parcel.read
     public static final Creator<UserP> CREATOR = new Creator<UserP>() {
         @Override
         public UserP createFromParcel(Parcel in) {

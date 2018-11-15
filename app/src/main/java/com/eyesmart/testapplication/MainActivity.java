@@ -17,6 +17,7 @@ import com.eyesmart.testapplication.android.SystemInfoUtils;
 import com.eyesmart.testapplication.android.TestActivity;
 import com.eyesmart.testapplication.android.TestBitmap;
 import com.eyesmart.testapplication.android.TestDatabase;
+import com.eyesmart.testapplication.android.TestEventBus;
 import com.eyesmart.testapplication.android.TestFragment;
 import com.eyesmart.testapplication.android.TestHandler;
 import com.eyesmart.testapplication.android.TestIO;
@@ -140,8 +141,9 @@ public class MainActivity extends AppCompatActivity {
         Class[] android2 = {
                 TestUI.class,           //布局优化
                 TestMemory.class,       //TODO 内存泄漏、优化、图片优化
-                TestRxJava.class,       //TODO 原理及应用
 
+                TestRxJava.class,       //TODO 原理及应用
+                TestEventBus.class,
                 HybridActivity.class,   //混合开发
                 //TODO 热修复
         };

@@ -15,6 +15,6 @@ package com.eyesmart.testapplication.android;
 public class IPC {
     void test() throws Exception {
         UserS.test();   //Serializable，使用简单，开销大，大量IO操作（Java提供的序列化方式，推荐）
-        UserP.test();   //Parcelable，使用麻烦，效率高（Android提供的序列化方式，推荐）
+        UserP.test();   //Parcelable，  使用麻烦，效率高（Android提供的序列化方式，推荐）
     }
 }

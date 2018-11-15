@@ -18,10 +18,12 @@ public class TestReceiver extends BroadcastReceiver {
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.eyesmart.testapplication.android.TestReceiver");
         context.registerReceiver(tr, filter);       //最好在onResume
+
         context.unregisterReceiver(tr);             //最好在onPause，保证一定会被注销，防止内存泄露；
         //因为onPause一定会执行，而onStop、onDestroy在activity“内存销毁”时不会执行
         //有注册就必然得有注销，否则会导致内存泄露
         //重复注册、重复注销也不允许
+
 
         /**发送广播*/
         Intent intent = new Intent("com.eyesmart.testapplication.android.TestReceiver");

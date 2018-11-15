@@ -18,7 +18,7 @@ import com.eyesmart.testapplication.TestApplication;
 
 public class TestDesignPattern {
     void test() throws CloneNotSupportedException {
-        
+
         //创建型
         Singleton.getInstance();                        //单例模式      只需要创建一个实例
         ProductFactory.createProduct(ProductA.class);   //工厂模式      把怎么创建交给工厂类
@@ -88,6 +88,22 @@ class Singleton2 {
             singleton2 = new Singleton2();
         }
         return singleton2;
+    }
+}
+
+//单例模式，双重检查模式
+class Singleton3 {
+    private static Singleton3 singleton3;
+
+    public static Singleton3 getInstance() {
+        if (singleton3 == null) {
+            synchronized (Singleton3.class) {
+                if (singleton3 == null) {
+                    singleton3 = new Singleton3();
+                }
+            }
+        }
+        return singleton3;
     }
 }
 
