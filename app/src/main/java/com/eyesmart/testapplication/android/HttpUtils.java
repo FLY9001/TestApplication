@@ -30,6 +30,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,12 +53,12 @@ public class HttpUtils {
         sendGetRequest("", null);
         sendPostRequest("", "", null);
 
-        /**Volley*/
+        /**Volley，基于请求队列*/
         testVolley(context);
 
-        /**OkHttp*/
+        /**OkHttp，拦截器，client.newCall(request)*/
         testOkHttp();
-        /**Retrofit*/
+        /**Retrofit，注解*/
         testRetrofit();
     }
 
@@ -199,7 +200,7 @@ public class HttpUtils {
                     }
                 });
         //获取Json数据用JsonObjectRequest、JsonArrayRequest
-        //加载图片用ImageRequest
+        //加载图片用ImageLoader
         queue.add(stringRequest);
     }
 //**********************************************************************************************************
@@ -217,7 +218,10 @@ public class HttpUtils {
                 return chain.proceed(request);
             }
         });
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client = client.newBuilder()
+                .addInterceptor(interceptor)                          //拦截器
                 .addInterceptor(new LoggingInterceptor())
                 //.connectTimeout(15, TimeUnit.SECONDS)               //超时时间
                 //.writeTimeout(20, TimeUnit.SECONDS)
@@ -300,6 +304,7 @@ public class HttpUtils {
     public static void testRetrofit() throws IOException {
         /**1、创建Retrofit*/
         Retrofit retrofit = new Retrofit.Builder()
+                //.client(new OkHttpClient())                         //可传入OkHttpClient
                 .baseUrl("http://api.zhifangw.cn/")                   //baseUrl必须以"/"结尾
                 //ConverterFactory依赖包需单独引入
                 .addConverterFactory(ScalarsConverterFactory.create())//增加返回值为String的支持

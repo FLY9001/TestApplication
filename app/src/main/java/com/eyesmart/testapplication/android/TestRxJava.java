@@ -24,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
+ * 函数响应式编程
  * RxJava：
  * 定义：一个 基于事件流、实现异步操作 的库
  * 特点：基于事件流的链式调用，逻辑简洁 & 实现优雅 & 使用简单

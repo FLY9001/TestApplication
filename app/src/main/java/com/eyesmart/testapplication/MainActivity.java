@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 TestMemory.class,       //TODO 内存泄漏、优化、图片优化
 
                 TestRxJava.class,       //TODO 原理及应用
-                TestEventBus.class,
+                TestEventBus.class,     //事件总线
                 HybridActivity.class,   //混合开发
                 //TODO 热修复
         };
