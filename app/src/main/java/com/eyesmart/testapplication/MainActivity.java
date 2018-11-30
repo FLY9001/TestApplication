@@ -1,5 +1,6 @@
 package com.eyesmart.testapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.eyesmart.testapplication.android.SensorActivity;
 import com.eyesmart.testapplication.android.SystemInfoUtils;
 import com.eyesmart.testapplication.android.TestActivity;
 import com.eyesmart.testapplication.android.TestBitmap;
+import com.eyesmart.testapplication.android.TestButterKnife;
 import com.eyesmart.testapplication.android.TestDatabase;
 import com.eyesmart.testapplication.android.TestEventBus;
 import com.eyesmart.testapplication.android.TestFragment;
@@ -35,9 +37,9 @@ import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.android.Version;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.MyCollection;
-import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
+import com.eyesmart.testapplication.java.MyReflect;
 import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
@@ -74,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 MyCollection.class,     //集合、数组、栈、属性类
                 MyThread.class,         //线程基础
 
-                MyGenericity.class,     //泛型、注解
-                MyEnum.class,           //反射、枚举
+                MyGenericity.class,     //枚举、泛型
+                MyReflect.class,        //反射、注解
         };
         /**android工程*/
         Class[] project = {
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
                 ListViewFragment.class,
                 RecyclerFragment.class,
+
+                HybridActivity.class,   //混合开发
         };
         /**android代码优化*/
         Class[] android2 = {
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
                 TestRxJava.class,       //TODO 原理及应用
                 TestEventBus.class,     //事件总线
-                HybridActivity.class,   //混合开发
+                TestButterKnife.class,  //依赖注入
                 //TODO 热修复
         };
         Class[] android3 = {
@@ -163,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
-                HybridActivity.actionStart(MainActivity.this);
+                startActivity(new Intent(this, TestButterKnife.class));
                 break;
         }
     }

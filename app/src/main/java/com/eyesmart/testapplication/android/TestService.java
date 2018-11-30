@@ -32,7 +32,7 @@ public class TestService extends Service {
 
         Intent intent = new Intent(this, TestService.class);
         /**普通启动*/
-        startService(intent);                       //调用onStartCommand(),多次启动多次回调
+        startService(intent);                       //调用onStartCommand()，多次启动多次回调
         stopService(intent);
 
         /**绑定启动*/

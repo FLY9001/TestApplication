@@ -183,9 +183,9 @@
         <provider
             android:name=".android.TestProvider"
             android:authorities="com.eyesmart.testapplication.android.TestContentProvider"
-            android:process="com.eyesmart.testapplication.remote"
             android:enabled="false"
-            android:exported="true">
+            android:exported="true"
+            android:process="com.eyesmart.testapplication.remote">
 
             <!-- android:enabled="false" 不可用 -->
         </provider>
@@ -198,6 +198,8 @@
         <activity android:name=".mvp.view.MVPActivity">
         </activity>
         <activity android:name=".android.HybridActivity">
+        </activity>
+        <activity android:name=".android.TestButterKnife">
         </activity>
     </application>
 

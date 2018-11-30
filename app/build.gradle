@@ -167,12 +167,16 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.0.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
     //implementation
     //这个指令的特点就是，对于使用了该命令编译的依赖，对该项目有依赖的项目将无法访问到使用该命令编译的依赖中的任何程序，
     //也就是将该依赖隐藏在内部，而不对外部公开。
     //编译速度会加快，优先使用
     //    下面是2.x版本依赖的说明，括号里对应的是3.0版本的依赖方式。
-    //    compile（api）
+    //    compile（api，implementation）
     //    这种是我们最常用的方式，使用该方式依赖的库将会参与编译和打包。
     //    provided（compileOnly）
     //    只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
