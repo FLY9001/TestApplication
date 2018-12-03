@@ -13,15 +13,12 @@ import android.view.WindowManager;
 
 public class TestWindow {
     public static void creatWindow(Context context) {
-        /**WindowManager*/
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
         /**LayoutParams*/
         WindowManager.LayoutParams wmParams = new WindowManager.LayoutParams();
         //wmParams = ((Activity) context).getWindow().getAttributes();  //activity获取
 
         //type，窗口类型；1~2999，层级越大越顶层
-        //分为 应用Window（1~99）、子Window（1000~1999，需附属父Window）、系统window（2000~2999，需声明权限）
+        //分为 应用Window（1~99，如通过Activity）、子Window（1000~1999，需附属父Window，如Dialog、PopupWindow）、系统window（2000~2999，需声明权限，如Toast和状态栏）
         //android.permission.SYSTEM_ALERT_WINDOW 允许程序显示系统窗口
         wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
         //flags，显示特性； https://blog.csdn.net/qq_28535319/article/details/82790331
@@ -37,6 +34,8 @@ public class TestWindow {
         wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         wmParams.format = 1;
 
+        /**WindowManager*/
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         /**add、update、remove*/
         wm.addView(new View(context), wmParams);
         wm.updateViewLayout(new View(context), wmParams);
