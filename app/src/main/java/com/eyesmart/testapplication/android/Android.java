@@ -19,7 +19,7 @@ public class Android {
 
 
         int source = R.drawable.source;         //源码目录结构
-        int source2 = R.drawable.source2;       //源码目录结构
+        int source2 = R.drawable.source20;       //源码目录结构
 
         int app_source = R.drawable.app_source;             //packages目录；存放着系统核心应用程序、第三方的应用程序和输入法等
         int frameworks_base = R.drawable.framework_source;  //frameworks/base目录，对应系统框架层；向上提供接口给应用层调用，向下与C/C++程序库以及硬件抽象层等进行衔接
@@ -31,7 +31,7 @@ public class Android {
 
      Application：               应用层                 app
      Framework：                 应用框架层             APIS
-     Libraries(Android Runtime)  系统运行库运行环境层   各种C、C++本地库和虚拟机（Dalvik、ART）
+     Libraries(Android Runtime)  系统运行库层           各种C、C++本地库和虚拟机（Dalvik、ART）
      HAL                         硬件抽象层             硬件控制接口层
      Linux Kernel：              Linux内核层            驱动程序
 
