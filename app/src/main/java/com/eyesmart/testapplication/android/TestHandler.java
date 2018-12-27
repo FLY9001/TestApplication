@@ -2,6 +2,7 @@ package com.eyesmart.testapplication.android;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
@@ -14,6 +15,9 @@ import android.os.Message;
  * 为什么主线程Looper.loop()不阻塞主线程？   Looper.loop()死循环一直阻塞主线程，一旦退出消息循环，程序也就退出了；只会发生别的代码阻塞Looper.loop()
  * **********************
  * Handler(sendMessage)--->Message--->(enqueueMessage)MessageQueue(next)--->(loop)Looper--->Message--->(dispatchMessage)Handler(handleMessage)
+ * <p>
+ * 1个Thread只有1个Looper，其只对应1个MessageQueue;
+ * MessageQueue中有N个Message，1个Message最多指定1个Handler
  */
 
 public class TestHandler {
@@ -23,22 +27,24 @@ public class TestHandler {
     Handler handler = new MyHandler();
 
     void test() {
-        /**创建Message*/
-        Message message = new Message();
+        /**Handler*/
+        //创建Message
+        Message message = Message.obtain(handler, 0);
         message = handler.obtainMessage(0);
-        /**发送Message*/
-        handler.sendMessage(message);
-        handler.sendMessageDelayed(message, 1000);
-        /**Message主动发送*/
-        message.setTarget(handler);
-        message.sendToTarget();
-        /**发送Runnable*/
+        //发送Runnable
         handler.post(new Runnable() {
             @Override
             public void run() {
 
             }
         });
+        //发送Message
+        handler.sendMessage(message);
+        handler.sendMessageDelayed(message, 1000);
+        //Message主动发送
+        message.setTarget(handler);
+        message.sendToTarget();
+
 
         /**AsyncTask*/
         //适合：边执行后台边更新UI
@@ -63,14 +69,17 @@ public class TestHandler {
                 /**主线程Handler*/
                 Handler mainHandler = new Handler(Looper.getMainLooper());
 
-                /**分线程Handler*/
-                Looper.prepare();                       //准备looper（实例化Looper，创建MessageQueue）
-                Handler threadHandler = new Handler();  //默认绑定本线程looper
-                Looper.loop();                          //运行looper
+                /**运用子线程Handler*/
+                Looper.prepare();                       //1、创建Looper（子线程没有Looper，需手动创建）
+                Handler threadHandler = new Handler();  //2、创建Handler（默认绑定本线程looper）
+                Looper.loop();                          //3、运行looper
                 Looper.myLooper().quit();               //立即终止looper
                 Looper.myLooper().quitSafely();         //处理完已有消息，再终止looper
             }
         }).start();
+        /**推荐：运用子线程Handler*/
+        HandlerThread handlerThread = new HandlerThread("");
+        Handler threadHandler = new Handler(handlerThread.getLooper());
     }
 
     class MyHandler extends Handler {
