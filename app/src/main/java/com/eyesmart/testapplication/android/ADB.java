@@ -1,7 +1,7 @@
 package com.eyesmart.testapplication.android;
 
 /**
- * Created by Tian on 2017-7-26 0026.
+ * https://www.jianshu.com/p/73a2d36ecf89
  */
 
 public class ADB {
