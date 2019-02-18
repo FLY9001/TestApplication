@@ -1,7 +1,11 @@
 package com.eyesmart.testapplication.android;
 
 /**
+ * adb:
  * https://www.jianshu.com/p/73a2d36ecf89
+ * <p>
+ * shell:
+ * http://baijiahao.baidu.com/s?id=1583484244727721573&wfr=spider&for=pc
  */
 
 public class ADB {

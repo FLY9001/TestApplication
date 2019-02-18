@@ -2,6 +2,8 @@ package com.eyesmart.testapplication.android;
 
 /**
  * Android 安全机制
+ * 权限：
+ * https://blog.csdn.net/koozxcv/article/details/50835601
  */
 
 public class Safety {
