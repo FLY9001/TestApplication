@@ -27,7 +27,8 @@ public class ADB {
 
      adb kill-server                            // 终止adb服务进程
      adb start-server                           // 重启adb服务进程
-     adb root                                   // 已root权限重启adb服务
+     adb root                                   // 已root权限
+     adb remount                                // 将system分区重新挂载为可读写分区
      adb wait-for-device                        // 在模拟器/设备连接之前把命令转载在adb的命令器中
 
      ------------------管理app----------------------------------------
@@ -70,5 +71,53 @@ public class ADB {
      adb shell chmod 777 /system/fonts/DroidSansFallback.ttf // 设置文件权限
      adb shell mkdir path/foldelname            // 新建文件夹
      adb shell cat <file>                       // 查看文件内容
+
+     ------------------shell操作--------------------------------------------
+
+     (change directory)
+     cd /system/bin                 表示切换到/system/bin路径下。
+     cd /                           表示切换到根目录。
+     cd ../                         表示切换到上一层路径。
+
+     (list)
+     ls                             显示目录下的所有文件及文件夹。
+     ls -l                          显示当前路径下的所有文件及文件夹的详细信息，
+
+     (change mode)
+     chmod 755 1.sh                 对于文件1.sh，设定1.sh的所有者权限为可读可写可执行，1.sh文件所有者所在组和其他用户对1.sh只有读取和执行的权限，没有修改权限。
+
+     (concatenate)连接
+     cat test.txt                   读取当前路径下test.txt文件内容。
+
+     echo hi 显示hi到屏幕上。
+     echo hi > test2.txt            将hi写入test2.txt中，test2.txt中原有的内容被覆盖。
+     echo hi >> test2.txt           将hi追加写入test2.txt中，test2.txt中原有的内容仍保留在hi之前。
+
+     (grep)检索
+     ls -l | grep test              检索包含test的文件和文件夹的意思。
+     cat test.txt | grep -i name    检索cat test.txt的执行结果中是否有包含name的内容(-i表示不区分name的大小写），也就查找包含test.txt中包含name的行。
+
+     (make directory)
+     mkdir /data/path               在/data路径下创建path文件夹。
+     mkdir -p a/b/c                 参数 -p用于创建多级文件夹，这句命令表示在当前路径下创建文件夹a， 而a文件夹包含子文件夹b，b文件夹下又包含子文件夹c。
+
+     (remove)
+     rm -rf path                    删除path。常用参数-r -f，-r表示删除目录，也可以用与删除文件，-f表示强制删除，不需要确认
+     rm test.txt                    删除test.txt。
+
+     (copy)
+     cp /data/logs /data/tmp/logs   复制/data路径下的logs到/data/tmp路径下。
+     cp 1.sh /sdcard/               复制当前路径下的1.sh到/sdcard下。
+
+     (move)
+     mv 111 222                     重命名
+     mv aaa 222/                    移动到
+
+     (process status)
+     ps                             查看进程详细信息
+
+     kill 3497                      停止进程号为3497的进程。
+
+     date                           查看日期和当前时间信息。
      */
 }
