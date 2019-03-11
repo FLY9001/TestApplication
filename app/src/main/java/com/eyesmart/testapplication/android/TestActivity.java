@@ -33,6 +33,9 @@ public class TestActivity extends Activity {
 
         onConfigurationChanged(null);
         onNewIntent(null);
+
+
+        int activity = R.drawable.activity;     //activity根View
     }
 
     @Override
@@ -40,8 +43,6 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         //设置Window属性
         TestWindow.activityWindow(this);
-
-        int activity = R.drawable.activity;     //activity根View
 
         /**最终调用PhoneWindow的setContentView*/
         //1、得到DecorView，其是Activity的顶级根View，包括标题栏(ActionBar)和内容栏(contentParent)
@@ -53,6 +54,8 @@ public class TestActivity extends Activity {
         FrameLayout content = (FrameLayout) findViewById(android.R.id.content);
         //此为我们为activity设置的View
         content.getChildAt(0);
+
+
 
         if (savedInstanceState != null) {                               //onCreate()中的savedInstanceState有可能为空
             savedInstanceState.getString("key");
@@ -74,7 +77,7 @@ public class TestActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {       //当系统配置信息发生改变时，且设置configChanges时，系统会调用此方法
         super.onConfigurationChanged(newConfig);
-        //设置屏幕旋转不重新创建：android:configChanges="orientation|screenSize"
+        //设置屏幕旋转不重新创建：android:configChanges="orientation|keyboardHidden|screenSize"
         //当新设置中，屏幕布局模式为横排时
         if (newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             //TODO 某些操作

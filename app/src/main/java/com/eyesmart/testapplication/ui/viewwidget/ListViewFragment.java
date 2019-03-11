@@ -64,7 +64,6 @@ public class ListViewFragment extends Fragment {
         return rootView;
     }
 
-
     class ListViewAdapter extends BaseAdapter {
         private List<Bean> mBeans;
 
