@@ -7,6 +7,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
+/**
+ * https://mp.weixin.qq.com/s?__biz=MzU4MTIzMjM3MA==&mid=2247483887&idx=3&sn=153693beef649ee6982fca56809a2afe&chksm=fd4bf272ca3c7b6420c43cbd4dffb8d63197cf5c680b3785ecd20dac5021da261d89278bd8aa&scene=21#wechat_redirect
+ */
 public class TestReceiver extends BroadcastReceiver {
     Context context;
 

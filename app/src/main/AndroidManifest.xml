@@ -183,7 +183,7 @@
         <provider
             android:name=".android.TestProvider"
             android:authorities="com.eyesmart.testapplication.android.TestContentProvider"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
             android:process="com.eyesmart.testapplication.remote">
 

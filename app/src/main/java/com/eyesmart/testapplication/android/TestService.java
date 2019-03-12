@@ -45,6 +45,12 @@ public class TestService extends Service {
         /**前台Service*/
         onCreate();
 
+        /**IntentService*/
+        //1、构造器传入线程名称、覆写onHandleIntent()方法
+        intent = new Intent(this, TestIntentService.class);
+        startService(intent);
+        //执行完成自动关闭
+
         /**远程Service*/
         //AIDL：Android接口定义语言，远程Service进行跨进程通信
         //服务端：1、aidl文件夹下定义接口；2、Binder实现接口；3、清单文件设置为远程Service
@@ -57,12 +63,6 @@ public class TestService extends Service {
         intent.setPackage("com.eyesmart.testapplication");
         //绑定服务,传入intent和ServiceConnection对象
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
-
-        /**IntentService*/
-        //1、构造器传入线程名称、复写onHandleIntent()方法
-        intent = new Intent(this, TestIntentService.class);
-        startService(intent);
-        //执行完成自动关闭
     }
 
     boolean binded = false;
@@ -95,7 +95,7 @@ public class TestService extends Service {
     public void onCreate() {
         super.onCreate();
         //前台Service在下拉通知栏有显示通知，但后台Service没有
-        //前台Service优先级较高，不会由于系统内存不足而被回收；后台Service优先级较低，当系统出现内存不足情况时，很有可能会被回收
+        //前台Service优先级较高，不会由于系统内存不足而被回收；普通后台Service优先级较低，当系统出现内存不足情况时，很有可能会被回收
 
         //添加下列代码将后台Service变成前台Service
         //构建"点击通知后打开MainActivity"的Intent对象
@@ -158,14 +158,14 @@ class TestIntentService extends IntentService {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         //1、创建了一个HandlerThread及其Handler
+        super.onCreate();
     }
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
         //2、向Handler发送包含intent的Message，由handleMessage()最终交给onHandleIntent()
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override

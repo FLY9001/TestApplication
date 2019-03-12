@@ -30,15 +30,15 @@ public class TestProvider extends ContentProvider {
         /**ContentResolver进行数据操作*/
         ContentResolver resolver = getContext().getContentResolver();
         Uri uri = Uri.parse("content://com.eyesmart.testapplication.android.TestContentProvider/");
-        getType(uri);                      //得到数据的MIME类型
-        insert(uri, null);                 //增，返回新增数据 Uri
-        delete(uri, null, null);           //删，返回删除数据 个数
-        update(uri, null, null, null);     //改，返回更新数据 个数
+        getType(uri);                                                                  //得到数据的MIME类型
+        insert(uri, null);                                                      //增，返回新增数据 Uri
+        delete(uri, null, null);                                //删，返回删除数据 个数
+        update(uri, null, null, null);                   //改，返回更新数据 个数
         query(uri, null, null, null, null);//查，返回查询数据 Cursor
 
         /**ContentUris操作URI*/
-        Uri resultUri = ContentUris.withAppendedId(uri, 1); //向URI追加一个id，+/1
-        long personid = ContentUris.parseId(resultUri);     //从URL中获取ID，得到1
+        Uri resultUri = ContentUris.withAppendedId(uri, 1);                        //向URI追加一个id，+/1
+        long personid = ContentUris.parseId(resultUri);                               //从URL中获取ID，得到1
 
         /**UriMatcher注册URI*/
 
