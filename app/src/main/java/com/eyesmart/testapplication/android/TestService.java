@@ -52,16 +52,14 @@ public class TestService extends Service {
         //执行完成自动关闭
 
         /**远程Service*/
-        //AIDL：Android接口定义语言，远程Service进行跨进程通信
+        //AIDL：Android Interface Definition Language，Android接口定义语言，远程Service进行跨进程通信
         //服务端：1、aidl文件夹下定义接口；2、Binder实现接口；3、清单文件设置为远程Service
         mBinder.asBinder();
         //客户端：1、复制aidl文件夹；2、绑定启动Service；3、IBinder转换为接口对象
         //参数与服务器端的action要一致,即"服务器包名.aidl接口文件名"
         intent = new Intent("com.eyesmart.testapplication.IMyAidlInterface");
-        //Android5.0后无法只通过隐式Intent绑定远程Service
-        //需要通过setPackage()方法指定包名
+        //Android5.0后无法只通过隐式Intent绑定远程Service，需要通过setPackage()方法指定包名
         intent.setPackage("com.eyesmart.testapplication");
-        //绑定服务,传入intent和ServiceConnection对象
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }
 
@@ -71,6 +69,7 @@ public class TestService extends Service {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             binded = true;
+            /**一般绑定时*/
             MyBinder binder = (TestService.MyBinder) service;
             TestService testService = binder.getService();
             testService.setOnProgressListener(new OnProgressListener() {//Service被动接受调用
@@ -79,8 +78,9 @@ public class TestService extends Service {
 
                 }
             });
-            /**AIDL时转换为接口对象*/
-            IMyAidlInterface.Stub.asInterface(service);
+            /**AIDL绑定时*/
+            IMyAidlInterface iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
+            //iMyAidlInterface.basicTypes();
         }
 
         //当发生异常断开连接时
@@ -138,6 +138,7 @@ public class TestService extends Service {
     public void setOnProgressListener(OnProgressListener onProgressListener) {
         this.onProgressListener = onProgressListener;
     }
+//****************************************************************************************************************
 
     /**
      * AIDL
@@ -149,6 +150,7 @@ public class TestService extends Service {
         }
     };
 }
+//****************************************************************************************************************
 
 //与后台线程相比，IntentService是一种后台服务，优点是：优先级高（不容易被系统杀死），从而保证任务的执行
 class TestIntentService extends IntentService {
