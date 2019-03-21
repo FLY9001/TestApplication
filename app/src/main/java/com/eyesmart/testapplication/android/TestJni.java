@@ -31,6 +31,14 @@ package com.eyesmart.testapplication.android;
  * ----------------------------------------------------
  * Android Studio2.2 以上实现NDK
  * 编译步骤：
+ * ----------------------------------------------------
+ * 打成.aar包或者.jar文件，需要
+ * <p>
+ * 1.将apply plugin: 'com.android.application'改为apply plugin: 'com.android.library'
+ * 2.去掉applicationId
+ * 3.此时再点击右侧的assembleRelease，
+ *          aar位置：\build\outputs\aar\
+ *          jar位置：\build\intermediates\bundles\
  */
 
 public class TestJni {
@@ -38,5 +46,5 @@ public class TestJni {
         System.loadLibrary("TestJni");
     }
 
-    public static native String sayHello();
+    //public static native String sayHello();
 }
