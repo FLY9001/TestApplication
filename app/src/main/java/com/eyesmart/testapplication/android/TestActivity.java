@@ -18,6 +18,12 @@ import com.eyesmart.testapplication.R;
  * singleInstance：任何应用再激活该Activity时都会重用该栈中的实例( 会调用实例的 onNewIntent())；如闹铃提醒
  * <p>
  * 清空任务栈：通过AndroidManifest和intent设置
+ *
+ * java.lang.Object
+    ↳    android.content.Context
+        ↳    android.content.ContextWrapper
+            ↳    android.view.ContextThemeWrapper
+                ↳    android.app.Activity
  */
 
 public class TestActivity extends Activity {
