@@ -52,12 +52,12 @@ public class MyCollection {
         //List
         //ArrayList
         List<String> list = new ArrayList();
-        list.add(0, "abc");          //增
-        list.remove(0);                       //删
+        list.add(0, "abc");                     //增
+        list.remove(0);                            //删
         list.remove("abc");                       //若删除对象，则其必须实现equals()及hashCode()方法
         list.contains("abc");                        //查
         list.indexOf("abc");
-        list.subList(1, 2);                          //截取
+        list.subList(1, 2);                    //截取
         list.isEmpty();                              //是否为空
         String[] strs = list.toArray(new String[]{});//输出为数组（指定泛型）
 
