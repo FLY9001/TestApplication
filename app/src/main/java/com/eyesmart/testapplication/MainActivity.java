@@ -36,6 +36,7 @@ import com.eyesmart.testapplication.android.TestWindow;
 import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.android.Version;
 import com.eyesmart.testapplication.java.APIs;
+import com.eyesmart.testapplication.java.Java;
 import com.eyesmart.testapplication.java.MyCollection;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
@@ -69,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /**java*/
         Class[] java = {
+                Java.class,
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
                 MyCollection.class,     //集合、数组、栈、属性类
