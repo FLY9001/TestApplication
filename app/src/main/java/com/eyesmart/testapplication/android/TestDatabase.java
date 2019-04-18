@@ -14,6 +14,12 @@ import static android.content.ContentValues.TAG;
  * 性能优化：
  * 1、execSql，rawQuery方法执行效率更高（大于1000，数据量越大越明显）
  * 2、批量操作时，执行事务（将先缓存在内存中，COMMIT时一次写入数据库，数据库文件只被打开关闭了一次，提高效率）
+ *
+ * 数据库升级
+ * 第一步将旧表改为临时表
+ * 第二步创建新表(新添加的字段或去掉的字段)
+ * 第三步将旧表中的原始数据保存到新表中以防遗失
+ * 第四步删除临时备份表
  */
 
 public class TestDatabase {

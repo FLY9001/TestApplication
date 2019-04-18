@@ -21,8 +21,11 @@ import java.io.Writer;
 
 /**
  * 输入、输出
- * 1字节 == 8bit
- * int为4字节，即32位
+ * 1byte（字节）= 8bit（比特、位）
+ * int为 4byte（字节）= 32bit（比特、位）
+ * 1KB = 1024B（byte）
+ *
+ * 1字符 = 2字节
  */
 
 public class MyIO {
