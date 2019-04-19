@@ -46,7 +46,7 @@ public class Java {
         Java中负责内存回收的是JVM。通过JVM自动回收内存，虽省心但不灵活，
         为了解决内存操作不灵活的问题，我们可以通过Java的引用方式来解决这个问题。
 
-     1．强引用
+     1．强引用（Strong Reference）
         最普遍的引用就是强引用，绝不会被回收。当内存空间不足，宁愿抛出OOM，异常终止程序，也不会靠回收它来解决内存不足问题。
      2．软引用（SoftReference）
         一个只具有软引用的对象，只有内存不足，才会被回收。使用软引用，可解决此对象引起的OOM问题。软引用可用来实现内存敏感的高速缓存。
@@ -59,23 +59,13 @@ public class Java {
         虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列（ReferenceQueue）联合使用。
         当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。
         程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。程序如果发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。
-
-     1.解决Handler可能造成的内存泄露 -- 使用弱引用
-     当使用内部类（包括匿名类）来创建Handler的时候，Handler对象会隐式地持有一个外部类对象（通常是一个Activity）的引用，不然你怎么可能通过Handler来操作Activity中的View。而Handler通常会伴随着一个耗时的后台线程（例如从网络拉取图片）一起出现，这个后台线程在任务执行完毕（例如图片下载完毕）之后，通过消息机制通知Handler，然后Handler把图片更新到界面。
-     然而，如果用户在网络请求过程中关闭了Activity，正常情况下，Activity不再被使用，它就有可能在GC检查时被回收掉，但由于这时线程尚未执行完，而该线程持有Handler的引用（不然它怎么发消息给Handler？），这个Handler又持有Activity的引用，就导致该Activity无法被回收（即内存泄露），直到网络请求结束（例如图片下载完毕）。
-     2.解决图片加载时，可能造成的内存不足问题 -- 使用软引用
-     使用软引用相对使用强引用，在图片加载方面能够很明显的提升性能，并减少崩溃的几率，与Lru算法指定LruCache能够更好的去管理，因为增加了根据图片使用频率来管理内存的算法，相比较更加合理和人性化。
-     补充：Java垃圾回收机制:
-     Java的垃圾回收器要负责完成3件任务：分配内存、确保被引用的对象的内存不被错误回收以及回收不再被引用的对象的内存空间。
-     垃圾回收是一个复杂而且耗时的操作。如果JVM花费过多的时间在垃圾回收上，则势必会影响应用的运行性能。一般情况下，当垃圾回收器在进行回收操作的时候，整个应用的执行是被暂时中止（stop-the-world）的。对于与用户交互的应用来说，则可能希望所垃圾回收所带来的应用停顿的时间间隔越小越好。对于这种情况，JVM中提供了多种垃圾回收方法以及对应的性能调优参数，应用可以根据需要来进行定制。
-
      */
     public void test() {
         A a = new A();
-        //软引用的使用
+        /**软引用的使用*/
         SoftReference<A> sr = new SoftReference<A>(a);
         a = null;
-        //如过对象没有被回收，则可以重新得到
+        /**如过对象没有被回收，则可以重新得到*/
         if (sr != null) {
             a = sr.get();
         } else {
@@ -90,4 +80,33 @@ public class Java {
             a = new int[100000000];
         }
     }
+
+    /**
+    1.解决Handler可能造成的内存泄露 -- 使用弱引用
+        1)静态类不持有外部类的对象，使用静态内部类Handler；
+        2)因为不持有外部类的对象，所以要把activity对象传进去，此时可对activity弱引用
+     正经的解决方法其实是：handler.removeCallbacksAndMessages(null);！！！！
+
+    2.解决图片加载时，可能造成的内存不足问题 -- 使用软引用
+        使用软引用相对使用强引用，在图片加载方面能够很明显的提升性能，并减少崩溃的几率，与Lru算法指定LruCache能够更好的去管理，因为增加了根据图片使用频率来管理内存的算法，相比较更加合理和人性化。
+    */
+//    class SampleActivity extends Activity {
+//        /**
+//         * Instances of static inner classes do not hold an implicit
+//         * reference to their outer class.
+//         */
+//        private static class MyHandler extends Handler {
+//            private final WeakReference<SampleActivity> mActivity;
+//            public MyHandler(SampleActivity activity) {
+//                mActivity = new WeakReference<SampleActivity>(activity);
+//            }
+//            @Override
+//            public void handleMessage(Message msg) {
+//                SampleActivity activity = mActivity.get();
+//                if (activity != null) {
+//
+//                }
+//            }
+//        }
+//    }
 }
