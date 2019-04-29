@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**java*/
         Class[] java = {
-                Java.class,
+                Java.class,             //JVM、内存
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
                 MyCollection.class,     //集合、数组、栈、属性类

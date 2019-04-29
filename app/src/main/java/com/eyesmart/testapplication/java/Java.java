@@ -3,6 +3,10 @@ package com.eyesmart.testapplication.java;
 import java.lang.ref.SoftReference;
 
 /**
+ * 二进制正负表示法：第一位为符号位，负数为二进制正数的补码；
+ * 补码：反码+1，反码为除符号位的位数取反；
+ * <<、>>：左移后用0补；右移后，正数用0补，负数用1补；
+ * >>>：无符号右移，都用0补
  *
  */
 

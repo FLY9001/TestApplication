@@ -1,5 +1,7 @@
 package com.eyesmart.testapplication.java;
 
+import com.eyesmart.testapplication.R;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +30,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * http://www.cnblogs.com/haimishasha/p/10757722.html
  * 类集，动态的对象数组，数据结构的包装
+ * <p>
+ * 数据结构：        数据的组织方式（树、图、哈希）和处理方式（增删改查、遍历）
+ * 数据结构分类：    线性结构、树结构、图结构、哈希结构
+ * 数据结构复杂度：  时间复杂度、空间复杂度
+ * 时间复杂度：      算法执行时间随输入规模增长而增长的量级
+ * 函数描述(好->坏)：常数级O(1)、对数级O(log n)、线性级O(n)、线性对数级O(n log n)、平方级O(n2)\立方级O(n3)、指数级O（2n）等
+ * <p>
+ * 集合类：工具类容器，实现了常用的数据结构，提供了操作API
  */
 
 public class MyCollection {
@@ -49,6 +60,10 @@ public class MyCollection {
         Arrays.equals(temp, null);          //数组比较
         Arrays.deepEquals(students, null);  //二维数组比较
 //--------------------------------------------------------------------------------------------------
+        /**集合类*/
+        int collection1 = R.drawable.collection;     //绿色：可并发，灰色：弃用
+        int collection2 = R.drawable.collection2;    //结构
+
         //List
         //ArrayList
         List<String> list = new ArrayList();

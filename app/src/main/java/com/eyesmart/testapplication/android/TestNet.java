@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 
 /**
+ * 物理层、链路层、网络层、传输层、应用层
+ *
  * TCP/IP是传输层协议，主要解决 数据如何在网络中传输。
  * HTTP  是应用层协议，主要解决 如何包装数据。一问一答，每次请求都需要服务器回送响应，在请求结束后，会主动释放连接
  * <p>
