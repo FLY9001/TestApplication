@@ -152,7 +152,12 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:palette-v7:26.1.0'
-    testCompile 'junit:junit:4.12'
+
+    //单元测试依赖
+    testImplementation 'junit:junit:4.12'
+    //可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+
     //用于Java编写执行Java测试用例
     compile 'com.dubsmash.volley:library:2.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
@@ -171,21 +176,14 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 
-    //implementation
-    //这个指令的特点就是，对于使用了该命令编译的依赖，对该项目有依赖的项目将无法访问到使用该命令编译的依赖中的任何程序，
-    //也就是将该依赖隐藏在内部，而不对外部公开。
-    //编译速度会加快，优先使用
-    //    下面是2.x版本依赖的说明，括号里对应的是3.0版本的依赖方式。
-    //    compile（api，implementation）
-    //    这种是我们最常用的方式，使用该方式依赖的库将会参与编译和打包。
-    //    provided（compileOnly）
-    //    只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
-    //    apk（runtimeOnly）
-    //    只在生成apk的时候参与打包，编译时不会参与，很少用。
-    //    testCompile（testImplementation）
-    //    testCompile 只在单元测试代码的编译以及最终打包测试apk时有效。
-    //    debugCompile（debugImplementation）
-    //    debugCompile 只在debug模式的编译和最终的debug apk打包时有效。
-    //    releaseCompile（releaseImplementation）
-    //    releaseCompile 仅仅针对Release模式的编译和最终的Release apk打包。
+    //implementation    将该依赖隐藏在内部，而不对外部公开。编译速度会加快，优先使用。api会对外公开
+
+    //下面是3.x版本依赖的说明，括号里是以前版本的依赖方式。
+    //api                   (compile)        这种是我们最常用的方式，使用该方式依赖的库将会参与编译和打包。
+    //testImplementation    (testCompile)    只在单元测试代码的编译以及最终打包测试apk时有效。
+    //debugImplementation   (debugCompile)   只在debug模式的编译和最终的debug apk打包时有效。
+    //releaseImplementation (releaseCompile) 仅仅针对Release模式的编译和最终的Release apk打包。
+
+    //compileOnly           (provided)       只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
+    //runtimeOnly           (apk)            只在生成apk的时候参与打包，编译时不会参与，很少用。
 }
