@@ -153,10 +153,13 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:palette-v7:26.1.0'
 
-    //单元测试依赖
+    //本地单元测试依赖
     testImplementation 'junit:junit:4.12'
-    //可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
-    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'org.mockito:mockito-core:2.27.0'
+    //仪器化单元测试依赖
+    androidTestImplementation 'org.mockito:mockito-core:2.27.0'
+    androidTestImplementation "com.google.dexmaker:dexmaker:1.2"
+    androidTestImplementation "com.google.dexmaker:dexmaker-mockito:1.2"
 
     //用于Java编写执行Java测试用例
     compile 'com.dubsmash.volley:library:2.0.1'

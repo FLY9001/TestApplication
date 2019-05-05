@@ -44,7 +44,7 @@ public class TestButterKnife extends AppCompatActivity {
     @BindColor(R.color.colorAccent)
     int colorAccent;
     @BindDimen(R.dimen.fab_margin)
-    Float fab_margin;
+    float fab_margin;
 
     /**
      * 绑定控件事件
