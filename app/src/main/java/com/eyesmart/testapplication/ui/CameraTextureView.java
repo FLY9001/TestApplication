@@ -10,6 +10,9 @@ import android.view.TextureView;
 
 import java.util.List;
 
+/**
+ * https://www.jianshu.com/p/bac0e72351e4
+ */
 public class CameraTextureView extends TextureView {
     private static final String TAG = "CameraTextureView";
 

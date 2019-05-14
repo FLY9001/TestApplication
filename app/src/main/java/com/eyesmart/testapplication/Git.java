@@ -33,8 +33,8 @@ class Git {
  *
  *--------------------------------------------------------------------------------------------------
  * 远程仓库（传输通过SSH加密）：
- * $ ssh-keygen -t rsa -C "youremail@example.com" //创建SSH Key，生成id_rsa、id_rsa.pub两个文件
- *                                                //给远程仓库添加公钥
+ * $ ssh-keygen -t rsa -C "youremail@example.com"           //创建SSH Key，生成id_rsa、id_rsa.pub两个文件
+ *                                                          //给远程仓库添加公钥
  *
  * $ git remote add origin git@github.com:FLY9001/test.git  //先有本地库，关联空的远程库
  * $ git push -u origin master                              //推送到远程库，（-u）并关联master分支
@@ -45,10 +45,10 @@ class Git {
  * $ git pull origin master --allow-unrelated-histories     //本地和远程都不为空时
  *
  *
- * $ git remote -v              //查看远程库
- * $ git pull                   //抓取最新
- * $ git push origin <branch-name>  //推送提交
- * $ git checkout -b <branch-name> origin/<branch-name> //创建并关联远程分支
+ * $ git remote -v                                          //查看远程库
+ * $ git pull                                               //抓取最新
+ * $ git push origin <branch-name>                          //推送提交
+ * $ git checkout -b <branch-name> origin/<branch-name>     //创建并关联远程分支
  * $ git branch --set-upstream <branch-name> origin/<branch-name> //建立分支关联
  *--------------------------------------------------------------------------------------------------
  * 分支：
@@ -62,5 +62,38 @@ class Git {
  *
  * $ git stash                  //藏匿工作现场，在创建bug分支时应用
  * $ git stash pop
+ *
+ *
+ * Git global setup
+ git config --global user.name "田宇飞"
+ git config --global user.email "yufei.tian@eyesmart.com.cn"
+
+
+
+ Create a new repository
+ git clone git@kernel:FLY/workspace_sofia.git
+ cd workspace_sofia
+ touch README.md
+ git add README.md
+ git commit -m "add README"
+ git push -u origin master
+
+
+
+ Existing folder
+ cd existing_folder
+ git init
+ git remote add origin git@kernel:FLY/workspace_sofia.git
+ git add .
+ git commit -m "Initial commit"
+ git push -u origin master
+
+
+
+ Existing Git repository
+ cd existing_repo
+ git remote add origin git@kernel:FLY/workspace_sofia.git
+ git push -u origin --all
+ git push -u origin --tags
  */
 }

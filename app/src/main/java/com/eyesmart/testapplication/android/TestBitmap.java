@@ -16,6 +16,7 @@ import com.eyesmart.testapplication.R;
 
 /**
  * 图像处理
+ * https://www.jianshu.com/p/8206dd8b6d8b
  */
 
 public class TestBitmap {

@@ -58,6 +58,7 @@ import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
 import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
 
 /**
+ * 基础教程：https://www.kancloud.cn/kancloud/android-tutorial/87287
  * ［干货］最全知识总结：
  * http://mp.weixin.qq.com/s?__biz=MzI0MjE3OTYwMg==&mid=2649548612&idx=1&sn=8e46b6dd47bd8577a5f7098aa0889098&chksm=f1180c39c66f852fd955a29a9cb4ffa9dc4d528cab524059bcabaf37954fa3f04bc52c41dae8&mpshare=1&scene=23&srcid=0803Ekz4932sa0JrjO4jR36C#rd
  * <p>
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 HybridActivity.class,   //混合开发
         };
         /**android代码优化*/
+        //https://www.jianshu.com/p/a4c3c32fa5ab
         Class[] android2 = {
                 TestUI.class,           //布局优化
                 TestMemory.class,       //TODO 内存泄漏、优化、图片优化

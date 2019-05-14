@@ -119,5 +119,11 @@ public class ADB {
      kill 3497                      停止进程号为3497的进程。
 
      date                           查看日期和当前时间信息。
+
+
+     wm size                        查看设备分辨率
+     wm density                     查看设备像素密度
+     pm list packages               列出所有安装程序信息
+
      */
 }

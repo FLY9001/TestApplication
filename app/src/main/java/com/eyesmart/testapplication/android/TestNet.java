@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 
 /**
+ * https://www.jianshu.com/p/5a77d409b7d6
  * 物理层、链路层、网络层、传输层、应用层
  *
  * TCP/IP是传输层协议，主要解决 数据如何在网络中传输。

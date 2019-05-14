@@ -4,6 +4,7 @@ package com.eyesmart.testapplication.android;
  * https://blog.csdn.net/carson_ho/article/details/73250163
  * http://blog.csdn.net/yanbober/article/details/45310365
  * https://blog.csdn.net/u012528526/article/details/80647537
+ * https://www.kancloud.cn/xyang0917/blogjnindk/117012
  * <p>
  * JNI：Java Native Interface（java的 java本地接口）
  * （使得Java与本地其他类型语言（如C、C++）交互）
