@@ -35,6 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.Body;
@@ -304,11 +305,12 @@ public class HttpUtils {
     public static void testRetrofit() throws IOException {
         /**1、创建Retrofit*/
         Retrofit retrofit = new Retrofit.Builder()
-                //.client(new OkHttpClient())                         //可传入OkHttpClient
-                .baseUrl("http://api.zhifangw.cn/")                   //baseUrl必须以"/"结尾
+                //.client(new OkHttpClient())                               //可传入OkHttpClient
+                .baseUrl("http://api.zhifangw.cn/")                         //baseUrl必须以"/"结尾
                 //ConverterFactory依赖包需单独引入
-                .addConverterFactory(ScalarsConverterFactory.create())//增加返回值为String的支持
-                .addConverterFactory(GsonConverterFactory.create())   //Gson支持
+                .addConverterFactory(ScalarsConverterFactory.create())      //增加返回值为String的支持
+                .addConverterFactory(GsonConverterFactory.create())         //Gson支持
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())  //RxJava支持
                 .build();
         /**2、创建请求集合*/
         TestService testService = retrofit.create(TestService.class);

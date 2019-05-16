@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 AppInfoUtils.class,     //各个应用信息
 
                 PermissionActivity.class,//权限
-                Version.class
+                Version.class           //各版本信息
         };
         /**android基础框架*/
         Class[] android = {

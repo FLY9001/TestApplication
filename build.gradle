@@ -38,9 +38,9 @@ allprojects {
 
 //extra property,第一次被声明，可用于全局
 ext {
-    compileSdkVersion = 26
-    buildToolsVersion = "26.0.2"
-    targetSdkVersion = 22
+    compileSdkVersion = 28
+    buildToolsVersion = "27.1.1"
+    targetSdkVersion = 28
     minSdkVersion = 14
 
     versionCode = 100900000
