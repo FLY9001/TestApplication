@@ -64,6 +64,7 @@ import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
  * <p>
  * 刘望舒知识体系引导
  * http://blog.csdn.net/itachi85/article/details/50705350
+ * https://blog.csdn.net/Gaugamela/article/details/78655546
  */
 public class MainActivity extends AppCompatActivity {
 

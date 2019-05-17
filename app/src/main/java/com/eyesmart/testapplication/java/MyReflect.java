@@ -39,13 +39,14 @@ public class MyReflect {
         Method equals = c.getMethod("equals", Object.class);//通过反射调用类中方法
         boolean b = (boolean) equals.invoke(stu, new Student());
 
-        Field age = c.getDeclaredField("age");      //通过反射操作属性
+        Field age = c.getDeclaredField("age");   //通过反射操作属性
         age.setAccessible(true);                    //设置为可被外部访问
         age.set(stu, "18");
     }
 
     /**
      * 注解
+     * https://blog.csdn.net/briblue/article/details/73824058
      */
     //4个标准注解
     //@Override                         //覆写
