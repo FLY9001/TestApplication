@@ -1,5 +1,6 @@
 package com.eyesmart.testapplication.ui.viewwidget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -18,7 +19,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -53,6 +56,7 @@ public class DrawView extends View {
         this(context, attrs, defStyleAttr, 0);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public DrawView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initPain();
@@ -84,7 +88,7 @@ public class DrawView extends View {
         // MIRROR:与REPEAT一样都是循环重复，但这个会对称重复
 
         //平铺渲染
-        Shader bitmapShader = new BitmapShader(Bitmap.createBitmap(null), Shader.TileMode.REPEAT, Shader.TileMode.MIRROR);//x方向重复，y方向镜像
+        Shader bitmapShader = new BitmapShader(Bitmap.createBitmap((Bitmap) null), Shader.TileMode.REPEAT, Shader.TileMode.MIRROR);//x方向重复，y方向镜像
         //线性渐变
         Shader linearGradient = new LinearGradient(0, 0, 40, 60, colors, null, Shader.TileMode.REPEAT);
         //圆形渐变
@@ -162,6 +166,7 @@ public class DrawView extends View {
      *
      * @param canvas
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void testcanvas(Canvas canvas) {
         //translate平移、scale缩放、rotate旋转、skew错切
         //save保存画布坐标体系，restore恢复到保存时画布坐标体系

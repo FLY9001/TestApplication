@@ -9,6 +9,7 @@ package com.eyesmart.testapplication;
 
 class Git {
 /**
+ * https://www.liaoxuefeng.com/wiki/896043488029600
  * 配置：
  * $ git config --global user.name "Your Name"
  * $ git config --global user.email "email@example.com"
