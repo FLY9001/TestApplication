@@ -84,7 +84,7 @@ public class DrawView extends View {
         // MIRROR:与REPEAT一样都是循环重复，但这个会对称重复
 
         //平铺渲染
-        Shader bitmapShader = new BitmapShader(Bitmap.createBitmap(null), Shader.TileMode.REPEAT, Shader.TileMode.MIRROR);//x方向重复，y方向镜像
+        Shader bitmapShader = new BitmapShader(Bitmap.createBitmap((Bitmap) null), Shader.TileMode.REPEAT, Shader.TileMode.MIRROR);//x方向重复，y方向镜像
         //线性渐变
         Shader linearGradient = new LinearGradient(0, 0, 40, 60, colors, null, Shader.TileMode.REPEAT);
         //圆形渐变

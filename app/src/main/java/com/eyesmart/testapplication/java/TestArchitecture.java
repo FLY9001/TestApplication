@@ -17,6 +17,7 @@ public class TestArchitecture {
     }
 
     /**
+     * https://github.com/antoniolg/androidmvp
      * Model:       负责存储、检索、操纵数据
      * View:        负责绘制UI元素、与用户进行交互(在Android中体现为Activity)
      * Presenter:   作为View与Model交互的中间纽带，处理与用户交互的负责逻辑。

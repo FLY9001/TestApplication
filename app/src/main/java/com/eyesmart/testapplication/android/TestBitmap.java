@@ -97,7 +97,7 @@ public class TestBitmap {
 
 
     static Matrix matrix = new Matrix();
-    static Bitmap bitmap = Bitmap.createBitmap(null);
+    static Bitmap bitmap = Bitmap.createBitmap((Bitmap) null);
 
     //Matrix图像变换
     private static void testBitmapMatrix(Canvas canvas) {
