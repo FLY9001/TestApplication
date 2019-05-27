@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**java*/
+        //Java学习+面试指南:https://github.com/Snailclimb/JavaGuide
         Class[] java = {
                 Java.class,             //JVM、内存
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化

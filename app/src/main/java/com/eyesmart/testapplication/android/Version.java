@@ -8,6 +8,7 @@ import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
 
 /**
  * Created by 1 on 2018/10/25 0025.
+ * 各版本新特性：https://mp.weixin.qq.com/s?__biz=MzIyMjQ0MTU0NA==&mid=2247488672&idx=1&sn=3c61a2685abbaab209c6bf43f88459c7&scene=21#wechat_redirect
  */
 
 public class Version {
