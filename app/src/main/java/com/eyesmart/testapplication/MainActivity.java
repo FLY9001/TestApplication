@@ -45,6 +45,7 @@ import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
 import com.eyesmart.testapplication.java.TestDesignPattern;
+import com.eyesmart.testapplication.mvp.view.MVPActivity;
 import com.eyesmart.testapplication.project.Resource;
 import com.eyesmart.testapplication.ui.CameraTextureView;
 import com.eyesmart.testapplication.ui.TestAnim;
@@ -173,7 +174,8 @@ public class MainActivity extends AppCompatActivity {
                 ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
-                startActivity(new Intent(this, TestButterKnife.class));
+                //startActivity(new Intent(this, TestButterKnife.class));
+                startActivity(new Intent(this, MVPActivity.class));
                 break;
         }
     }
