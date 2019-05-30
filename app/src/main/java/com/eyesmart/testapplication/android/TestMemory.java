@@ -41,6 +41,12 @@ public class TestMemory {
 
     /**
      * 内存泄露：对象无法被GC回收，大量的内存泄露会导致内存溢出(oom)
+     * 内存泄漏的根本原因在于生命周期长的对象持有了生命周期短的对象的引用
+     * 1.非静态内部类，如handler=
+     * 2.异步操作 还有AsyncTask 等
+     * 3.静态类持有非静态类 比如工具类莫名持有context
+     * 4.资源对象未关闭（File流 Cursor ）
+     * 5.注册监听 未及时注销
      * LeakCanary
      */
     void testMemoryLeak() {

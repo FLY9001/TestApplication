@@ -46,6 +46,7 @@ public class TestService extends Service {
         onCreate();
 
         /**IntentService*/
+        //内含HandlerThread，在子线程执行intent
         //1、构造器传入线程名称、覆写onHandleIntent()方法
         intent = new Intent(this, TestIntentService.class);
         startService(intent);
@@ -155,7 +156,7 @@ public class TestService extends Service {
 //与后台线程相比，IntentService是一种后台服务，优点是：优先级高（不容易被系统杀死），从而保证任务的执行
 class TestIntentService extends IntentService {
     public TestIntentService() {
-        super("TestIntentService"); //工作线程的名字
+        super("工作线程的名字");
     }
 
     @Override
