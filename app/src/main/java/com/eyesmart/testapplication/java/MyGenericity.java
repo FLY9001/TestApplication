@@ -13,8 +13,13 @@ public class MyGenericity {
             c.ordinal();    //序号：0
         }
 
-
+        /**
+         * 泛型，即“参数化类型”。
+         * 分为 泛型类、泛型接口、泛型方法
+         * 通配符适用于形参中，便于指定类型范围
+         */
         Point<Integer> p = new Point<Integer>();      //声明或实例化时指定
+        p.setX(1);
         out(p);
     }
 
@@ -27,15 +32,16 @@ public class MyGenericity {
     public void out2(Point<? super Number> p) {       //泛型的范围，下限
     }
 
+    //泛型方法
     public <T extends Number> Point<T> out(T param) { //泛型方法返回泛型类型
         Point<T> point = new Point<>();
         point.setX(param);
         return point;
     }
 
+    //泛型类或接口，最简单的只有T或别的字母
     class Point<T extends Number> {
         private T x;
-        private T y;
 
         public T getX() {
             return x;
@@ -43,14 +49,6 @@ public class MyGenericity {
 
         public void setX(T x) {
             this.x = x;
-        }
-
-        public T getY() {
-            return y;
-        }
-
-        public void setY(T y) {
-            this.y = y;
         }
     }
 

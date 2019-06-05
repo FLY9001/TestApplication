@@ -35,6 +35,7 @@ import com.eyesmart.testapplication.android.TestUI;
 import com.eyesmart.testapplication.android.TestWindow;
 import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.android.Version;
+import com.eyesmart.testapplication.android.opengl.GLActivity;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.Java;
 import com.eyesmart.testapplication.java.MyCollection;
@@ -45,7 +46,6 @@ import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
 import com.eyesmart.testapplication.java.TestDesignPattern;
-import com.eyesmart.testapplication.mvp.view.MVPActivity;
 import com.eyesmart.testapplication.project.Resource;
 import com.eyesmart.testapplication.ui.CameraTextureView;
 import com.eyesmart.testapplication.ui.TestAnim;
@@ -176,7 +176,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 //startActivity(new Intent(this, TestButterKnife.class));
-                startActivity(new Intent(this, MVPActivity.class));
+                //startActivity(new Intent(this, MVPActivity.class));
+                startActivity(new Intent(this, GLActivity.class));
                 break;
         }
     }

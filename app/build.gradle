@@ -2,21 +2,37 @@
 apply plugin: 'com.android.application'//应用此插件，可构建应用程序
 //apply plugin: 'com.android.library'//应用此插件，可构建依赖库，两者不能同时应用
 
+//获取git当前分支名，${getGitBranchName()}
+def getGitBranchName() {
+    return "git symbolic-ref --short -q HEAD".execute().text.trim()
+}
+//获取git commit的ID，即SHA-1值（40个十六进制数字）
+def getGitCommitSha() {
+    return "git rev-parse HEAD".execute().text.trim()
+}
+
 android {
     //必须有的两个属性
-    compileSdkVersion rootProject.ext.compileSdkVersion     //编译SDK版本，尽量最新，确保能使用最新API。路径：安装SDK目录/platforms/。
-    buildToolsVersion rootProject.ext.buildToolsVersion     //构建工具版本，尽量最新，因为新的兼容旧的。>=CompileSdkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    //编译SDK版本（API Level），尽量最新，确保能使用最新API。路径：安装SDK目录/platforms/。
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    //构建工具版本（SDK目录里的工具包版本·），尽量最新，因为新的兼容旧的。>=CompileSdkVersion
 
     //默认配置,重写AndroidManifest或在其上添加 自定义属性
     defaultConfig {
         applicationId "com.eyesmart.testapplication"    //只会修改当前程序的包名,不影响源码中资源文件对包名的引用
-        minSdkVersion 19                                //最小支持的sdk版本（必须>=所有依赖库所支持的最低版本），建议填写16(Android4.0)
+        minSdkVersion 19
+        //最小支持的sdk版本（必须>=所有依赖库所支持的最低版本），建议填写16(Android4.0)
         //目标SDK版本（compileSdkVersion采用了23（6.0），但是项目暂时还未对6.0的特性（如运行时权限）做相应的处理，那么可以设置targetSdkVersion的版本低于23。这样，应用仍可以正常运行在6.0的机子上（当然也就不具有运行时权限的特性）。）
         targetSdkVersion 27                             //建议22，小于Android6.0
-        versionCode 1                                   //app版本号
-        versionName "1.0"                               //app版本名，无作用
-        flavorDimensions "versionCode"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"  //仪器化单元测试默认为AndroidJUnitRunner
+        versionCode 1                                   //app版本号，用于升级
+        versionName "1.0"                               //app版本名，只用于代号
+        flavorDimensions "ad"//, "liveness"            //风味维度，每个产品风味都指定维度，维度之间可组合
+        multiDexEnabled true                            //多dex分包支持，解决方法超过65535
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //仪器化单元测试默认为AndroidJUnitRunner
+        resConfigs "zh-rCN", "en-rUS"                   //打包只保留中文和英文语言资源，缩小安装包体积
 
         ndk {
             moduleName "TestJni"                        //生成的so名字
@@ -27,30 +43,43 @@ android {
     //产品风味，重写默认配置或在其上添加 自定义属性
     productFlavors {
         flavor {
+            dimension 'ad'
+            manifestPlaceholders.put("KEY", "value")     //占位符，配置manifest文件中的参数
         }
         myflavors {
+            dimension 'ad'
+
             applicationIdSuffix ".myflavors"
             //signingConfig signingConfigs.release
+
+            manifestPlaceholders.put("KEY", "value")
         }
     }
 
     //签名配置
     signingConfigs {
-        staging.initWith(signingConfigs.debug)
+        //staging.initWith(signingConfigs.debug)
         release {
             //storeFile file("release.keystore")                //可以这样，文件路径
-            storeFile file(System.properties['keyStore'])       //可以这样
-            storePassword System.properties['keyStorePassword']
-            keyAlias project.property('testapp.keyAlias')       //也可以这样
-            keyPassword testKeyAliasPassword                    //还可以这样
+//            storeFile file(System.properties['keyStore'])       //可以这样
+//            storePassword System.properties['keyStorePassword']
+//            keyAlias project.property('testapp.keyAlias')       //也可以这样
+//            keyPassword testKeyAliasPassword                    //还可以这样
+
+            storeFile file('test.jks')
+            storePassword '123456'
+            keyAlias 'a'
+            keyPassword '123456'
         }
     }
 
     //编译类型，重写产品风味或在其上添加 自定义属性
     buildTypes {
         debug {
-            buildConfigField "String", "API_URL", "\"http://test.example.com/api\"" //定义全局常量BuildConfig.API_UR
-            resValue "string", "APP_NAME", "TestApp_debug"                          //定义资源 R.string.app_name
+            buildConfigField "String", "API_URL", "\"http://test.example.com/api\""
+            //定义全局常量BuildConfig.API_UR
+            resValue "string", "APP_NAME", "TestApp_debug"
+            //定义资源 R.string.app_name
         }
         myrelease.initWith(buildTypes.debug)                                        //继承debug编译类型
         myrelease {
@@ -61,10 +90,10 @@ android {
             resValue "string", "APP_NAME", "TestApp_myrelease"
         }
         release {
-            minifyEnabled true      //是否进行混淆
-            zipAlignEnabled true    //Zipalign优化
-            shrinkResources true    //移除无用的resource文件
-            //混淆文件proguard-android.txt为系统默认的混淆文件，位于\sdk\tools\proguard    proguard-rules.pro为项目自定义混淆文件，用于定义第三方依赖包的混淆规则
+            minifyEnabled true      //是否进行混淆,工具ProGuard，去除无用代码。可能会去除反射调用的代码，通过编写keep.xml解决
+            zipAlignEnabled true    //zipalign优化，整理优化apk文件，会调用SDK下的zipalign工具
+            shrinkResources true    //移除无用的resource文件，去除无用资源，生效需打开minifyEnabled
+            //配置多个混淆文件，getDefaultProguardFile获取名为proguard-android.txt的混淆文件，位于\sdk\tools\proguard    proguard-rules.pro为项目自定义混淆文件，用于定义第三方依赖包的混淆规则
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "APP_NAME", "TestApp_myrelease"
         }
@@ -73,22 +102,22 @@ android {
     //保持旧的eclipse文件结构
 //    sourceSets {
 //        main {
-//            aidl.srcDirs = ['src']
-//            assets.srcDirs = ['assets']
+//            manifest.srcFile 'AndroidManifest.xml'
 //            java.srcDirs = ['src']
-//            jniLibs.srcDirs =
 //            resources.srcDirs = ['src']
+//            aidl.srcDirs = ['src']
 //            renderscript.srcDirs = ['src']
 //            res.srcDirs = ['res']
-//            manifest.srcFile 'AndroidManifest.xml'
-//
+//            assets.srcDirs = ['assets']
+
+//            jniLibs.srcDirs =
 //            jniLibs.srcDir 'libs'                 //jniLibs: so库依赖路径 (armeabi、armebi-v7a)
 //                                                  //libs: jar包依赖路径
 //        }
 //        androidTest.setRoot('tests')
 //    }
 
-    //自定义apk的文件名
+    //自定义apk的文件名，all方法遍历
 //    applicationVariants.all { variant ->
 //        variant.outputs.each { output ->
 //            if (output.outputFile != null &&
@@ -118,36 +147,47 @@ android {
 //        targetCompatibility JavaVersion.VERSION_1_7
 //    }
 
-    // 移除lint检查的error
+    // 移除lint检查的error,https://blog.csdn.net/berber78/article/details/60766091
 //    lintOptions {
 //        abortOnError false
-//    }
+
+    //源集，源代码文件的相关配置
     sourceSets {
         main {
-            jni.srcDirs = []                                    //设置禁止gradle生成Android.mk
-            jniLibs.srcDirs = ['src/main/jniLibs']              //设置目标的so存放路径
+            jni.srcDirs = []                                 //设置禁止gradle生成Android.mk
+            jniLibs.srcDirs 'src/main/jniLibs'              //设置目标的so存放路径
         }
     }
+
+    //使用相对路径配置本地仓库,一般用于引用aar
     repositories {
         flatDir {
             dirs 'libs'//作用是添加一个本地仓库,并把libs目录当做仓库地址
         }
     }
-    buildToolsVersion '28.0.0'
 }
+//android配置为应用插件所提供
 
 //依赖的库
+//库名称包含三个元素：组名:库名:版本号
 dependencies {
     //将libs文件夹中所有的jar文件视为依赖库
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.aar'], dir: 'libs')
+
+    //引用本地库中的某个
+    //implementation(name: 'testlibrary-debug', ext: 'aar')
+
+    //库项目引用
+    //implementation project(':baselib')
+
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile(name: 'testlibrary-debug', ext: 'aar')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         //根据不同编译类型，依赖不同的库
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:palette-v7:27.1.1'
 
@@ -160,20 +200,20 @@ dependencies {
     androidTestImplementation "com.google.dexmaker:dexmaker-mockito:1.2"
 
     //用于Java编写执行Java测试用例
-    compile 'com.dubsmash.volley:library:2.0.1'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.1'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'jp.wasabeef:glide-transformations:1.0.6'
-    compile 'com.github.bumptech.glide:glide:4.0.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    implementation 'com.dubsmash.volley:library:2.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'jp.wasabeef:glide-transformations:1.0.6'
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'

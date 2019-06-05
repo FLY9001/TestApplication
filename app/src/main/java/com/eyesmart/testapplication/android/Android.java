@@ -44,7 +44,7 @@ public class Android {
         /**
          ******************sdk目录********************************************
          sdk目录：
-         add-ons                 附加库
+         add-ons                 附加库，一般为第三方公司的附加库，供开发者使用
          build-tools             编译工具：aapt、aidl、dexdump、dx等
          docs                    开发文档
          emulator                模拟器

@@ -1,0 +1,87 @@
+//双引号能对字符串里的表达式做运算，单引号不能，它仅表示纯粹的字符串
+//括号可以省略，method(1,2)、method 1,2 一样
+//return可以不写，默认最后一句代码是返回值
+//代码块可以被传递，也就是闭包
+
+//创建一个任务
+task customTask1 << {
+    println "123"
+}
+
+//任务依赖，被依赖的会先执行
+task customTask2(dependencies: customTask1) {
+    println "456"
+}
+task customTask3 {
+    dependencies customTask1, customTask2
+    println "789"
+}
+
+//1.不加doLast和doFirst的最先执行
+//2.依赖task优先级高于自己的doFirst和doLast
+//3.同一个task中的doLast按从上向下顺序执行
+//4.同一个task中的doFirst按从下到上倒序执行
+//5.同一个task的doFirst优先级高于doLast
+task customTask4 {
+    println "0"
+    doFirst {
+        println "2"
+    }
+    doLast {
+        println "3"
+    }
+    doFirst {
+        println "1"
+    }
+    doLast {
+        println "4"
+
+    }
+}
+
+//自定义属性
+ext.age = 18        //自定义一个
+ext {               //自定义多个
+    phone = 123456
+    address = '地址'
+}
+sourceSets.all {
+    ext.resourcesDir = null
+}
+sourceSets {
+    test1 {
+        resourcesDir = 'test1/res'
+    }
+    test2 {
+        resourcesDir = 'test2/res'
+    }
+}
+task testCustom5 {
+    //遍历
+    sourceSets.each {
+        println "${it.name}的resourcesDir是：${it.resourcesDir}"
+    }
+    //test1的resourcesDir是：test1/res
+    //test2的resourcesDir是：test2/res
+}
+
+//应用二进制插件
+apply plugin: 'java'
+//应用脚本插件，把文件脚本加载进来
+apply from:'test.gradle'
+//应用第三方插件，如Android Gradle、fabric
+buildscript {   //构建项目之前，初始化配置的地方
+    //远程仓库
+    repositories {
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    //依赖，插件需配置的classpath
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'io.fabric.tools:gradle:1.28.1'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'

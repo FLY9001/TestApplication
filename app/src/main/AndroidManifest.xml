@@ -116,13 +116,14 @@
                     android:scheme="string"/>
                 -->
             </intent-filter>
-            <!--
-            <meta-data                              //元数据，可以包含在<activity> <activity-alias> <service> <receiver>四个元素中
-                android:name="string"               //这个名字是唯一的，可用java风格命名规范，如com.woody.project.fried
-                android:resource="resource"         //该资源的id可以通过方法Bundle.getInt()来从meta-data中找到
-                android:value="string"/>             //值？
-            -->
         </activity>
+        <!-- 元数据，在第三方sdk时会运用到，可获得value的值 -->
+        <meta-data
+            android:name="meta_app"
+            android:value="${KEY}"/>
+        <meta-data
+            android:name="meta_act"
+            android:resource="@string/app_name"/>
         <!--
         <activity-alias                             //为activity创建快捷方式
             android:enabled=["true" | "false"]
@@ -200,6 +201,8 @@
         <activity android:name=".android.HybridActivity">
         </activity>
         <activity android:name=".android.TestButterKnife">
+        </activity>
+        <activity android:name=".android.opengl.GLActivity">
         </activity>
     </application>
 

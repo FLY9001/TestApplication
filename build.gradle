@@ -2,12 +2,15 @@
  * Gradle是编程框架，控制编译过程
  */
 
-//构建脚本，定义了 Android 编译工具的类路径
+//构建脚本，构建项目之前，初始化配置的地方
 buildscript {
-    //远程仓库依赖，依赖包的来源，设定插件的下载仓库
+    //远程仓库，依赖包的来源，设定插件的下载仓库
     repositories {
         jcenter()
+        google()
 //        mavenCentral()
+
+        //如果仓库有密码
 //        maven {
 //            url "http://repo.acmecorp.com/maven2"
 //            credentials {
@@ -15,15 +18,11 @@ buildscript {
 //                password 'secretpassword'
 //            }
 //        }
-        google()
     }
 
-    //依赖
+    //依赖，插件需配置的classpath
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -39,7 +38,7 @@ allprojects {
 //extra property,第一次被声明，可用于全局
 ext {
     compileSdkVersion = 28
-    buildToolsVersion = "27.1.1"
+    buildToolsVersion = "28.0.0"
     targetSdkVersion = 28
     minSdkVersion = 14
 
