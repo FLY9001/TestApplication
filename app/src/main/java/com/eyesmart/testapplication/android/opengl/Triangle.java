@@ -94,24 +94,22 @@ public class Triangle {
     public void draw() {
         //设置使用的程式
         GLES20.glUseProgram(mProgram);
-        //从程式中获取顶点着色器代码中的变量索引
+        //定点着色器相关，从程式中获取顶点着色器代码中的变量索引
         //Java代码中需要获取shader代码中定义的变量索引，用于在后面的绘制代码中进行赋值
         //变量索引在GLSL程式生命周期内（链接之后和销毁之前）都是固定的，只需获取一次
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
         //绑定vertex坐标值 glVertexAttribPointer()告诉OpenGL，它可以在缓冲区vertexBuffer中获取vPosition的数据
         GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
-
         //启用vertex Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
-        //从程式中获取片元着色器代码中的变量索引
+        //片元着色器相关，从程式中获取片元着色器代码中的变量索引
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
-        //设置颜色
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
-        //通过 GLES20.glDrawArrays 或者 GLES20.glDrawElements 开始绘制
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+        GLES20.glUniform4fv(mColorHandle, 1, color, 0);     //设置颜色
 
-        //Disable vertex array
+        //绘制，GLES20.glDrawArrays或GLES20.glDrawElements
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+        //收尾
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }
 }
