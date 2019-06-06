@@ -81,7 +81,7 @@ public class TestGLSurfaceView extends GLSurfaceView {
      * @return
      */
     public static int loadShader(int type, String shaderCode) {
-        int shader = GLES20.glCreateShader(type);   //传入渲染器类型参数type，创建对应的着色器对象；
+        int shader = GLES20.glCreateShader(type);   //传入渲染器类型参数type，得到对应的着色器对象；
         GLES20.glShaderSource(shader, shaderCode);  //传入着色器对象和字符串shaderCode定义的源代码，将二者关联起来；
         GLES20.glCompileShader(shader);             //传入着色器对象，对其进行编译。
         return shader;
