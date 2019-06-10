@@ -10,24 +10,13 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * OpenGL（英语：Open Graphics Library，译名：开放图形库或者“开放式图形库”）
- * 是用于渲染2D、3D矢量图形的跨语言、跨平台的应用程序编程接口（API）。用来和GPU进行交互的
- * <p>
- * OpenGL ES (OpenGL for Embedded Systems)
- * 是 OpenGL 三维图形 API 的子集，针对手机、PAD和游戏主机等嵌入式设备而设计
- * <p>
- * OpenGL ES 1.x针对固定管线硬件的，OpenGL ES 2.x针对可编程管线硬件
- * <!--0x00020000 代表使用 OpenGL ES 2.0 接口-->
- * <uses-featureandroid:glEsVersion="0x00020000" android:required="true"/>
- * <p>
- * 满屏或接近满屏的图形推荐GLSurfaceView，布局中的小部分图形推荐TextureView
+ *
  */
-public class TestGLSurfaceView extends GLSurfaceView {
+public class CameraGLSurfaceView extends GLSurfaceView {
     private static final String TAG = "TestGLSurfaceView";
 
 
-    private GLSurfaceView.Renderer mGLRenderer = new GLSurfaceView.Renderer() {
-        private Triangle mTriangle;
+    private Renderer mGLRenderer = new Renderer() {
 
         //当View的OpenGL环境被创建的时候调用
         @Override
@@ -36,7 +25,6 @@ public class TestGLSurfaceView extends GLSurfaceView {
             //设置清空屏幕用的颜色，即背景色（r,g,b,a）
             //GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            mTriangle = new Triangle();
         }
 
         //当视图的几何形状发生变化（例如，当设备的屏幕方向改变时）时调用
@@ -54,16 +42,15 @@ public class TestGLSurfaceView extends GLSurfaceView {
             //清空屏幕，清空屏幕后调用glClearColor(）中设置的颜色填充屏幕
             //GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-            mTriangle.draw();
         }
     };
 
-    public TestGLSurfaceView(Context context) {
+    public CameraGLSurfaceView(Context context) {
         super(context);
         init();
     }
 
-    public TestGLSurfaceView(Context context, AttributeSet attrs) {
+    public CameraGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

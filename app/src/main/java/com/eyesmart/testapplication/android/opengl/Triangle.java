@@ -9,32 +9,33 @@ import java.nio.FloatBuffer;
 /**
  * OpenGL只能画点、线、三角形，复杂的图形都是由三角形构成的。
  * <p>
- * 1、定义图形
+ * 1、坐标值准备
  *      1.1、创建一个包含顶点坐标的浮点数组
  *      1.2、将浮点数组添加到一个浮点缓冲区
- * 2、绘制图形
+ * 2、着色器准备
  *      2.1、创建两个着色器代码
  *      2.2、加载编译着色器代码
- *      2.3、将着色器对象放入到程式并链接GLES
+ *      2.3、着色器放入到程式并链接GLES
+ * 3、着色器准备
+ *      3.1、设置程式
+ *      3.2、设置着色器索引
+ *      3.3、绘制及收尾
  */
 //三角形
 public class Triangle {
 
     /**1.1、创建一个包含顶点坐标的浮点数组*/
     //每个顶点的坐标数
-    static final int COORDS_PER_VERTEX = 3;
+    private static final int COORDS_PER_VERTEX = 3;
     //创建三角形顶点数组，[0,0,0]为GLSurfaceView框架的中心，[ - 1，-1,0]是左下角，[1,1,0]是右上角，
     //OpenGL 只会渲染坐标值范围在 [-1, 1] 的内容
-    static float triangleCoords[] = {   //“卷曲顺序”，以逆时针顺序排列顶点。可以优化性能：使用卷曲顺序可以指出一个三角形属于任何给定物体的前面或者后面，OpenGL可以忽略那些无论如何都无法被看到的后面的三角形。
-            0.0f, 0.622008459f, 0.0f,   // top
-            -0.5f, -0.311004243f, 0.0f, // bottom left
-            0.5f, -0.311004243f, 0.0f   // bottom right
+    private static float triangleCoords[] = {   //“卷曲顺序”，以逆时针顺序排列顶点。可以优化性能：使用卷曲顺序可以指出一个三角形属于任何给定物体的前面或者后面，OpenGL可以忽略那些无论如何都无法被看到的后面的三角形。
+            0.0f, 1.0f, 0.0f,   // top
+            -0.5f, -1.0f, 0.0f, // bottom left
+            0.5f, -1.0f, 0.0f   // bottom right
     };
     //浮点缓冲区
     private FloatBuffer vertexBuffer;
-
-    //red, green, blue, alpha
-    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};
 
 
     /**2.1、创建两个着色器代码*/
@@ -84,32 +85,34 @@ public class Triangle {
     }
 
 
-    private int mPositionHandle;    //变量 用于存取attribute修饰的变量的位置编号
-    private int mColorHandle;       //变量 用于存取uniform修饰的变量的位置编号
-
-    private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;
-    private final int vertexStride = COORDS_PER_VERTEX * 4; //每个顶点4个字节
+    private int mPositionHandle;    //用于存取attribute修饰变量的索引
+    private int mColorHandle;       //用于存取 uniform 修饰变量的索引
+    private final int vertexStride = COORDS_PER_VERTEX * 4;                     //每个顶点坐标数据长度
+    private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;  //顶点个数
+    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};              //red, green, blue, alpha
 
     //图形类中创建draw()方法，拿到链接至GLES的程式(Program)，设置形状的顶点位置和表面的颜色值;
     public void draw() {
-        //设置使用的程式
+        /**3.1、设置要使用的程式*/
         GLES20.glUseProgram(mProgram);
-        //定点着色器相关，从程式中获取顶点着色器代码中的变量索引
+
+        /**3.2、设置着色器索引*/
+        //定点着色器相关
         //Java代码中需要获取shader代码中定义的变量索引，用于在后面的绘制代码中进行赋值
         //变量索引在GLSL程式生命周期内（链接之后和销毁之前）都是固定的，只需获取一次
-        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
-        //绑定vertex坐标值 glVertexAttribPointer()告诉OpenGL，它可以在缓冲区vertexBuffer中获取vPosition的数据
-        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
-        //启用vertex Enable a handle to the triangle vertices
+        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");//从程式中获取顶点着色器代码中的变量索引
+        //绑定vertex坐标值
+        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX,
+                GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);   //glVertexAttribPointer()告诉OpenGL，它可以在缓冲区vertexBuffer中获取vPosition的数据
+        //启用索引
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
-        //片元着色器相关，从程式中获取片元着色器代码中的变量索引
-        mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);     //设置颜色
+        //片元着色器相关
+        mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");     //从程式中获取片元着色器代码中的变量索引
+        GLES20.glUniform4fv(mColorHandle, 1, color, 0);              //设置颜色
 
-        //绘制，GLES20.glDrawArrays或GLES20.glDrawElements
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
-        //收尾
+        /**3.3、绘制及收尾*/
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);            //GLES20.glDrawArrays或GLES20.glDrawElements
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }
 }
