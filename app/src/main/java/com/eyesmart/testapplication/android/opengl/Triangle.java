@@ -10,7 +10,7 @@ import java.nio.FloatBuffer;
  * OpenGL只能画点、线、三角形，复杂的图形都是由三角形构成的。
  * <p>
  * 1、坐标值准备
- *      1.1、创建一个包含顶点坐标的浮点数组
+ *      1.1、创建包含顶点坐标的浮点数组
  *      1.2、将浮点数组添加到一个浮点缓冲区
  * 2、着色器准备
  *      2.1、创建两个着色器代码
@@ -24,7 +24,7 @@ import java.nio.FloatBuffer;
 //三角形
 public class Triangle {
 
-    /**1.1、创建一个包含顶点坐标的浮点数组*/
+    /**1.1、创建包含顶点坐标的浮点数组*/
     //每个顶点的坐标数
     private static final int COORDS_PER_VERTEX = 3;
     //创建三角形顶点数组，[0,0,0]为GLSurfaceView框架的中心，[ - 1，-1,0]是左下角，[1,1,0]是右上角，
@@ -89,7 +89,7 @@ public class Triangle {
     private int mColorHandle;       //用于存取 uniform 修饰变量的索引
     private final int vertexStride = COORDS_PER_VERTEX * 4;                     //每个顶点坐标数据长度
     private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;  //顶点个数
-    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};              //red, green, blue, alpha
+    private float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};      //red, green, blue, alpha
 
     //图形类中创建draw()方法，拿到链接至GLES的程式(Program)，设置形状的顶点位置和表面的颜色值;
     public void draw() {

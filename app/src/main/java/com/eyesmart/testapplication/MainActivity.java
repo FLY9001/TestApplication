@@ -1,5 +1,6 @@
 package com.eyesmart.testapplication;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,6 @@ import com.eyesmart.testapplication.android.ADB;
 import com.eyesmart.testapplication.android.Android;
 import com.eyesmart.testapplication.android.AppInfoUtils;
 import com.eyesmart.testapplication.android.HttpUtils;
-import com.eyesmart.testapplication.android.HybridActivity;
 import com.eyesmart.testapplication.android.IPC;
 import com.eyesmart.testapplication.android.PermissionActivity;
 import com.eyesmart.testapplication.android.Safety;
@@ -35,7 +35,8 @@ import com.eyesmart.testapplication.android.TestUI;
 import com.eyesmart.testapplication.android.TestWindow;
 import com.eyesmart.testapplication.android.TestXmlJson;
 import com.eyesmart.testapplication.android.Version;
-import com.eyesmart.testapplication.android.opengl.GLActivity;
+import com.eyesmart.testapplication.android.WebViewActivity;
+import com.eyesmart.testapplication.android.opengl.CameraGLSurfaceView;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.Java;
 import com.eyesmart.testapplication.java.MyCollection;
@@ -47,16 +48,19 @@ import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
 import com.eyesmart.testapplication.java.TestDesignPattern;
 import com.eyesmart.testapplication.project.Resource;
+import com.eyesmart.testapplication.ui.CameraActivity;
+import com.eyesmart.testapplication.ui.CameraSurfaceView;
 import com.eyesmart.testapplication.ui.CameraTextureView;
+import com.eyesmart.testapplication.ui.PasswordDialog;
 import com.eyesmart.testapplication.ui.TestAnim;
 import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
-import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
 import com.eyesmart.testapplication.ui.viewwidget.DrawView;
 import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
 import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
-import com.eyesmart.testapplication.ui.viewwidget.ViewWidgetActivity;
+import com.eyesmart.testapplication.utils.PermissionsCallback;
+import com.eyesmart.testapplication.utils.PermissionsUtil;
 
 /**
  * 基础教程：https://www.kancloud.cn/kancloud/android-tutorial/87287
@@ -118,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 TestXmlJson.class,      //数据解析
 
                 TestMedia.class,        //多媒体：音频、视频
-                CameraTextureView.class,//相机
                 SensorActivity.class,   //传感器
 
                 TestJni.class,          //Jni的编译、应用
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 DisplayUtil.class,
                 Resource.class,         //资源文件
 
+                /**控件原理*/
                 TestWindow.class,       //显示窗口
                 TestView.class,         //坐标系、初始化；绘制流程、事件体系
                 TestAnim.class,         //动画
@@ -143,10 +147,17 @@ public class MainActivity extends AppCompatActivity {
                 DrawView.class,         //Paint、Canvas绘制图形
                 TestBitmap.class,       //ColorMatrix、Pixels颜色效果，Matrix、Mesh变换扭曲
 
+                /**常用控件*/
+                PasswordDialog.class,   //Dialog
+                WebViewActivity.class,  //WebView
                 ListViewFragment.class,
                 RecyclerFragment.class,
 
-                HybridActivity.class,   //混合开发
+                /**高级显示控件*/
+                CameraSurfaceView.class,//相机及显示
+                CameraTextureView.class,
+                CameraGLSurfaceView.class,
+
         };
         /**android代码优化*/
         //https://www.jianshu.com/p/a4c3c32fa5ab
@@ -169,15 +180,28 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_view_widget:
-                ViewWidgetActivity.actionStart(MainActivity.this);
+                //ViewWidgetActivity.actionStart(MainActivity.this);
                 break;
             case R.id.btn_view_principle:
-                ViewPrincipleActivity.actionStart(MainActivity.this);
+                //ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
                 //startActivity(new Intent(this, TestButterKnife.class));
                 //startActivity(new Intent(this, MVPActivity.class));
-                startActivity(new Intent(this, GLActivity.class));
+
+                PermissionsUtil.getInstance(this).requestPermissions(new PermissionsCallback() {
+                                                                         @Override
+                                                                         public void requestSuccess() {
+                                                                             startActivity(new Intent(MainActivity.this, CameraActivity.class));
+                                                                             //startActivity(new Intent(MainActivity.this, GLActivity.class));
+                                                                         }
+
+                                                                         @Override
+                                                                         public void requestFail() {
+                                                                             finish();
+                                                                         }
+                                                                     }, true,
+                        Manifest.permission.CAMERA);
                 break;
         }
     }

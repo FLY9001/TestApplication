@@ -18,20 +18,20 @@ import com.eyesmart.testapplication.R;
 /**
  * WebView使用小结：https://blog.csdn.net/u012730980/article/details/53213147
  */
-public class HybridActivity extends AppCompatActivity {
-    private static final String TAG = "HybridActivity";
+public class WebViewActivity extends AppCompatActivity {
+    private static final String TAG = "WebViewActivity";
     private WebView webView;
 
     //启动该Activity
     public static void actionStart(Context context) {
-        Intent intent = new Intent(context, HybridActivity.class);
+        Intent intent = new Intent(context, WebViewActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hybrid);
+        setContentView(R.layout.activity_webview);
         webView = (WebView) findViewById(R.id.webView);
 
         //支持javascript

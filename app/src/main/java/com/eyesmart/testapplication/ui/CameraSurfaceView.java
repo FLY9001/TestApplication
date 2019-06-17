@@ -5,15 +5,16 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.util.Log;
-import android.view.TextureView;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.util.List;
 
 /**
  * https://www.jianshu.com/p/bac0e72351e4
  */
-public class CameraTextureView extends TextureView {
-    private static final String TAG = "CameraTextureView";
+public class CameraSurfaceView extends SurfaceView {
+    private static final String TAG = "CameraSurfaceView";
 
     private CameraMonitorListener mCameraMonitorListener;
     private PreviewCallback mPreviewCallback;
@@ -21,35 +22,26 @@ public class CameraTextureView extends TextureView {
     private SurfaceTexture mSurfaceTexture;
     private int preWidth, preHeight;
 
-    SurfaceTextureListener mSurfaceTextureListener = new SurfaceTextureListener() {
+    SurfaceHolder.Callback mCallback = new SurfaceHolder.Callback() {
         @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            Log.i(TAG, "onSurfaceTextureAvailable: " + width + " * " + height);
-            mSurfaceTexture = surface;
+        public void surfaceCreated(SurfaceHolder holder) {
+            Log.d(TAG, "surfaceCreated: ");
             openCamera();
         }
 
         @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            Log.i(TAG, "onSurfaceTextureSizeChanged: " + width + " * " + height);
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            Log.d(TAG, "surfaceChanged: ");
         }
 
         @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-            Log.i(TAG, "onSurfaceTextureDestroyed: ");
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            Log.d(TAG, "surfaceDestroyed: ");
             releaseCamera();
-            surface.release();
-            mSurfaceTexture = null;
-            return false;
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-            Log.i(TAG, "onSurfaceTextureUpdated: ");
         }
     };
 
-    public CameraTextureView(Context context, PreviewCallback previewCallback, CameraMonitorListener cameraMonitorListener) {
+    public CameraSurfaceView(Context context, PreviewCallback previewCallback, CameraMonitorListener cameraMonitorListener) {
         super(context);
         mPreviewCallback = previewCallback;
         mCameraMonitorListener = cameraMonitorListener;
@@ -61,8 +53,11 @@ public class CameraTextureView extends TextureView {
      */
     private void init() {
         Log.i(TAG, "init: ");
-        this.setSurfaceTextureListener(mSurfaceTextureListener);
+        mHolder = this.getHolder();
+        mHolder.addCallback(mCallback);
     }
+
+    SurfaceHolder mHolder;
 
     private void openCamera() {
         Log.i(TAG, "openCamera: ");
@@ -71,7 +66,8 @@ public class CameraTextureView extends TextureView {
         //setCameraDisplayOrientation(cameraId, mCamera);
         try {
             updateCameraParameters();
-            mCamera.setPreviewTexture(mSurfaceTexture);
+            //mCamera.setPreviewTexture(mSurfaceTexture);
+            mCamera.setPreviewDisplay(mHolder);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +143,7 @@ public class CameraTextureView extends TextureView {
      * @author Mr.lu
      */
     public interface CameraMonitorListener {
-        void cameraOpenSuccess(CameraTextureView cameraTextureView, int preWidth, int preHeight);
+        void cameraOpenSuccess(CameraSurfaceView cameraSurfaceView, int preWidth, int preHeight);
 
         void cameraOpenFail(String errorInfo);
 

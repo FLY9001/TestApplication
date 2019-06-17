@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">TestApp</string>
     <string name="action_settings">Settings</string>
+
+    <string name="permission_request">权限请求</string>
+    <string name="permission_go_setting">去设置</string>
+    <string name="permission_READ_EXTERNAL_STORAGE">存储权限</string>
+    <string name="permission_CAMERA">相机权限</string>
+    <string name="permission_SMS">短信权限</string>
+    <string name="permission_CALENDAR">日历权限</string>
+    <string name="permission_READ_CONTACTS">联系人权限</string>
+    <string name="permission_RECORD_AUDIO">麦克风权限</string>
+    <string name="permission_BODY_SENSORS">传感器权限</string>
+    <string name="permission_LOCATION">位置权限</string>
+    <string name="permission_PHONE">电话权限</string>
+    <string name="permission_the_function_will_not_be_able_to_normal_use">被禁止，功能将无法正常使用！</string>
+
 </resources>

@@ -22,7 +22,7 @@ buildscript {
 
     //依赖，插件需配置的classpath
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.4.1'
     }
 }
 
