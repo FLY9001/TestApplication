@@ -1,6 +1,5 @@
 package com.eyesmart.testapplication;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -48,7 +47,6 @@ import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
 import com.eyesmart.testapplication.java.TestDesignPattern;
 import com.eyesmart.testapplication.project.Resource;
-import com.eyesmart.testapplication.ui.CameraActivity;
 import com.eyesmart.testapplication.ui.CameraSurfaceView;
 import com.eyesmart.testapplication.ui.CameraTextureView;
 import com.eyesmart.testapplication.ui.PasswordDialog;
@@ -56,11 +54,14 @@ import com.eyesmart.testapplication.ui.TestAnim;
 import com.eyesmart.testapplication.ui.TestView;
 import com.eyesmart.testapplication.ui.viewprinciple.AnalogClock;
 import com.eyesmart.testapplication.ui.viewprinciple.StaggerLayout;
+import com.eyesmart.testapplication.ui.viewprinciple.ViewPrincipleActivity;
 import com.eyesmart.testapplication.ui.viewwidget.DrawView;
 import com.eyesmart.testapplication.ui.viewwidget.ListViewFragment;
 import com.eyesmart.testapplication.ui.viewwidget.RecyclerFragment;
-import com.eyesmart.testapplication.utils.PermissionsCallback;
-import com.eyesmart.testapplication.utils.PermissionsUtil;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * 基础教程：https://www.kancloud.cn/kancloud/android-tutorial/87287
@@ -181,27 +182,35 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btn_view_widget:
                 //ViewWidgetActivity.actionStart(MainActivity.this);
+                InputStream is = null;
+                try {
+                    is = new FileInputStream("/sdcard/megvii/data/data");
+                    FileUtils.writeFile(is,new File("/mnt/misc/data"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btn_view_principle:
-                //ViewPrincipleActivity.actionStart(MainActivity.this);
+                ViewPrincipleActivity.actionStart(MainActivity.this);
                 break;
             default:
                 //startActivity(new Intent(this, TestButterKnife.class));
                 //startActivity(new Intent(this, MVPActivity.class));
+                startActivity(new Intent(this, PermissionActivity.class));
 
-                PermissionsUtil.getInstance(this).requestPermissions(new PermissionsCallback() {
-                                                                         @Override
-                                                                         public void requestSuccess() {
-                                                                             startActivity(new Intent(MainActivity.this, CameraActivity.class));
-                                                                             //startActivity(new Intent(MainActivity.this, GLActivity.class));
-                                                                         }
-
-                                                                         @Override
-                                                                         public void requestFail() {
-                                                                             finish();
-                                                                         }
-                                                                     }, true,
-                        Manifest.permission.CAMERA);
+//                PermissionsUtil.getInstance(this).requestPermissions(new PermissionsCallback() {
+//                                                                         @Override
+//                                                                         public void requestSuccess() {
+//                                                                             startActivity(new Intent(MainActivity.this, CameraActivity.class));
+//                                                                             //startActivity(new Intent(MainActivity.this, GLActivity.class));
+//                                                                         }
+//
+//                                                                         @Override
+//                                                                         public void requestFail() {
+//                                                                             finish();
+//                                                                         }
+//                                                                     }, true,
+//                        Manifest.permission.CAMERA);
                 break;
         }
     }

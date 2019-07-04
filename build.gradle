@@ -4,6 +4,7 @@
 
 //构建脚本，构建项目之前，初始化配置的地方
 buildscript {
+    ext.kotlin_version = '1.3.41'
     //远程仓库，依赖包的来源，设定插件的下载仓库
     repositories {
         jcenter()
@@ -23,6 +24,7 @@ buildscript {
     //依赖，插件需配置的classpath
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

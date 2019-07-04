@@ -1,5 +1,7 @@
 //插件用于扩展gradle脚本的能力，在一个项目中使用插件，该项目的构建脚本就可以定义该插件定义好的属性和使用它的tasks
-apply plugin: 'com.android.application'//应用此插件，可构建应用程序
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'//应用此插件，可构建应用程序
 //apply plugin: 'com.android.library'//应用此插件，可构建依赖库，两者不能同时应用
 
 //获取git当前分支名，${getGitBranchName()}
@@ -13,16 +15,13 @@ def getGitCommitSha() {
 
 android {
     //必须有的两个属性
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    //编译SDK版本（API Level），尽量最新，确保能使用最新API。路径：安装SDK目录/platforms/。
-    //buildToolsVersion rootProject.ext.buildToolsVersion
-    //构建工具版本（SDK目录里的工具包版本·），尽量最新，因为新的兼容旧的。>=CompileSdkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion //编译SDK版本（API Level），尽量最新，确保能使用最新API。路径：安装SDK目录/platforms/。
+    buildToolsVersion rootProject.ext.buildToolsVersion //构建工具版本（SDK目录里的工具包版本·），尽量最新，因为新的兼容旧的。>=CompileSdkVersion
 
     //默认配置,重写AndroidManifest或在其上添加 自定义属性
     defaultConfig {
         applicationId "com.eyesmart.testapplication"    //只会修改当前程序的包名,不影响源码中资源文件对包名的引用
-        minSdkVersion 19
-        //最小支持的sdk版本（必须>=所有依赖库所支持的最低版本），建议填写16(Android4.0)
+        minSdkVersion 19                                //最小支持的sdk版本（必须>=所有依赖库所支持的最低版本），建议填写16(Android4.0)
         //目标SDK版本（compileSdkVersion采用了23（6.0），但是项目暂时还未对6.0的特性（如运行时权限）做相应的处理，那么可以设置targetSdkVersion的版本低于23。这样，应用仍可以正常运行在6.0的机子上（当然也就不具有运行时权限的特性）。）
         targetSdkVersion 27                             //建议22，小于Android6.0
         versionCode 1                                   //app版本号，用于升级
@@ -217,6 +216,7 @@ dependencies {
 
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //implementation    将该依赖隐藏在内部，而不对外部公开。编译速度会加快，优先使用。api会对外公开
 
@@ -228,4 +228,7 @@ dependencies {
 
     //compileOnly           (provided)       只在编译时有效，不会参与打包，可以在自己的moudle中使用该方式依赖。比如com.android.support，gson这些使用者常用的库，避免冲突。
     //runtimeOnly           (apk)            只在生成apk的时候参与打包，编译时不会参与，很少用。
+}
+repositories {
+    mavenCentral()
 }

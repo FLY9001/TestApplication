@@ -1,3 +1,5 @@
+//http://liuwangshu.cn/application/gradle/3-groovy.html
+
 //双引号能对字符串里的表达式做运算，单引号不能，它仅表示纯粹的字符串
 //括号可以省略，method(1,2)、method 1,2 一样
 //return可以不写，默认最后一句代码是返回值
