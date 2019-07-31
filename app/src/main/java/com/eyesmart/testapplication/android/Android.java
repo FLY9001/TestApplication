@@ -3,6 +3,11 @@ package com.eyesmart.testapplication.android;
 import com.eyesmart.testapplication.R;
 
 /**
+ * Android系统是：“一个特殊的Linux系统”！！！
+ * 意味着两个特性：1、多用户；2、权限机制
+ * 一个APP就是linux的一个用户，一个User，是系统资源的一个调用者。
+ * 每个app都被分配了一个独一无二的ID，这个ID，系统知道，app自己不知道。
+ *
  * Android系统的架构、源码、目录
  * 开发的SDK目录、工程目录
  */

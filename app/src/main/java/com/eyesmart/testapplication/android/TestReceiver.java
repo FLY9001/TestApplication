@@ -38,6 +38,10 @@ public class TestReceiver extends BroadcastReceiver {
         //Priority属性相同者，动态注册的广播优先
         //可以对广播进行截断、修改
 
+        /**粘性广播*///需要权限
+        //context.sendStickyBroadcast(intent, null);
+
+
         /**局部广播*/
         //通过exported设为false
         //通过permission

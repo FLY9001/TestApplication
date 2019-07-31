@@ -48,9 +48,9 @@ class TestKotlin {
 
 //---变量-------------------------------------------------------------------------------------------------------------------
 
-    //可变变量定义：var 关键字
-    //不可变变量定义：val 关键字，只能赋值一次的变量(类似Java中final修饰的变量)
     fun test() {
+        //可变变量定义：var 关键字
+        //不可变变量定义：val 关键字，只能赋值一次的变量(类似Java中final修饰的变量)
         var a: Int = 1
         val b = 1       //系统自动推断类型为Int
         var c: Int      //不初始化必须指明类型
@@ -60,7 +60,6 @@ class TestKotlin {
         //字符串模板，$表示一个变量名或者变量值
         //$varName表示变量值
         //${varName.fun()}表示变量的方法返回值:
-
         // 模板中的简单名称：
         var s1 = "a is $a"
         a = 2
@@ -69,10 +68,27 @@ class TestKotlin {
 
 
         //NULL检查机制
-        var age: String? = "23"         //类型后面加?表示可为空，当一个引用可能为 null 值时, 对应的类型声明必须明确地标记为可为 null。
+        var age: String? = null         //类型后面加?表示可为空，当一个引用可能为 null 值时, 对应的类型声明必须明确地标记为可为 null。
         var ages = age!!.toInt()        //抛出空指针异常
         var ages1 = age?.toInt()        //age为空，不做处理返回null
         var ages2 = age?.toInt() ?: -1  //age为空返回-1
+        // 直接使用age会导致错误, 因为它们可能为 null.
+        if (age != null) {
+            // 在进行过 null 值检查之后, age的类型会被自动转换为非 null 变量
+            print(age)
+        }
+
+
+        //类型检测及自动类型转换
+        var obj: Any = 0
+        if (obj is String) {            //做过类型判断以后，obj会被系统自动转换为String类型
+            print(age.length)
+        }
+        //这里的obj仍然是Any类型的引用
+        if (obj !is String) {           //在这里还有一种方法，与Java中instanceof不同，使用!is
+            // XXX
+        }
+        //这里的obj是String类型
 
     }
 
