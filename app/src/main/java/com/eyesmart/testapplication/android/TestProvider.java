@@ -39,7 +39,7 @@ public class TestProvider extends ContentProvider {
         //2、清单文件注册该ContentProvider，指定authorities属性
         //3、ContentResolver进行数据操作
         ContentResolver resolver = getContext().getContentResolver();
-        Uri uri = Uri.parse("content://com.eyesmart.testapplication.android.TestContentProvider/");
+        Uri uri = Uri.parse("content://com.eyesmart.testapplication.android.TestProvider/");
         resolver.getType(uri);                                                                  //得到数据的MIME类型
         resolver.insert(uri, null);                                                      //增，返回新增数据 Uri
         resolver.delete(uri, null, null);                                   //删，返回删除数据 个数

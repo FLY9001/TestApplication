@@ -13,6 +13,7 @@ kotlin.ranges.*
 kotlin.sequences.*
 kotlin.text.*
  */
+
 class TestKotlin {
     //var aaa: Int = 1
 
@@ -22,6 +23,7 @@ class TestKotlin {
     fun sum(a: Int, b: Int): Int {   // Int 参数，返回值
         return a + b
     }
+
 
     //表达式函数，返回类型自动推断：
     fun sum0(a: Int, b: Int) = a + b
