@@ -19,7 +19,7 @@ import com.eyesmart.testapplication.R;
  * <p>
  * 清空任务栈：通过AndroidManifest和intent设置
  *
- * java.lang.Object
+ * java.lang.Objectl
     ↳    android.content.Context
         ↳    android.content.ContextWrapper
             ↳    android.view.ContextThemeWrapper

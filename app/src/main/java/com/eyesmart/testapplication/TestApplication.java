@@ -3,6 +3,7 @@ package com.eyesmart.testapplication;
 import android.app.Application;
 import android.content.Context;
 
+import com.eyesmart.testapplication.android.db.GreenDaoTest;
 import com.squareup.leakcanary.LeakCanary;
 /**
  * 进程 是程序的一个运行实例；线程 是CPU调度的基本单位
@@ -43,5 +44,7 @@ public class TestApplication extends Application {
         context = this;
 
         LeakCanary.install(this);
+
+        GreenDaoTest.init(this);
     }
 }

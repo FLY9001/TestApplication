@@ -26,22 +26,18 @@ public class MyThread {
         int t = R.drawable.thread;
 
         /**线程*/
-        Thread thread = Thread.currentThread(); //取得当前线程
+        Thread thread = new Thread(new MyThreadRunnable(), "线程名");
+        //thread.setDaemon(true);                 //设置为守护（后台）线程，进程结束，该线程会继续执行到结束
+        //thread.setPriority(Thread.MAX_PRIORITY);//设置优先级(0~10)
+        thread.start();                         //启动线程
+
+        thread.isAlive();                       //判断该线程是否正在运行
+        thread.interrupt();                     //中断此线程，线程执行抛出中断异常
+        thread.join(0);                   //线程进入强制单独运行状态，其他线程暂时等待；可设置时长，0表示直到结束
+
+        thread = Thread.currentThread();        //取得当前线程
         Thread.sleep(1000);               //使当前线程休眠1000毫秒
-
-        new Thread(new Runnable() {             //添加一个任务，并启动线程
-            @Override
-            public void run() {
-
-            }
-        }).start();
-        //thread.run();                         //执行方法，但没有启动线程
-        thread.interrupt();                     //中断此线程
-        thread.isAlive();                       //判断该线程是否已经启动
-        thread.join();                          //强制该线程运行，其他线程暂时等待
-        thread.setDaemon(true);                 //设置为守护（后台）线程
-        thread.setPriority(Thread.MAX_PRIORITY);//设置为最高线程优先级
-        thread.yield();                         //线程礼让（相同优先级）
+        Thread.yield();                         //线程礼让（相同优先级）
 
         /**线程池*/
         //1、重用线程池中的线程，避免因为线程的创建和销毁所带来的性能开销；
@@ -82,28 +78,47 @@ public class MyThread {
 
     }
 
+    /**
+     * synchronized资源同步，注意：有可能产生死锁！！！！
+     */
     class MyThreadRunnable implements Runnable {
+
+        private boolean flag = true;
+
+        public void stop() {
+            flag = false;
+        }
+
         @Override
         public void run() {
-            synchronized (this) {    //this为需要同步的对象
-                //TODO 需要同步的代码块
+            //设置标志位停止线程
+            while (flag) {
+
             }
-            try {
-                syn();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            //同步方法
+            syn();
+            //同步代码块
+            synchronized (this) {       //this为需要同步的对象
             }
+            test();
+        }
+
+        synchronized void syn() {//其同步对象为当前方法所在的对象自身
         }
 
         /**
-         * 资源同步，注意：有可能产生死锁！！！！
+         * Object同步锁
          */
-        public synchronized void syn() throws InterruptedException {   //其同步对象为当前方法所在的对象自身
-            //TODO 需要同步的方法                 //只有当线程执行完此同步方法后，才会释放锁对象，其他的线程才有可能获取此同步锁，以此类推...
-
-            this.wait();         //导致当前线程等待并使其进入到等待阻塞状态。直到其他线程调用该同步锁对象的notify()或notifyAll()方法来唤醒此线程。
-            this.notify();       //唤醒在此同步锁对象上等待的单个线程，如果有多个线程，则会任意选择其中某个线程进行唤醒操作，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
-            this.notifyAll();    //唤醒在此同步锁对象上等待的所有线程，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
+        void test() {
+            try {
+                this.wait(1000);
+                this.wait();         //导致当前线程等待并使其进入到等待阻塞状态。直到其他线程调用该同步锁对象的notify()或notifyAll()方法来唤醒此线程。
+                this.notify();       //唤醒单个线程（在此同步锁对象上等待的），如果有多个线程，则会任意选择其中某个线程进行唤醒操作，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
+                this.notifyAll();    //唤醒所有线程（在此同步锁对象上等待的），只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 APIs.class,             //Runtime、System、字符操作、数据日期格式化
                 MyIO.class,             //数据流
                 MyCollection.class,     //集合、数组、栈、属性类
-                MyThread.class,         //线程基础
+                MyThread.class,         //线程、并发
 
                 MyGenericity.class,     //枚举、泛型
                 MyReflect.class,        //反射、注解

@@ -1,8 +1,9 @@
 //插件用于扩展gradle脚本的能力，在一个项目中使用插件，该项目的构建脚本就可以定义该插件定义好的属性和使用它的tasks
 apply plugin: 'com.android.application'
+//apply plugin: 'com.android.library'//应用此插件，可构建依赖库，两者不能同时应用
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'//应用此插件，可构建应用程序
-//apply plugin: 'com.android.library'//应用此插件，可构建依赖库，两者不能同时应用
+apply plugin: 'org.greenrobot.greendao' //GreenDao数据库
 
 //获取git当前分支名，${getGitBranchName()}
 def getGitBranchName() {
@@ -167,6 +168,14 @@ android {
 }
 //android配置为应用插件所提供
 
+greendao {
+    schemaVersion 1 //数据库版本号
+    daoPackage 'com.eyesmart.testapplication.android.db.dao'//设置DaoMaster、DaoSession、Dao 包名
+    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录,隔断用“.”？
+    //targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+    //generateTests false //设置为true以自动生成单元测试。
+}
+
 //依赖的库
 //库名称包含三个元素：组名:库名:版本号
 dependencies {
@@ -217,6 +226,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'org.greenrobot:greendao:3.2.2' //GreenDao数据库
 
     //implementation    将该依赖隐藏在内部，而不对外部公开。编译速度会加快，优先使用。api会对外公开
 
