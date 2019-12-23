@@ -21,6 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 
 public class MyThread {
+
     public void test() throws InterruptedException {
         /**线程6种状态*/
         int t = R.drawable.thread;
@@ -39,28 +40,34 @@ public class MyThread {
         Thread.sleep(1000);               //使当前线程休眠1000毫秒
         Thread.yield();                         //线程礼让（相同优先级）
 
-        /**线程池*/
-        //1、重用线程池中的线程，避免因为线程的创建和销毁所带来的性能开销；
-        //2、能有效的控制线程池中的最大并发数，避免大量线程之间因互相抢占系统资源而导致的阻塞现象；
-        //3、能对线程进行简单的管理，并提供定时执行及指定间隔循环执行等功能；
-        ExecutorService threadPool;
-        threadPool = Executors.newSingleThreadExecutor();//单线程池
-        threadPool = Executors.newCachedThreadPool();    //灵活复用执行完毕的线程，不用每次新建
-        threadPool = Executors.newFixedThreadPool(3);    //固定大小，超出的线程会在队列中等待
-        //Runtime.getRuntime().availableProcessors();    //可用的处理器核心，可用来设置线程池大小
-        threadPool.execute(new MyThreadRunnable());
+        /**线程辅助类*/
+        //CyclicBarrier， 循环栅栏，让所有线程都等待await完成后才会继续下一步行动
+        //CountDownLatch，倒数门栓（一次性），通过该门的线程都需要等待await，直到倒数countDown到0
+        //Semaphore，     信号量，可以控制访问（acquire-release）特定资源的线程数目
+        //Exchanger，     交换者，两个工作线程之间交换exchange数据的封装工具类
 
-        ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);//类似Timer
-        scheduledThreadPool.scheduleAtFixedRate(new MyThreadRunnable(), 1, 3, TimeUnit.SECONDS);
+        /**线程池*/
+        //1、降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗；
+        //2、提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行；
+        //3、提高线程可管理性。有效的控制线程池中的最大并发数，可以进行统一的分配，调优和监控。
+        ExecutorService es;
+        es = Executors.newSingleThreadExecutor();      //单线程池
+        es = Executors.newFixedThreadPool(3); //固定线程池，复用线程，有最大限制，超出的线程会在队列中等待
+        //Runtime.getRuntime().availableProcessors();  //可用的处理器核心，可用来设置线程池大小
+        es = Executors.newCachedThreadPool();          //缓存线程池，复用线程，无最大限制
+        es.execute(new MyThreadRunnable());
+        es.shutdown();
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(3);//调度型线程池，类似Timer，可延迟、周期性执行
+        ses.scheduleAtFixedRate(new MyThreadRunnable(), 1, 3, TimeUnit.SECONDS);
 
         //以上底层实现为ThreadPoolExecutor，例如单线程池：
         new ThreadPoolExecutor(1,         //核心线程池大小
                 1,                   //最大线程池大小
                 0L,                     //线程池中超过corePoolSize数目的空闲线程最大存活时间；可以allowCoreThreadTimeOut(true)成为核心线程的有效时间
                 TimeUnit.MILLISECONDS,                //keepAliveTime的时间单位
-                new LinkedBlockingQueue<Runnable>(),  //阻塞任务队列
-                null,                   //线程工厂
-                new ThreadPoolExecutor.AbortPolicy());//当提交任务数超过maxmumPoolSize+workQueue之和时，任务会交给RejectedExecutionHandler来处理
+                new LinkedBlockingQueue<Runnable>(),  //阻塞任务队列，存放来不及处理的任务的队列，是一个BlockingQueue
+                null,                    //生产线程的工厂类，可以定义线程名，优先级等
+                new ThreadPoolExecutor.AbortPolicy());//拒绝策略，当任务来不及处理的时候，如何处理；当提交任务数超过maxmumPoolSize+workQueue之和时，任务会交给RejectedExecutionHandler来处理
 
         /**Timer，定时工具*/
         //可以计划执行一个任务一次或反复多次
@@ -83,16 +90,23 @@ public class MyThread {
      */
     class MyThreadRunnable implements Runnable {
 
-        private boolean flag = true;
+        /**
+         * volatile：声明一个域为volatile，那么编译器和虚拟机就知道该域是可能被另一个线程并发更新的
+         * 并发编程中的3个特性：原子性、可见性、有序性
+         * volatile不保证原子性
+         */
+        public volatile boolean isRunning = true;
+
+        //原子操作类Atomic，可在证原子性
 
         public void stop() {
-            flag = false;
+            isRunning = false;
         }
 
         @Override
         public void run() {
             //设置标志位停止线程
-            while (flag) {
+            while (isRunning) {
 
             }
 
@@ -101,20 +115,16 @@ public class MyThread {
             //同步代码块
             synchronized (this) {       //this为需要同步的对象
             }
-            test();
         }
 
         synchronized void syn() {//其同步对象为当前方法所在的对象自身
-        }
-
-        /**
-         * Object同步锁
-         */
-        void test() {
+            /**
+             * Object同步锁，必须在同步方法/代码块中调用（因为必须通过synchronized先获得该对象的锁，才能执行锁操作）
+             */
             try {
                 this.wait(1000);
                 this.wait();         //导致当前线程等待并使其进入到等待阻塞状态。直到其他线程调用该同步锁对象的notify()或notifyAll()方法来唤醒此线程。
-                this.notify();       //唤醒单个线程（在此同步锁对象上等待的），如果有多个线程，则会任意选择其中某个线程进行唤醒操作，只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
+                this.notify();       //唤醒单个线程（在此同步锁对象上等待的），notify()方法不能唤醒某个具体的线程，所以只有一个线程在等待的时候它才有用武之地
                 this.notifyAll();    //唤醒所有线程（在此同步锁对象上等待的），只有当前线程放弃对同步锁对象的锁定，才可能执行被唤醒的线程。
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -145,11 +155,4 @@ public class MyThread {
             mLock.unlock();
         }
     }
-
-    /**
-     * volatile：声明一个域为volatile，那么编译器和虚拟机就知道该域是可能被另一个线程并发更新的
-     * 并发编程中的3个特性：原子性、可见性、有序性
-     * volatile不保证原子性
-     */
-    public volatile boolean isRunning = true;
 }

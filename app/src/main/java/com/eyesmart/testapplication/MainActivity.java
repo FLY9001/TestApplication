@@ -41,7 +41,7 @@ import com.eyesmart.testapplication.java.Java;
 import com.eyesmart.testapplication.java.MyCollection;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
-import com.eyesmart.testapplication.java.MyReflect;
+import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 MyCollection.class,     //集合、数组、栈、属性类
                 MyThread.class,         //线程、并发
 
-                MyGenericity.class,     //枚举、泛型
-                MyReflect.class,        //反射、注解
+                MyEnum.class,        //枚举、注解
+                MyGenericity.class,     //泛型、反射
         };
         /**android工程*/
         Class[] project = {
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 InputStream is = null;
                 try {
                     is = new FileInputStream("/sdcard/megvii/data/data");
-                    FileUtils.writeFile(is,new File("/mnt/misc/data"));
+                    FileUtils.writeFile(is, new File("/mnt/misc/data"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
