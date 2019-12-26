@@ -83,13 +83,13 @@ public class MainActivity extends AppCompatActivity {
         //Java学习+面试指南:https://github.com/Snailclimb/JavaGuide
         Class[] java = {
                 Java.class,             //JVM、内存
-                APIs.class,             //Runtime、System、字符操作、数据日期格式化
-                MyIO.class,             //数据流
+                APIs.class,             //常用类库
+                MyEnum.class,           //枚举、注解
+                MyGenericity.class,     //泛型、反射
+
                 MyCollection.class,     //集合、数组、栈、属性类
                 MyThread.class,         //线程、并发
-
-                MyEnum.class,        //枚举、注解
-                MyGenericity.class,     //泛型、反射
+                MyIO.class,             //数据流
         };
         /**android工程*/
         Class[] project = {

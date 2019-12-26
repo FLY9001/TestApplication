@@ -93,11 +93,9 @@ public class MyThread {
         /**
          * volatile：声明一个域为volatile，那么编译器和虚拟机就知道该域是可能被另一个线程并发更新的
          * 并发编程中的3个特性：原子性、可见性、有序性
-         * volatile不保证原子性
+         * volatile不保证原子性，原子操作类Atomic，可保证原子性
          */
         public volatile boolean isRunning = true;
-
-        //原子操作类Atomic，可在证原子性
 
         public void stop() {
             isRunning = false;
