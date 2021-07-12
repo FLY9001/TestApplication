@@ -6,18 +6,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 泛型，解决数据类型安全问题
+ * 泛型，即“参数化类型”。解决数据类型安全问题
  */
 
 public class MyGenericity {
 
     public void test() {
         /**
-         * 泛型，即“参数化类型”。
          * 分为 泛型类、泛型接口、泛型方法
          * 通配符适用于形参中，便于指定类型范围
          */
-        Point<Integer> p = new Point<Integer>();      //包括泛型的类，一般针对成员变量类型
+        Point<Integer> p = new Point<>();             //包括泛型的类，一般针对成员变量类型
         p.setX(1);
         out(1);                                //包括泛型的方法，一般针对形参类型
 

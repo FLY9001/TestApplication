@@ -54,7 +54,7 @@ class TestKotlin {
     fun test() {
         //可变变量定义：var 关键字
         //不可变变量定义：val 关键字，只能赋值一次的变量(类似Java中final修饰的变量)
-        var a: Int = 1
+        var a: Byte = 1
         val b = 1       //系统自动推断类型为Int
         var c: Int      //不初始化必须指明类型
         c = 1
@@ -92,7 +92,7 @@ class TestKotlin {
             // XXX
         }
         //这里的obj是String类型
-
+        obj as String                   //强转
     }
 
     /*块注释/*可嵌套*/*/

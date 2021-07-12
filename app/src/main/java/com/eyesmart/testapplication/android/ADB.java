@@ -30,7 +30,9 @@ public class ADB {
      adb root                                   // 已root权限
      adb remount                                // 将system分区重新挂载为可读写分区
      adb wait-for-device                        // 在模拟器/设备连接之前把命令转载在adb的命令器中
-
+     ------------------端口占用-------------------------------------------
+     netstat -aon|findstr "5037"                // 找到占用5037端口的进程PID
+     tasklist|findstr "5440"                    // 通过PID找出进程
      ------------------管理app----------------------------------------
 
      aapt d badging <apkfile>                   // 获取apk的packagename 和 classname
