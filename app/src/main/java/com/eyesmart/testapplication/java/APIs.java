@@ -46,7 +46,7 @@ public class APIs {
 
 //--------------------------------------------------------------------------------------------------
         /**字符串*/
-        StringBuffer buffer = new StringBuffer();   //StringBuffer，频繁修改字符串比String有效率；String：每次修改都生成新对象，StringBuffer：修改针对对象本身，所以效率高，且线程安全；StringBuild：类似StringBuffer，线程不安全，但更快
+        StringBuffer buffer = new StringBuffer();   //String：每次修改都生成新对象，StringBuffer：修改针对对象本身，所以效率高，且线程安全；StringBuild：类似StringBuffer，线程不安全，但更快
         buffer.reverse().append("abc").delete(1, 2).replace(0, 0, "b").indexOf("a");  //反转及增删改查
 
         Pattern pattern = Pattern.compile("[0-9]+");//正则表达式，用于字符串的匹配、替换、拆分

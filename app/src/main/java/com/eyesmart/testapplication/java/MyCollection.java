@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -103,10 +104,13 @@ public class MyCollection {
         //Vector，类似ArrayList，但线程安全
         list = new Vector<>();
 //--------------------------------------------------------------------------------------------------
-        /**Set，基于二叉树，数据不可重复*/
-        //对象类要覆写equals()、hashCode()方法
-        Set<String> set = new HashSet<>();            //HashSet，无序，离散，遍历序和插入序不一致;LinkedHashSet保证遍历序和插入序一致（Hash离散，Linked有序）
-        TreeSet<String> treeSet = new TreeSet<>();    //TreeSet，排序（对象类必须实现Comparable接口）；TreeSet中实现接口SortedSet，可用于排序
+        /**Set，基于二叉树，数据不可重复*///对象类要覆写equals()、hashCode()方法
+        //HashSet，无序，离散，遍历序和插入序不一致;
+        Set<String> set = new HashSet<>();
+        //LinkedHashSet保证遍历序和插入序一致（Hash离散，Linked有序）
+        set = new LinkedHashSet<>();
+        //TreeSet，排序（对象类必须实现Comparable接口）；TreeSet中实现接口SortedSet，可用于排序
+        TreeSet<String> treeSet = new TreeSet<>();
 //--------------------------------------------------------------------------------------------------
         /**迭代器*/
         //Collection的输出接口
@@ -125,10 +129,14 @@ public class MyCollection {
             iterator.remove();
         }
 //--------------------------------------------------------------------------------------------------
-        /**Map，key-value*/
-        //以key-value形式存储，key不可重复，重复会覆盖（key要覆写equals()、hashCode()方法）
-        Map<String, String> map = new HashMap<>();                  //HashMap，key无序；IdentityHashMap可实现key重复；LinkedHashMap保证遍历序和插入序一致（Hash离散，Linked有序）
-        TreeMap<String, String> treeMap = new TreeMap<>();          //TreeMap，key排序（key类必须实现Comparable接口）；TreeMap中实现接口SortedMap，用于排序（多了一些排序相关方法）
+        /**Map，key-value*///以key-value形式存储，key不可重复，重复会覆盖（key要覆写equals()、hashCode()方法）
+        //HashMap，key无序；IdentityHashMap可实现key重复；
+        Map<String, String> map = new HashMap<>();
+        //LinkedHashMap保证遍历序和插入序一致（Hash离散，Linked有序）
+        map = new HashMap<>();
+        //TreeMap，key排序（key类必须实现Comparable接口）；TreeMap中实现接口SortedMap，用于排序（多了一些排序相关方法）
+        TreeMap<String, String> treeMap = new TreeMap<>();
+
         map.put("key", "value");
         map.get("key");
         map.containsKey("key");
@@ -155,8 +163,9 @@ public class MyCollection {
         Stack<String> stringStack = new Stack<>();  //父类是Vector
         stringStack.isEmpty();
         stringStack.push("abc");              //入栈
-        stringStack.pop();                          //出栈，同时删除
-        stringStack.peek();                         //出栈，不删除
+        stringStack.pop();                          //出栈
+
+        stringStack.peek();                         //得到，不删除
         stringStack.search("abc");               //查找
 //--------------------------------------------------------------------------------------------------
         /**属性类，可读写属性文件*/
@@ -175,10 +184,11 @@ public class MyCollection {
 //--------------------------------------------------------------------------------------------------
         /**Queue，模拟队列，先进先出*/
         Queue<String> queue = linkedList;
-        queue.offer("Y");                    //表尾增加
-        queue.poll();                           //得到表头并删除，没有就返回null
-        queue.element();                        //得到表头，没有就抛出异常
-        queue.peek();                           //得到表头，没有就返回null
+        queue.offer("Y");                    //入列
+        queue.poll();                           //出列，没有就返回null
+
+        queue.peek();                           //得到表头，不删除，没有就返回null
+        queue.element();                        //得到表头，不删除，没有就抛出异常
 
         //不阻塞队列LinkedList，PriorityQueue，ConcurrentLinkedQueue
         queue = new PriorityQueue<>();          //优先队列，会重新排序元素

@@ -6,34 +6,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 泛型，解决数据类型安全问题
+ * 泛型，即“参数化类型”。解决数据类型安全问题
+ * 分为 泛型类、泛型接口、泛型方法
+ * Java 的泛型是伪泛型，这是因为类型擦除 ：Java 在编译期间，所有的泛型信息都会被擦掉，这也就是通常所说。
  */
 
-public class MyGenericity {
+public class MyGenericity extends Object{
 
-    public void test() {
-        /**
-         * 泛型，即“参数化类型”。
-         * 分为 泛型类、泛型接口、泛型方法
-         * 通配符适用于形参中，便于指定类型范围
-         */
-        Point<Integer> p = new Point<Integer>();      //包括泛型的类，一般针对成员变量类型
-        p.setX(1);
-        out(1);                                //包括泛型的方法，一般针对形参类型
+    //通过<>进行传入泛型，后续即可使用
 
-        out(p);                                       //通配符，形参是泛型类
-    }
-
-    public void out(Point<?> p) {                     //泛型的类型指定不能用Object，必须用 通配符?
-    }
-
-    public void out1(Point<? extends Number> p) {     //泛型的范围，上限
-    }
-
-    public void out2(Point<? super Number> p) {       //泛型的范围，下限
-    }
-
-    //泛型类或接口，最简单的只有T或别的字母
+    //泛型类或接口
     class Point<T extends Number> {
         private T x;
 
@@ -49,6 +31,24 @@ public class MyGenericity {
     //泛型方法
     public <T extends Number> boolean out(T param) { //泛型方法返回泛型类型
         return true;
+    }
+
+
+    public void test() {
+        /**
+         * 通配符适用于形参中，便于指定类型范围
+         */
+        Point<Integer> p = new Point<>();             //泛型类
+        p.setX(1);
+        out(1);                                //泛型方法
+
+        out(p);                                       //通配符，形参是泛型类
+    }
+
+    public void out(Point<?> p) {                     //泛型的类型指定不能用Object，必须用 通配符?
+    }
+
+    public void out1(Point<? extends Number> p) {     //泛型的范围，extends上限，super下限
     }
 
 

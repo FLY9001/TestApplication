@@ -12,4 +12,4 @@ def initGradleEnvironment() {
 initGradleEnvironment()
 
 //include也是一个函数：
-include ':app', ':testlibrary'
+include ':app'
