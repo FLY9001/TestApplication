@@ -55,6 +55,7 @@ public class TestHandler {
         //创建Message
         Message message = Message.obtain(handler, 0);
         message = handler.obtainMessage(0);
+        handler.obtainMessage();
         //发送Runnable
         handler.post(new Runnable() {
             @Override

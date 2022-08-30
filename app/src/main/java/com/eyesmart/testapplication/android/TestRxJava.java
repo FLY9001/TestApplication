@@ -19,7 +19,6 @@ import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -47,13 +46,7 @@ public class TestRxJava {
                 //e.onError(new NullPointerException());
             }
             //filter，过滤事件
-        }).filter(new Predicate<String>() {
-            @Override
-            public boolean test(@NonNull String s) throws Exception {
-                return false;
-            }
-            //sample，采样事件，每1秒采集一次
-        }).sample(1, TimeUnit.SECONDS);
+        });
         /**观察者*/
         Observer<String> observer = new Observer<String>() {
             private Disposable disposable;
@@ -70,7 +63,6 @@ public class TestRxJava {
 
             @Override
             public void onError(@NonNull Throwable e) {
-
             }
 
             @Override

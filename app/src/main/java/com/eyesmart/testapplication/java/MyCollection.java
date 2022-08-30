@@ -73,6 +73,7 @@ public class MyCollection {
         Collections.shuffle(c);                                 //乱序
         Collections.max(c);                                     //最大
         Collections.min(c);                                     //最小
+        Collections.synchronizedList(c);                        //返回一个线程安全的List类
 //--------------------------------------------------------------------------------------------------
         /**集合类*/
         int collection1 = R.drawable.collection;     //绿色：可并发，灰色：弃用
@@ -82,12 +83,12 @@ public class MyCollection {
         //ArrayList，基于动态数组，内含数组，长度不够则扩大1.5倍；查找效率高
         List<String> list = new ArrayList<>();
         list.isEmpty();
-        list.add(0, "abc");           //增
-        list.remove(0);                        //删
+        list.add(0, "abc");                     //增
+        list.remove(0);                            //删
         list.remove("abc");                       //若删除对象，则其必须实现equals()及hashCode()方法
         list.contains("abc");                        //查
         list.indexOf("abc");
-        list.subList(1, 2);                          //截取
+        list.subList(1, 2);                    //截取
         list.isEmpty();                              //是否为空
         String[] strs = list.toArray(new String[]{});//输出为数组（指定泛型）
 

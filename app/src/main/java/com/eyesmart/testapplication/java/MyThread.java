@@ -39,6 +39,7 @@ public class MyThread {
         thread = Thread.currentThread();        //取得当前线程
         Thread.sleep(1000);               //使当前线程休眠1000毫秒
         Thread.yield();                         //线程礼让（相同优先级）
+        
 
         /**线程辅助类*/
         //CyclicBarrier， 循环栅栏，让所有线程都等待await完成后才会继续下一步行动
@@ -60,14 +61,13 @@ public class MyThread {
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(3);//调度型线程池，类似Timer，可延迟、周期性执行
         ses.scheduleAtFixedRate(new MyThreadRunnable(), 1, 3, TimeUnit.SECONDS);
 
-        //以上底层实现为ThreadPoolExecutor，例如单线程池：
-        new ThreadPoolExecutor(1,         //核心线程池大小
-                1,                   //最大线程池大小
-                0L,                     //线程池中超过corePoolSize数目的空闲线程最大存活时间；可以allowCoreThreadTimeOut(true)成为核心线程的有效时间
+        new ThreadPoolExecutor(1,         //核心线程数量
+                1,                   //最大线程数量
+                0L,                     //非核心线程没有工作时的最大存活时间；可以allowCoreThreadTimeOut(true)成为核心线程的有效时间
                 TimeUnit.MILLISECONDS,                //keepAliveTime的时间单位
-                new LinkedBlockingQueue<Runnable>(),  //阻塞任务队列，存放来不及处理的任务的队列，是一个BlockingQueue
+                new LinkedBlockingQueue<Runnable>(),  //阻塞任务队列，存放待执行任务的阻塞队列，需实现BlockingQueue接口
                 null,                    //生产线程的工厂类，可以定义线程名，优先级等
-                new ThreadPoolExecutor.AbortPolicy());//拒绝策略，当任务来不及处理的时候，如何处理；当提交任务数超过maxmumPoolSize+workQueue之和时，任务会交给RejectedExecutionHandler来处理
+                new ThreadPoolExecutor.AbortPolicy());//拒绝策略，当任务来不及处理的时候，如何处理；当提交任务数超过maximumPoolSize+workQueue之和时，任务会交给RejectedExecutionHandler来处理
 
         /**Timer，定时工具*/
         //可以计划执行一个任务一次或反复多次

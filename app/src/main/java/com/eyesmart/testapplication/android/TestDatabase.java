@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.eyesmart.testapplication.android.db.DaoManager;
-import com.eyesmart.testapplication.android.db.GreenDaoTest;
 
 import static android.content.ContentValues.TAG;
 
@@ -41,9 +39,6 @@ public class TestDatabase {
         /**关闭数据库*/
         db.close();
 
-        /**GreenDao*/
-        GreenDaoTest.getDaoSession();
-        DaoManager.getInstance();    //封装
     }
 
     private void testTransaction(SQLiteDatabase db) {

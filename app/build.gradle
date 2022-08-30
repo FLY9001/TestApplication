@@ -86,8 +86,8 @@ android {
             applicationIdSuffix ".myrelease"                                        //自定义包名后缀
             versionNameSuffix "_release"                                            //自定义版本名后缀
             //signingConfig signingConfigs.release
-            buildConfigField "String", "API_URL", "\"http://example.com/api\""
-            resValue "string", "APP_NAME", "TestApp_myrelease"
+            //buildConfigField "String", "API_URL", "\"http://example.com/api\""
+            //resValue "string", "APP_NAME", "TestApp_myrelease"
         }
         release {
             minifyEnabled true      //是否进行混淆,工具ProGuard，去除无用代码。可能会去除反射调用的代码，通过编写keep.xml解决
@@ -168,13 +168,13 @@ android {
 }
 //android配置为应用插件所提供
 
-greendao {
-    schemaVersion 1 //数据库版本号
-    daoPackage 'com.eyesmart.testapplication.android.db.dao'//设置DaoMaster、DaoSession、Dao 包名
-    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录,隔断用“.”？
-    //targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
-    //generateTests false //设置为true以自动生成单元测试。
-}
+//greendao {
+//    schemaVersion 1 //数据库版本号
+//    daoPackage 'com.eyesmart.testapplication.android.db.dao'//设置DaoMaster、DaoSession、Dao 包名
+//    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录,隔断用“.”？
+//    //targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+//    //generateTests false //设置为true以自动生成单元测试。
+//}
 
 //依赖的库
 //库名称包含三个元素：组名:库名:版本号

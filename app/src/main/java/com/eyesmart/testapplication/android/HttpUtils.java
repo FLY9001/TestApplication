@@ -209,16 +209,6 @@ public class HttpUtils {
     public void testOkHttp() throws IOException {
         /**1、创建OkHttpClient*/
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new Interceptor() {               //可设置拦截器；添加，移除、转换请求头或响应头信息
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder()      //统一请求头
-                        .header("Authorization", "")
-                        .addHeader("key", "value")
-                        .build();
-                return chain.proceed(request);
-            }
-        });
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client = client.newBuilder()
@@ -229,6 +219,18 @@ public class HttpUtils {
                 //.readTimeout(20, TimeUnit.SECONDS)
                 .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存；注意路径！
                 .build();
+
+        client.interceptors().add(new Interceptor() {               //可设置拦截器；添加，移除、转换请求头或响应头信息
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request request = chain.request().newBuilder()      //统一请求头
+                        .header("Authorization", "")
+                        .addHeader("key", "value")
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
 
         /**2、创建请求*/
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json数据");//数据可以从多个地方获取

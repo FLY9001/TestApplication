@@ -39,9 +39,9 @@ import com.eyesmart.testapplication.android.opengl.CameraGLSurfaceView;
 import com.eyesmart.testapplication.java.APIs;
 import com.eyesmart.testapplication.java.Java;
 import com.eyesmart.testapplication.java.MyCollection;
+import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyGenericity;
 import com.eyesmart.testapplication.java.MyIO;
-import com.eyesmart.testapplication.java.MyEnum;
 import com.eyesmart.testapplication.java.MyThread;
 import com.eyesmart.testapplication.java.TestArchitecture;
 import com.eyesmart.testapplication.java.TestArithmetic;
@@ -166,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
                 TestUI.class,           //布局优化
                 TestMemory.class,       //TODO 内存泄漏、优化、图片优化
 
-                TestRxJava.class,       //TODO 原理及应用
-                TestEventBus.class,     //事件总线
                 TestButterKnife.class,  //依赖注入
+                TestEventBus.class,     //事件总线
+                TestRxJava.class,       //TODO 原理及应用
                 //TODO 热修复
         };
         Class[] android3 = {

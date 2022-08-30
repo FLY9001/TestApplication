@@ -45,6 +45,7 @@ public class CameraSurfaceView extends SurfaceView {
         super(context);
         mPreviewCallback = previewCallback;
         mCameraMonitorListener = cameraMonitorListener;
+        SurfaceTexture a = null;
         init();
     }
 

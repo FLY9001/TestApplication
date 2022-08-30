@@ -37,7 +37,7 @@ public class TestEventBus {
      * 5、处理事件
      */
     //线程模型、是否粘性、优先级
-    //线程模型 默认POSTING（本线程处理），MAIN（主线程处理），BACKGROUND（子线程处理），ASYNC（新建子线程处理）
+    //线程模型 默认POSTING（本线程处理，即post发送线程），MAIN（主线程处理），BACKGROUND（子线程处理），ASYNC（新建子线程处理）
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = true, priority = 0)
     public void onReceiveEvent(MessageEvent event) {
         Log.d("TAG", "onReceiveEvent: " + event.getMessage());

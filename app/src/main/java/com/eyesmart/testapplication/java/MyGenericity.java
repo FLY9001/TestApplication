@@ -69,9 +69,9 @@ public class MyGenericity {
 
         c.getInterfaces();                          //取得类实现的接口
         c.getSuperclass();                          //取得类的父类
-        c.getMethods();                             //取得全部方法
         c.getFields();                              //取得全部属性(包括父类及接口中)
         c.getDeclaredFields();                      //取得本类的全部属性
+        c.getMethods();                             //取得全部方法
 
         Method equals = c.getMethod("equals", Object.class);//通过反射调用类中方法
         boolean b = (boolean) equals.invoke(stu, new Student());
