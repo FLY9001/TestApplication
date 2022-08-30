@@ -16,7 +16,7 @@ def getGitCommitSha() {
 android {
     //必须有的两个属性
     compileSdkVersion rootProject.ext.compileSdkVersion //编译SDK版本（API Level），尽量最新，确保能使用最新API。路径：安装SDK目录/platforms/。
-    buildToolsVersion rootProject.ext.buildToolsVersion //构建工具版本（SDK目录里的工具包版本·），尽量最新，因为新的兼容旧的。>=CompileSdkVersion
+    //构建工具版本（SDK目录里的工具包版本·），尽量最新，因为新的兼容旧的。>=CompileSdkVersion
 
     //默认配置,重写AndroidManifest或在其上添加 自定义属性
     defaultConfig {
