@@ -13,3 +13,4 @@ initGradleEnvironment()
 
 //include也是一个函数：
 include ':app'
+include ':lib'

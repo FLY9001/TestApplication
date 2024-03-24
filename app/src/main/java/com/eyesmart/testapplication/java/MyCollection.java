@@ -1,5 +1,8 @@
 package com.eyesmart.testapplication.java;
 
+import android.util.ArrayMap;
+import android.util.SparseIntArray;
+
 import com.eyesmart.testapplication.R;
 
 import java.io.File;
@@ -141,6 +144,8 @@ public class MyCollection {
         map.get("key");
         map.containsKey("key");
         map.containsValue("value");
+        SparseIntArray s = new SparseIntArray();
+        ArrayMap
 
         Set<String> keys = map.keySet();                            //Map中所有key
         Iterator<String> keysIterator = keys.iterator();

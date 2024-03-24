@@ -77,7 +77,7 @@ public class TestAnim extends Activity {
 
     //属性动画，分为ObjectAnimator、ValueAnimator
     void propertyAnimator() {
-        /**ObjectAnimator，对Object的属性XXX进行操作，属性变量一定要有setXXX、getXXX方法（但不需要单独设置成员变量XXX本身*/
+        /**ObjectAnimator，继承自ValueAnimator，对Object的属性XXX进行操作，属性变量一定要有setXXX、getXXX方法（但不需要单独设置成员变量XXX本身*/
         ObjectAnimator tAnimator = ObjectAnimator.ofFloat(view, "translationX", 0f, 100f);
         tAnimator.setInterpolator(new AccelerateDecelerateInterpolator());  //插值器，可自定义
         tAnimator.addListener(null);//监听
@@ -94,7 +94,7 @@ public class TestAnim extends Activity {
         set.setTarget(view);
         set.start();
 
-        /**ValueAnimator，数值发生器，对数值变化进行操作*/
+        /**ValueAnimator，数值发生器，根据数值变化进行操作*/
         final ValueAnimator animator = ValueAnimator.ofInt(0, 100);//对数值变化进行操作
         animator.setDuration(5000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

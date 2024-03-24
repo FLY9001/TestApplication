@@ -17,18 +17,17 @@ public class StaggerLayout extends ViewGroup {
 
     //第一个构造方法
     public StaggerLayout(Context context) {
-        this(context, null);
+        super(context);
     }
 
     //第二个构造方法
     public StaggerLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     //第三个构造方法
     public StaggerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-
+        super(context, attrs, defStyleAttr);
     }
 
     //第四个构造方法

@@ -16,42 +16,10 @@ kotlin.text.*
 
 class TestKotlin {
 
-
-//---函数-------------------------------------------------------------------------------------------------------------------
-
-    //函数定义关键字 fun，参数格式为：参数 : 类型
-    fun sum(a: Int, b: Int): Int {   // Int 参数，返回值
-        return a + b
-    }
-
-
-    //表达式函数，返回类型自动推断：
-    fun sum0(a: Int, b: Int) = a + b
-
-    public fun sum1(a: Int, b: Int): Int = a + b   //public方法则必须明确写出返回类型
-
-    //无返回值的函数 Unit(类似Java中的void)，可以省略
-    fun printSum(a: Int, b: Int): Unit {
-        print(a + b)
-    }
-
-    //函数的可变长参数关键字 vararg
-    //vars(1, 2, 3, 4, 5)  // 输出12345
-    fun vars(vararg v: Int) {
-        for (vt in v) {
-            print(vt)
-        }
-    }
-
-    //TODO lambda表达式使用实例
-    fun main(args: Array<String>) {
-        val sumLambda: (Int, Int) -> Int = { x, y -> x + y }
-        println(sumLambda(1, 2))  // 输出 3
-    }
-
-//---变量-------------------------------------------------------------------------------------------------------------------
+//---基础语法-------------------------------------------------------------------------------------------------------------------
 
     fun test() {
+        // variable，变量；value，值
         //可变变量定义：var 关键字
         //不可变变量定义：val 关键字，只能赋值一次的变量(类似Java中final修饰的变量)
         var a: Byte = 1
@@ -71,31 +39,90 @@ class TestKotlin {
 
 
         //NULL检查机制
-        var age: String? = null         //类型后面加?表示可为空，当一个引用可能为 null 值时, 对应的类型声明必须明确地标记为可为 null。
-        var ages = age!!.toInt()        //抛出空指针异常
+        //不允许赋值null，除非加?
+        var age: String? = null         //类型后面加?表示可为null（当一个引用可能为null值时, 对应的类型声明必须明确地标记为可为null）
         var ages1 = age?.toInt()        //age为空，不做处理返回null
         var ages2 = age?.toInt() ?: -1  //age为空返回-1
-        // 直接使用age会导致错误, 因为它们可能为 null.
+        // 直接使用age会导致错误, 因为它们可能为 null
         if (age != null) {
-            // 在进行过 null 值检查之后, age的类型会被自动转换为非 null 变量
+            // 上面在进行过 null 值检查之后, age的类型在此处会被自动转换为非 null 变量
             print(age)
         }
+        var ages = age!!.toInt()        //抛出空指针异常
 
-
-        //类型检测及自动类型转换
+        //类型检测is，相当于Java中instanceOf
+        //自动类型转换
         var obj: Any = 0
         if (obj is String) {            //做过类型判断以后，obj会被系统自动转换为String类型
             print(age.length)
         }
         //这里的obj仍然是Any类型的引用
-        if (obj !is String) {           //在这里还有一种方法，与Java中instanceof不同，使用!is
+        if (obj !is String) {           //在这里还有一种方法，与Java中instanceOf不同，使用!is
             // XXX
         }
         //这里的obj是String类型
         obj as String                   //强转
+
+
+        // 区间in
+        var i: Int = 1
+        for (i in 1..4) print(i) // 输出“1234”
+        for (i in 4..1) print(i) // 什么都不输出
+        if (i in 1..10) { // 等同于 1 <= i && i <= 10
+            println(i)
+        }
+        // 使用 step 指定步长
+        for (i in 1..4 step 2) print(i) // 输出“13”
+        for (i in 4 downTo 1 step 2) print(i) // 输出“42”
+        // 使用 until 函数排除结束元素
+        for (i in 1 until 10) {   // i in [1, 10) 排除了 10
+            println(i)
+        }
     }
 
-    /*块注释/*可嵌套*/*/
+
+    //控制语句，条件&循环
+    //if，when，for
+    fun test2() {
+        var a: Int = 0
+        var b: Int = 0
+        var ints: Array<Int> = arrayOf(0, 1, 2, 3)
 
 
+        //if
+        //可赋值
+        var max = if (a > b) {
+            a
+        } else {
+            b
+        }
+        //可作为表达式
+        max = if (a > b) a else b
+
+
+        //when，类似switch
+        when (a) {
+            0, 1 -> print("")
+            in 2..10 -> print("")
+            is Int -> print("")
+            else -> print("")
+        }
+        //取代if-else链
+        when {
+            a == 0 -> print("")
+            b == 1 -> print("")
+            else -> print("")
+        }
+
+        //for,可遍历任何提供迭代器（iterator）的对象
+        for (item: Int in ints) {
+        }
+        for (i in ints.indices) {
+        }
+        for ((i, item) in ints.withIndex()) {
+        }
+
+        //while，do...while
+    }
 }
+

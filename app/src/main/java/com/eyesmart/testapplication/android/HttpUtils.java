@@ -50,18 +50,252 @@ public class HttpUtils {
         /**TODO 网络思维导图*/
         int net = R.drawable.net;
 
+        /**OkHttp，拦截器，client.newCall(request)*/
+        testOkHttp();
+        /**Retrofit，注解*/
+        testRetrofit();
+
         /**HttpURLConnection*/
         sendGetRequest("", null);
         sendPostRequest("", "", null);
 
         /**Volley，基于请求队列*/
         testVolley(context);
-
-        /**OkHttp，拦截器，client.newCall(request)*/
-        testOkHttp();
-        /**Retrofit，注解*/
-        testRetrofit();
     }
+    //**********************************************************************************************************
+
+    public void testOkHttp() throws IOException {
+        /**1、创建OkHttpClient*/
+        OkHttpClient client = new OkHttpClient();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        client = client.newBuilder()
+                .addInterceptor(interceptor)                          //拦截器
+                .addInterceptor(new LoggingInterceptor())
+                //.connectTimeout(15, TimeUnit.SECONDS)               //超时时间
+                //.writeTimeout(20, TimeUnit.SECONDS)
+                //.readTimeout(20, TimeUnit.SECONDS)
+                .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存；注意路径！
+                .build();
+
+        client.interceptors().add(new Interceptor() {               //可设置拦截器；添加，移除、转换请求头或响应头信息
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request request = chain.request().newBuilder()      //统一请求头
+                        .header("Authorization", "")
+                        .addHeader("key", "value")
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+
+        /**2、创建请求*/
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json数据");//数据可以从多个地方获取
+//        FormBody formBody = new FormBody.Builder()                  //POST提交键值对
+//                .add("key", "value")
+//                .build();
+        Request request = new Request.Builder()
+                .url("http://api.zhifangw.cn/")
+                .get()                                              //GET请求（默认）
+                .post(requestBody)                                  //POST请求
+                .header("User-Agent", "OkHttp Headers.java")        //添加请求头（覆盖）
+                .addHeader("Accept", "application/json; q=0.5")     //不覆盖
+                //.cacheControl(CacheControl.FORCE_NETWORK)         //无缓存，每次都请求网络获取最新数据
+                .build();
+
+        /**3、创建请求Call*/
+        okhttp3.Call call = client.newCall(request);
+        /**4、发送*/
+        okhttp3.Response response = call.execute();                 //同步请求
+        call.enqueue(new okhttp3.Callback() {                       //异步请求
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                okhttp3.Headers responseHeaders = response.headers();
+                for (int i = 0; i < responseHeaders.size(); i++) {
+                    System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                }
+
+                System.out.println(response.body().string());
+            }
+        });
+        //当成功时……
+        call.cancel();                                              //必要时取消请求
+    }
+
+//**********************************************************************************************************
+
+    public interface TestService {
+        @GET("testBean/{id}")
+        Call<ResponseBody> getTestBean(@Path("id") int id);
+
+        @POST("testBean/1")
+        @Headers("Cache-Control: max-age=640000")
+//        @Headers({
+//                "Accept-Encoding: application/json",
+//                "User-Agent: MoonRetrofit"
+//        })
+        Call<ResponseBody> getTestBean2(@Body String body, @Query("sort") String sort);
+
+        //@HTTP可替代请求方法  @HTTP(method = "POST", path = "testBean/1", hasBody = true)
+
+        //@Path("XXX")动态配置URL地址，{XXX}中的表示待定参数
+        //@Headers("")请求头设置，@Header可放在方法参数前，动态设置
+
+        //@Query用于查询参数如同"?"作用
+        //@QueryMap用于有多个查询参数，参数为Map
+
+        //@Body请求体，可以为json对象(主要是用于@POST方式)
+
+        //@FormUrlEncoded表明请求体是一个form表单
+        //@Field("key")传输数据类型为键值对；合@FormUrlEncoded使用
+
+        //@Multipart表明请求体是一个支持文件上传的form表单
+        //@Part：单个文件上传，@PartMap：多个文件上传；配合@Multipart
+
+        //@Streaming表明响应体的数据用流的形式返回（用于数据量比较大时）
+    }
+
+    public static void testRetrofit() throws IOException {
+        /**1、创建Retrofit*/
+        Retrofit retrofit = new Retrofit.Builder()
+                //.client(new OkHttpClient())                               //可传入OkHttpClient
+                .baseUrl("http://api.zhifangw.cn/")                         //baseUrl必须以"/"结尾
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())  //增加支持RxJava的请求适配器。内部默认有一个支持线程切换功能的请求适配器
+                //ConverterFactory依赖包需单独引入
+                .addConverterFactory(ScalarsConverterFactory.create())      //增加返回值为String的转换支持
+                .addConverterFactory(GsonConverterFactory.create())         //增加返回值Gson转换支持
+                .build();
+        /**2、创建请求集合*/
+        TestService testService = retrofit.create(TestService.class);
+        /**3、创建具体请求Call*/
+        Call<ResponseBody> call = testService.getTestBean(1);
+        /**4、发送*/
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (!response.isSuccessful())
+                        throw new IOException("Unexpected code " + response);
+                    response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+        Response<ResponseBody> response = call.execute();
+        //当成功时……
+        call.cancel();
+    }
+
+
+//**********************************************************************************************************
+
+    /**
+     * 从InputStream中读取数据，转换成byte数组，最后关闭InputStream
+     *
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    private static byte[] getBytesByInputStream(InputStream is) throws IOException {
+        byte[] bytes = null;
+        BufferedInputStream bis = new BufferedInputStream(is);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BufferedOutputStream bos = new BufferedOutputStream(baos);
+        try {
+            byte[] buffer = new byte[1024];
+            int length = -1;
+            while ((length = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+            }
+            bos.flush();
+            bytes = baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            bis.close();
+            bos.close();
+        }
+        return bytes;
+    }
+
+    //读取请求头
+    private static String getReqeustHeader(HttpURLConnection conn) {
+        //https://github.com/square/okhttp/blob/master/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/HttpURLConnectionImpl.java#L236
+        Map<String, List<String>> requestHeaderMap = conn.getRequestProperties();
+        Iterator<String> requestHeaderIterator = requestHeaderMap.keySet().iterator();
+        StringBuilder sbRequestHeader = new StringBuilder();
+        while (requestHeaderIterator.hasNext()) {
+            String requestHeaderKey = requestHeaderIterator.next();
+            String requestHeaderValue = conn.getRequestProperty(requestHeaderKey);
+            sbRequestHeader.append(requestHeaderKey);
+            sbRequestHeader.append(":");
+            sbRequestHeader.append(requestHeaderValue);
+            sbRequestHeader.append("\n");
+        }
+        return sbRequestHeader.toString();
+    }
+
+    //读取响应头
+    private static String getResponseHeader(HttpURLConnection conn) {
+        Map<String, List<String>> responseHeaderMap = conn.getHeaderFields();
+        int size = responseHeaderMap.size();
+        StringBuilder sbResponseHeader = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            String responseHeaderKey = conn.getHeaderFieldKey(i);
+            String responseHeaderValue = conn.getHeaderField(i);
+            sbResponseHeader.append(responseHeaderKey);
+            sbResponseHeader.append(":");
+            sbResponseHeader.append(responseHeaderValue);
+            sbResponseHeader.append("\n");
+        }
+        return sbResponseHeader.toString();
+    }
+
+    private static class LoggingInterceptor implements Interceptor {
+        @Override
+        public okhttp3.Response intercept(Chain chain) throws IOException {
+            //这个chain里面包含了request和response，所以你要什么都可以从这里拿
+            Logger logger = Logger.getLogger("LoggingInterceptor");
+            Request request = chain.request();
+
+            long t1 = System.nanoTime();//请求发起的时间
+            logger.info(String.format("发送请求 %s on %s%n%s",
+                    request.url(), chain.connection(), request.headers()));
+
+            okhttp3.Response response = chain.proceed(request);
+
+            long t2 = System.nanoTime();//收到响应的时间
+
+            //这里不能直接使用response.body().string()的方式输出日志
+            //因为response.body().string()之后，response中的流会被关闭，程序会报错，我们需要创建出一
+            //个新的response给应用层处理
+            ResponseBody responseBody = response.peekBody(1024 * 1024);
+
+            logger.info(String.format("接收响应: [%s] %n状态码:[%s]%n返回json:【%s】 %.3fms%n%s",
+                    response.request().url(),
+                    response.code(),
+                    responseBody.string(),
+                    (t2 - t1) / 1e6d,
+                    response.headers()));
+
+            return response;
+        }
+    }
+
+//**********************************************************************************************************
 
     private static final int TIMEOUT = 8000;
 
@@ -204,236 +438,5 @@ public class HttpUtils {
         //加载图片用ImageLoader
         queue.add(stringRequest);
     }
-//**********************************************************************************************************
 
-    public void testOkHttp() throws IOException {
-        /**1、创建OkHttpClient*/
-        OkHttpClient client = new OkHttpClient();
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        client = client.newBuilder()
-                .addInterceptor(interceptor)                          //拦截器
-                .addInterceptor(new LoggingInterceptor())
-                //.connectTimeout(15, TimeUnit.SECONDS)               //超时时间
-                //.writeTimeout(20, TimeUnit.SECONDS)
-                //.readTimeout(20, TimeUnit.SECONDS)
-                .cache(new Cache(new File(""), 10 * 1024 * 1024))   //设置缓存；注意路径！
-                .build();
-
-        client.interceptors().add(new Interceptor() {               //可设置拦截器；添加，移除、转换请求头或响应头信息
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder()      //统一请求头
-                        .header("Authorization", "")
-                        .addHeader("key", "value")
-                        .build();
-                return chain.proceed(request);
-            }
-        });
-
-
-        /**2、创建请求*/
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "json数据");//数据可以从多个地方获取
-//        FormBody formBody = new FormBody.Builder()                  //POST提交键值对
-//                .add("key", "value")
-//                .build();
-        Request request = new Request.Builder()
-                .url("http://api.zhifangw.cn/")
-                .get()                                              //GET请求（默认）
-                .post(requestBody)                                  //POST请求
-                .header("User-Agent", "OkHttp Headers.java")        //添加请求头（覆盖）
-                .addHeader("Accept", "application/json; q=0.5")     //不覆盖
-                //.cacheControl(CacheControl.FORCE_NETWORK)         //无缓存，每次都请求网络获取最新数据
-                .build();
-
-        /**3、创建请求Call*/
-        okhttp3.Call call = client.newCall(request);
-        /**4、发送*/
-        call.enqueue(new okhttp3.Callback() {                       //异步请求
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-                okhttp3.Headers responseHeaders = response.headers();
-                for (int i = 0; i < responseHeaders.size(); i++) {
-                    System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                }
-
-                System.out.println(response.body().string());
-            }
-        });
-        okhttp3.Response response = call.execute();                 //同步请求
-        //当成功时……
-        call.cancel();                                              //必要时取消请求
-    }
-
-//**********************************************************************************************************
-
-    public interface TestService {
-        @GET("testBean/{id}")
-        Call<ResponseBody> getTestBean(@Path("id") int id);
-
-        @POST("testBean/1")
-        @Headers("Cache-Control: max-age=640000")
-//        @Headers({
-//                "Accept-Encoding: application/json",
-//                "User-Agent: MoonRetrofit"
-//        })
-        Call<ResponseBody> getTestBean2(@Body String body, @Query("sort") String sort);
-
-        //@HTTP可替代请求方法  @HTTP(method = "POST", path = "testBean/1", hasBody = true)
-
-        //@Path("XXX")动态配置URL地址，{XXX}中的表示待定参数
-        //@Headers("")请求头设置，@Header可放在方法参数前，动态设置
-
-        //@Query用于查询参数如同"?"作用
-        //@QueryMap用于有多个查询参数，参数为Map
-
-        //@Body请求体，可以为json对象(主要是用于@POST方式)
-
-        //@FormUrlEncoded表明请求体是一个form表单
-        //@Field("key")传输数据类型为键值对；合@FormUrlEncoded使用
-
-        //@Multipart表明请求体是一个支持文件上传的form表单
-        //@Part：单个文件上传，@PartMap：多个文件上传；配合@Multipart
-
-        //@Streaming表明响应体的数据用流的形式返回（用于数据量比较大时）
-    }
-
-    public static void testRetrofit() throws IOException {
-        /**1、创建Retrofit*/
-        Retrofit retrofit = new Retrofit.Builder()
-                //.client(new OkHttpClient())                               //可传入OkHttpClient
-                .baseUrl("http://api.zhifangw.cn/")                         //baseUrl必须以"/"结尾
-                //ConverterFactory依赖包需单独引入
-                .addConverterFactory(ScalarsConverterFactory.create())      //增加返回值为String的支持
-                .addConverterFactory(GsonConverterFactory.create())         //Gson支持
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())  //RxJava支持
-                .build();
-        /**2、创建请求集合*/
-        TestService testService = retrofit.create(TestService.class);
-        /**3、创建具体请求Call*/
-        Call<ResponseBody> call = testService.getTestBean(1);
-        /**4、发送*/
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (!response.isSuccessful())
-                        throw new IOException("Unexpected code " + response);
-                    response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-        Response<ResponseBody> response = call.execute();
-        //当成功时……
-        call.cancel();
-    }
-
-
-//**********************************************************************************************************
-
-    /**
-     * 从InputStream中读取数据，转换成byte数组，最后关闭InputStream
-     *
-     * @param is
-     * @return
-     * @throws IOException
-     */
-    private static byte[] getBytesByInputStream(InputStream is) throws IOException {
-        byte[] bytes = null;
-        BufferedInputStream bis = new BufferedInputStream(is);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BufferedOutputStream bos = new BufferedOutputStream(baos);
-        try {
-            byte[] buffer = new byte[1024];
-            int length = -1;
-            while ((length = bis.read(buffer)) != -1) {
-                bos.write(buffer, 0, length);
-            }
-            bos.flush();
-            bytes = baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            bis.close();
-            bos.close();
-        }
-        return bytes;
-    }
-
-    //读取请求头
-    private static String getReqeustHeader(HttpURLConnection conn) {
-        //https://github.com/square/okhttp/blob/master/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/HttpURLConnectionImpl.java#L236
-        Map<String, List<String>> requestHeaderMap = conn.getRequestProperties();
-        Iterator<String> requestHeaderIterator = requestHeaderMap.keySet().iterator();
-        StringBuilder sbRequestHeader = new StringBuilder();
-        while (requestHeaderIterator.hasNext()) {
-            String requestHeaderKey = requestHeaderIterator.next();
-            String requestHeaderValue = conn.getRequestProperty(requestHeaderKey);
-            sbRequestHeader.append(requestHeaderKey);
-            sbRequestHeader.append(":");
-            sbRequestHeader.append(requestHeaderValue);
-            sbRequestHeader.append("\n");
-        }
-        return sbRequestHeader.toString();
-    }
-
-    //读取响应头
-    private static String getResponseHeader(HttpURLConnection conn) {
-        Map<String, List<String>> responseHeaderMap = conn.getHeaderFields();
-        int size = responseHeaderMap.size();
-        StringBuilder sbResponseHeader = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            String responseHeaderKey = conn.getHeaderFieldKey(i);
-            String responseHeaderValue = conn.getHeaderField(i);
-            sbResponseHeader.append(responseHeaderKey);
-            sbResponseHeader.append(":");
-            sbResponseHeader.append(responseHeaderValue);
-            sbResponseHeader.append("\n");
-        }
-        return sbResponseHeader.toString();
-    }
-
-    private static class LoggingInterceptor implements Interceptor {
-        @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
-            //这个chain里面包含了request和response，所以你要什么都可以从这里拿
-            Logger logger = Logger.getLogger("LoggingInterceptor");
-            Request request = chain.request();
-
-            long t1 = System.nanoTime();//请求发起的时间
-            logger.info(String.format("发送请求 %s on %s%n%s",
-                    request.url(), chain.connection(), request.headers()));
-
-            okhttp3.Response response = chain.proceed(request);
-
-            long t2 = System.nanoTime();//收到响应的时间
-
-            //这里不能直接使用response.body().string()的方式输出日志
-            //因为response.body().string()之后，response中的流会被关闭，程序会报错，我们需要创建出一
-            //个新的response给应用层处理
-            ResponseBody responseBody = response.peekBody(1024 * 1024);
-
-            logger.info(String.format("接收响应: [%s] %n状态码:[%s]%n返回json:【%s】 %.3fms%n%s",
-                    response.request().url(),
-                    response.code(),
-                    responseBody.string(),
-                    (t2 - t1) / 1e6d,
-                    response.headers()));
-
-            return response;
-        }
-    }
 }

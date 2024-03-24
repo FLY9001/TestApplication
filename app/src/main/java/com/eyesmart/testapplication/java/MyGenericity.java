@@ -28,6 +28,12 @@ public class MyGenericity extends Object{
         }
     }
 
+    class Studet<T extends Number>{
+        <K extends Number>T test (T t){
+            return  t;
+        }
+    }
+
     //泛型方法
     public <T extends Number> boolean out(T param) { //泛型方法返回泛型类型
         return true;

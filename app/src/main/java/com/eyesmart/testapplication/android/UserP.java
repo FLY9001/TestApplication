@@ -1,5 +1,6 @@
 package com.eyesmart.testapplication.android;
 
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,6 +14,7 @@ public class UserP implements Parcelable {
     public UserP userP2;
 
     public static void test() {
+
     }
 
     //文件描述

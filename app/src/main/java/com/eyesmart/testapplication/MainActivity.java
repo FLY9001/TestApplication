@@ -1,5 +1,6 @@
 package com.eyesmart.testapplication;
 
+import android.arch.lifecycle.LifecycleObserver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().findViewById();
+        getWindowManager().addView();
+        getSystemService();
+        onResume();
 
         /**java*/
         //Java学习+面试指南:https://github.com/Snailclimb/JavaGuide

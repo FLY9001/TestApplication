@@ -50,6 +50,7 @@ public class RecyclerFragment extends Fragment {
             }
         }
 
+
         //设置LayoutManager，LinearLayoutManager线性排列（垂直、水平），GridLayoutManager网格，StaggeredGridLayoutManager瀑布流
         rv_recycler.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         //设置分割线

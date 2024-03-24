@@ -11,6 +11,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.os.Debug;
+import android.os.Trace;
 
 import com.eyesmart.testapplication.R;
 
@@ -138,6 +140,11 @@ public class TestBitmap {
             }
         }
         //修改verts中指定坐标数据，扭曲图像
+        Debug.startMethodTracing();
+
+        Trace.beginSection();
+        Trace.endSection();
+
 
         canvas.drawBitmapMesh(bitmap, widthNum, heightNum, verts, 0, null, 0, null);
     }
@@ -147,7 +154,8 @@ public class TestBitmap {
 
     //图像叠加
     private static void testXformode(Canvas canvas) {
-        Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.xformod);
+        Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.xformod, new BitmapFactory.Options());
+        new BitmapFactory.Options().inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         canvas.drawBitmap(bitmap, 0, 0, mPaint);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
